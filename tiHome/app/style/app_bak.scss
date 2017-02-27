@@ -1,0 +1,623 @@
+// your style goes here
+* {
+-webkit-touch-callout:none;
+-webkit-user-select:none;
+-khtml-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+}
+/*重置页面背景底色*/
+.views .view{
+  background: #fff;
+}
+//当面付样式
+.home-title {
+  margin-left: 25px;
+margin-top: 50px;
+font-size: 16px;
+color: #a0a0a0;
+}
+
+.hotel-title {
+    margin-left: 14px;
+    margin-top: 50px;
+    font-size: 13px;
+}
+.money-input .item-input .field-label {
+    display: block;
+    width: 16%;
+    font-size: 32px;
+}
+
+.money-newinput .item-input .field-label {
+    display: block;
+    width: 16%;
+    font-size: 28px;
+}
+
+.money-input .item-input {
+  border-top: 0px;
+  margin-left: 14px;
+  margin-right: 14px;
+  margin-top: 25px;
+}
+input#payOldMoney {
+    font-size: 28px;
+    color: #474747;
+}
+
+.btn-pay-notput {
+    width: 130px;
+    height: 50px;
+    float: right;
+    text-align: center;
+    background: #fff;
+    line-height: 50px;
+    border-radius: 30px;
+    margin-top: 20px;
+    margin-right: 20px;
+    color: #888888;
+    border: 1px solid #000000;
+    font-size: 19px;
+}
+.btn-pay-input {
+    width: 130px;
+    height: 50px;
+    float: right;
+    text-align: center;
+    background: #fff;
+    line-height: 50px;
+    border-radius: 30px;
+    margin-top: 20px;
+    margin-right: 20px;
+    color: #474747;
+    border: 1px solid #474747;
+    font-size: 19px;
+}
+
+.btn-pay-newinput {
+    width: 130px;
+    height: 50px;
+    float: right;
+    text-align: center;
+    background: #fff;
+    line-height: 50px;
+    border-radius: 30px;
+    margin-top: 70px;
+    margin-right: 20px;
+    color: #474747;
+    border: 1px solid #00a698;
+    font-size: 19px;
+}
+.btn-pay-newnotput {
+    width: 130px;
+    height: 50px;
+    float: right;
+    text-align: center;
+    background: #fff;
+    line-height: 50px;
+    border-radius: 30px;
+    margin-top: 70px;
+    margin-right: 20px;
+    color: #00a698;
+    border: 1px solid #00a698;
+    font-size: 19px;
+}
+input#payMoney {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.discount-card {
+  background: #020f92;
+  text-align: center;
+  color: #fff;
+  margin: 10px auto;
+  border-radius: 10px;
+  width: 60%;
+}
+.discount-level {
+  height: 70px;
+  line-height: 70px;
+  font-size: 33px;
+  text-align: left;
+  text-indent: 10px;
+}
+.discount-deadline {
+    height: 50px;
+    line-height: 50px;
+    font-size: 17px;
+}
+.card-status {
+  width: 60%;
+  margin: 10px auto 10px;
+  color: #474747;
+  font-size: 24px;
+}
+
+.hotel-card-name {
+    width: 70%;
+    margin: 0 auto;
+}
+.hotel-card-new {
+  margin-left: 25px;
+  margin-top: 40px;
+  color: #fff;
+}
+ul.list.money-new-input {
+    margin-top: 20px;
+}
+.views .new-background {
+    background: #00a698;
+}
+.new-group .group-body {
+    background: #00a698;
+}
+.new-group .money-input {
+    background: #00a698;
+}
+input#payNewMoney {
+    background: #00a698;
+}
+// .home-new-title {
+//   margin-left: 25px;
+//   font-size: 28px;
+//   color: #fff;
+//   margin-top: 40px;
+// }
+.home-new-title {
+    margin-left: 0.5rem;
+    font-size: 0.64rem;
+    color: #fff;
+    margin-top: 0.8rem;
+}
+
+.new-group .money-new-input {
+    background: #00a698;
+}
+.money-new-input .field-label {
+    display: block;
+    width: 22%;
+    font-size: 26px;
+    color: #fff;
+}
+
+.money-new-input .item-input {
+    border-top: 0px;
+    background: #00a698;
+    padding-left: 18px;
+}
+input#payNewMoney {
+    background: #00a698;
+    color: #fff;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.money-new-input .item-input .field-label {
+    display: block;
+    width: 16%;
+}
+.copration {
+  text-align: right;
+  margin-right: 10px;
+  font-size: 8px;
+  color: #fff;
+  margin-top: -28px;
+}
+ul.list.money-input {
+    margin: 0;
+}
+
+.discount-welfare {
+    width: 90%;
+    margin: 40px auto;
+}
+
+
+.discount-welfare {
+    width: 90%;
+    margin: 20px auto 10px;
+}
+.welfare-more {
+    width: 20%;
+    height: 44px;
+    color: #000000;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    float: left;
+    border: 1px dashed #888888;
+}
+.more-reduce {
+    display: inline-block;
+    height: 44px;
+    line-height: 44px;
+    width: 80%;
+    text-align: right;
+    font-size: 18px;
+    color: #888888;
+}
+.welfare-level {
+    width: 30%;
+    height: 44px;
+    color: #a0a0a0;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    float: left;
+    margin-top: 78px;
+}
+
+.welfare-reduce {
+    display: inline-block;
+    width: 168px;
+    height: 50px;
+    float: right;
+    text-align: center;
+    background: #00a698;
+    line-height: 50px;
+    border-radius: 30px;
+    margin-top: 70px;
+    margin-right: 20px;
+    color: #fff;
+    border: 1px solid #00a698;
+    font-size: 18px;
+}
+
+.card-type{
+  width: 40%;
+  height: 84px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 20px;
+  float: left;
+  background: red;
+}
+
+.card-reduce{
+  display: inline-block;
+  width: 50%;
+  height: 80px;
+  text-align: left;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 18px;
+  text-indent: 14px;
+
+}
+
+.bigTitle {
+    margin-left: 40px;
+    line-height: 179px;
+    color: #fff;
+    font-size: 36px;
+}
+.smallTitle {
+    margin-top: -60px;
+    margin-left: 40px;
+    font-size: 14px;
+    color: #fff;
+}
+.hotelcard-list {
+  width: 90%;
+  margin: 40px auto 10px;
+}
+
+.card-discount {
+    text-align: left;
+    text-indent: 13px;
+    color: #fff;
+}
+.card-discount span {
+    font-size: 32px;
+}
+.card-money {
+    text-align: right;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #fff;
+}
+.cardlist-border {
+    width: 100%;
+    height: 1px;
+    background: #dfe0ef;
+    margin-top: 40px;
+}
+.card-reduceMoney {
+    color: #474747;
+    margin-top: 12px;
+}
+.card-giveMoney {
+    color: #ff5161;
+    font-size: 14px
+}
+.giveUp {
+  width: 100%;
+  height: 55px;
+  position: absolute;
+  bottom: 0px;
+  background: #000000;
+  text-align: center;
+  line-height: 55px;
+  color: #fff;
+  font-size: 24px;
+  opacity: 0.8;
+}
+.cardDiscount{
+    margin-left: 40px;
+    line-height: 145px;
+    color: #fff;
+    font-size: 44px;
+}
+
+.cardDetail_name ,.cardDetail_deadline{
+    margin-left: 40px;
+    font-size: 16px;
+    color: #fff;
+}
+.cardDetail_price {
+    float: right;
+    margin-right: 30px;
+    margin-top: -26px;
+    color: #fff;
+}
+.cardDetail-list {
+    margin: 10px auto 10px;
+    width: 90%;
+    left: 0;
+    right: 0;
+    color: #474747;
+}
+.cardDetail-top-line {
+  height: 1px;
+  width: 90%;
+  background: #dfe0df;
+  margin: 0 auto;
+}
+span.info-after {
+    float: right;
+    display: inline-block;
+}
+.CardDetailBtn {
+    width: 180px;
+    height: 50px;
+    background: #00a699;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 30px;
+    float: right;
+    margin-right: 5%;
+    margin-top: 40px;
+}
+
+.vipCopration {
+    text-align: right;
+    margin-right: 10px;
+    font-size: 8px;
+    color: #a0a0a0;
+    margin-top: 0px;
+}
+
+input#payMemberMoney {
+    background: #00a698;
+    color: #fff;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.CardDetailBtn a {
+    color: #fff;
+}
+.dyj-type {
+    width: 40%;
+    height: 84px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    float: left;
+}
+.oldDiscount {
+    width: 90%;
+    margin: 10px auto 10px;
+    text-align: right;
+    color: #ff4f65;
+    font-size: 20px;
+}
+.dyj-discount {
+    text-align: center;
+    color: #fff;
+    margin-top: 8px;
+}
+.dyj-money {
+    font-size: 14px;
+    color: #fff;
+    margin-top: -10px;
+    font-size: 20px;
+}
+
+.views .payEnd-background {
+    background: #000000;
+    opacity: 0.8;
+}
+.payCostMoney {
+    width: 90%;
+    margin: 50px auto 10px;
+    color: #fff;
+}
+.payDiscountMoney {
+    width: 90%;
+    margin: 10px auto 10px;
+    color: #fff;
+}
+.payClubDiscount {
+    width: 90%;
+    margin: 10px auto 10px;
+    color: #ff5161;
+}
+.payTrueMoney {
+    width: 90%;
+    margin: 10px auto 10px;
+    color: #fff;
+}
+.givDYJ {
+    width: 90%;
+    margin: 10px auto 10px;
+    color: #fff;
+    text-align: right;
+}
+span.data-before.dyjTrueMoney {
+    font-size: 23px;
+}
+span.data-after.dyjTrueMoney {
+    font-size: 23px;
+}
+
+.payEnd {
+    height: 50px;
+    background: #00a698;
+    text-align: center;
+    line-height: 50px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-size: 18px;
+    color: #fff;
+}
+
+
+span.data-before {
+  width: 70%;
+display: inline-block;
+float: left;
+font-size: 18px;
+color: #fff;
+height: 36px;
+}
+span.data-after {
+  display: block;
+float: right;
+font-size: 18px;
+color: #fff;
+height: 36px;
+width: 30%;
+}
+
+span.inputBefore {
+    display: inline-block;
+    color: #fff;
+    font-size: 30px;
+    float: left;
+    height: 0px;
+    margin-left: 20px
+}
+
+.copration-new {
+    text-align: right;
+    margin-right: 10px;
+    font-size: 8px;
+    color: #fff;
+}
+.moneyInputArea {
+    border-bottom: 1px solid #fff;
+    margin-top: 50px;
+}
+.moneyVipInputArea {
+    border-bottom: 1px solid #dedede;
+    margin-top: 10px;
+}
+
+span.inputVipBefore {
+    display: inline-block;
+    color: #474747;
+    font-size: 30px;
+    float: left;
+    height: 0px;
+    margin-left: 20px;
+}
+
+span.data-before.reduce-dyj {
+    color: red;
+}
+span.data-after.reduce-dyj {
+    color: red;
+}
+.dyj-border-line {
+    height: 1px;
+    width: 90%;
+    background: #fff;
+    margin: 0 auto;
+    margin-top: 128px;
+}
+
+.backTitle {
+    margin-left: 25px;
+    margin-top: 50px;
+    font-size: 24px;
+    color: #b3b3b3;
+}
+.backSuccess {
+    margin-left: 25px;
+    margin-top: 50px;
+    font-size: 44px;
+    color: #00a698;
+}
+.backInfo {
+    margin-top: 100px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+span.backInfoTitle {
+    display: block;
+    font-size: 12px;
+    color: #474747;
+}
+span.backInfoDis {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+span.border-top-line {
+    display: inline-block;
+    width: 100%;
+    height: 1px;
+    background: #dfe0df;
+    border: 1px;
+    margin-bottom: 16px;
+}
+
+.card-border-line {
+    height: 1px;
+    width: 90%;
+    background: #fff;
+    margin: 0 auto;
+    margin-top: 160px;
+}
+
+$ratchicons-path: "../../node_modules/amazeui-touch/fonts/";
+
+@import "~amazeui-touch/scss/amazeui.touch.scss";
+
+/* Container `fade` 动画示例 */
+.view-transition-fade-enter {
+  opacity: 0.01;
+}
+
+.view-transition-fade-enter.view-transition-fade-enter-active {
+  opacity: 1;
+  transition: opacity 450ms ease-in;
+}
+
+.view-transition-fade-leave {
+  opacity: 1;
+}
+
+.view-transition-fade-leave.view-transition-fade-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

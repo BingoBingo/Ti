@@ -1,0 +1,1445 @@
+// your style goes here
+/*重置页面背景底色*/
+.tabbar{
+  background: #fff !important;
+}
+.views .view{
+  background: #fff;
+}
+/*loader样式重置*/
+.card-loader {
+    text-align: center;
+    margin-top: 200px;
+}
+.card-loader .loader >div{
+    background-color: #06A79B;
+}
+
+/*按钮样式重置*/
+.btn-secondary {
+    background: #06A79B !important;
+    border: 1px solid #06A79B !important;
+    color: #fff;
+}
+.hotel-card .card-cover {
+    // min-height: 15rem;
+    height: 225px;
+    border-radius: 2.5px;
+    background-color: #f2f2f2;
+}
+.headerPic .card-header {
+    height: 14rem;
+    border-bottom: 0px;
+}
+.card.headerPic {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+//首页卡片样式覆盖
+.home-title {
+  padding-left: 25px;
+  font-size: 32px;
+  margin-top: 30px;
+  color: #474747;
+  line-height: 32px;
+  // margin-bottom: 30px;
+}
+
+.home-collectionTitle {
+  padding-left: 25px;
+  font-size: 32px;
+  margin-top: 30px;
+  color: #474747;
+  line-height: 32px;
+}
+
+.borderRight {
+  width: 3px;
+  height: 36px;
+  background: #09a492;
+  float: left;
+  margin-right: 20px;
+}
+
+.search-title{
+  margin-left: 14px;
+  font-size: 32px;
+  margin-top: 30px;
+  color: #a0a0a0;
+}
+.location-image {
+    height: 10px;
+    width: 10px;
+    float: left;
+    background: url(/i/location.png) no-repeat 10px center;
+    background-size: 10px 10px;
+}
+.dis-info {
+  margin-bottom: 20px;
+  color: #888888;
+}
+.border-line {
+  width: 100%;
+  margin-top: 25px;
+  display: block;
+  margin-bottom: 25px;
+  height: 1px;
+  background: #dfe0df;
+}
+
+.search-top-line {
+  height: 1px;
+  background: #dedede;
+  width: 47px;
+  margin-bottom: 20px;
+}
+ul.list.searchInput {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+input.search-box.field {
+    margin-left: 6px;
+}
+.room-type {
+  font-size: 16px;
+  color: #474747;
+  line-height: 16px;
+  margin-bottom: 7px;
+}
+.hotel-card .card-body {
+    padding: 30px 0px;
+}
+.card.hotel-card {
+    box-shadow: none;
+    border-bottom: 1px solid #E7E7E7;
+    margin: 30px 25px;
+}
+span.countyName {
+    display: inline-block;
+    font-size: 11px;
+}
+.hotel-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #454545;
+    float: left;
+    height: 18px;
+    line-height: 18px;
+}
+.hotel-discout{
+  float: left;
+  font-size: 12px;
+  height: 18px;
+  // border: 1px solid #06A79B;
+  // text-align: center;
+  // border-radius: 5px;
+  // line-height: 18px;
+  // padding-left: 6px;
+  // padding-right: 6px;
+  // margin-left: 10px;
+}
+
+.hotel-discout-detail{
+  float: left;
+  font-size: 12px;
+  height: 16px;
+  // border: 3px solid #06A79B;
+  text-align: center;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: #fff;
+  background: #00a698;
+  padding-left: 6px;
+  padding-right: 6px;
+  line-height: 12px;
+}
+
+.discount-dis {
+  line-height: 18px;
+  font-size: 14px;
+  color: #474747;
+}
+.hotel-earth-place {
+    font-size: 18px;
+    color: #474747;
+    line-height: 18px;
+    margin-bottom: 10px;
+}
+.h-d-dis.group {
+    margin-top: 40px;
+}
+.hotel-price-info {
+    margin-bottom: 12px;
+    line-height: 21px;
+}
+select#gender {
+    width: 120px;
+    margin-left: 90px;
+    border:0px;
+}
+.hotel-place {
+    font-size: 10px;
+    text-indent: -3px;
+    display: inline-block;
+    float: left;
+}
+.countyName {
+    font-size: 11px;
+    padding-top: 4px;
+    display: inline-block;
+    margin-left: -4px;
+}
+.hotel-name {
+  font-size: 16px;
+  line-height: 16px;
+  margin-bottom: 4px;
+}
+.hotel-earth.g.g-wrap {
+    margin-bottom: 10px;
+    margin-left: -10px
+}
+/*酒店详情轮播图*/
+.h-d-pic {
+    margin: -45px -15px 0px;
+}
+.slider-slides > li > img, .slider-slides > li > a > img{
+  height: 290px !important;
+}
+.hotelName {
+  font-size: 24px;
+  margin-bottom: 15px;
+  line-height: 24px;
+  color: #474747;
+}
+.h-d-dis .group-body {
+    padding: 0 25px;
+}
+.district-info.col.col-6 {
+    font-size: 13px;
+    color: #474747;
+    line-height: 13px;
+}
+.room-list {
+    // margin-bottom: 10px;
+    // height: 154px
+}
+.room-price {
+  // text-align: right;
+  // margin-right: 10px;
+  font-size: 21px;
+  color: #474747;
+  line-height: 21px;
+}
+.ckdt{
+  color: #00a698;
+  text-align: right;
+  margin-right: -10px;
+  font-size: 18px;
+  line-height: 18px;
+  padding-top: 10px;
+}
+.hotel-dis {
+  font-size: 13px;
+  text-indent: 10px;
+  // height: 59px;
+  // display: -webkit-box;
+  // overflow: hidden;
+  // white-space: normal!important;
+  // text-overflow: ellipsis;
+  // word-wrap: break-word;
+  // -webkit-line-clamp: 3;
+  // -webkit-box-orient: vertical;
+}
+.showAll {
+  display: inline-block;
+  background-color: #dfe0df;
+  line-height: 19px;
+  min-width: 53px;
+  color: #999;
+  text-align: center;
+  margin: 8px 0 0;
+  font-size: 12px;
+  padding: 2px;
+}
+.room-list.g.g-wrap {
+    margin-left: -10px;
+}
+.room-dis {
+  font-size: 11px;
+  color: #a0a0a0;
+  line-height: 11px;
+  // position: absolute;
+}
+.dis-title {
+    color: #474747;
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 18px;
+}
+.col-roomImg{
+    width: 90px;
+    height: 90px;
+    float: left;
+    display: inline-block;
+}
+
+.col-HotelImg{
+    width: 135px;
+    height: 93px;
+    float: left;
+    display: inline-block;
+    background: #dedede;
+}
+
+.searchBody .group-body {
+    padding: 0 25px;
+}
+.col-roomtype{
+    width: 65%;
+    float: left;
+    display: inline-block;
+    text-indent: 10px;
+}
+.col-Hoteltype{
+    width: 100%;
+    display: inline-block;
+    padding-left: 15px;
+    height: 93px;
+}
+.col-roomPrice{
+  width: 35%;
+  display: inline-block;
+  padding-top: 70px;
+  text-align: right;
+}
+
+.border-line-hotelname,.border-line-place {
+  width: 100%;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  height: 1px;
+  background: #dfe0df;
+}
+
+
+.collectHotel {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0px;
+    background: #06A79B;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    font-size: 24px;
+}
+
+.removeCollection {
+    float: right;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-top: -12px;
+    width: 40px;
+    text-align: right;
+}
+/*搜索*/
+.searchTitle {
+  font-size: 32px;
+  color: #d5d5d5;
+  line-height: 32px;
+  font-weight: bold;
+  display: inline-block;
+}
+input.searchPlace {
+  border-top-style: none !important;
+  border-right-style: none !important;
+  border-left-style: none !important;
+  border-bottom-style: none !important;
+  color: #00a698 !important;
+  font-size: 32px !important;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  width: 90% !important;
+}
+input.searchPlace::-webkit-input-placeholder {
+    color: #474747;
+    font-size: 32px;
+    text-overflow: ellipsis;
+}
+
+.me-detail.group {
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+li.item.item-input.nickName {
+    border-top: 0px;
+}
+.searchBody.group {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.searchBorder {
+    height: 1px;
+    background: #dedede;
+}
+dl.serachDt {
+  margin-left: 25px;
+  margin-top: 20px;
+}
+dt.search-dt a {
+    color: #525252;
+    font-size: 24px;
+}
+dt.search-dt {
+  font-size: 24px;
+  color: #525252;
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+.view .grop-margin {
+    margin: 0px;
+}
+.keyword-dis {
+    height: 50px;
+    border-bottom: 1px solid #e0e0e0;
+    line-height: 50px;
+    font-size: 18px;
+    text-indent: 20px;
+    color: #a3a3a3;
+}
+input.search-box.field {
+    color: #06A79B;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-left: 6px;
+}
+li.item.item-input.search-list {
+    border-top: 0px;
+}
+.earth-sort {
+    width: 100px;
+    text-align: center;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 16px;
+    background: #000;
+    opacity: 0.6;
+    color: #ffffff;
+    font-size: 10px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -50px;
+}
+
+
+.hotelOP {
+  float: right;
+  width: 100px;
+  margin-top: -18px;
+  position: relative;
+  margin-right: 12px;
+}
+span.icon.icon-like {
+    color: #FF3333;
+}
+.searchIcon {
+    text-align: right;
+    margin-top: -38px;
+    padding-right: 14px;
+}
+
+/*底部工具栏*/
+.tabbar > .active.tabBarColor, .tabbar > .active.tabBarColor a {
+    color: #06A79B;
+}
+
+/*我*/
+
+li.item.item-linked.me-name {
+    border-top: 0px;
+}
+.me-name>a>.item-media {
+    width: 50px;
+    height: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    background: #E6E6E6;
+}
+.me-name>a>.item-media>img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+button.btn.btn-success.btn-hollow.user-change-btn {
+    border: 1px solid #d42e28;
+    color: #d42e28;
+    width: 200px;
+    border-radius: 6px;
+    margin-right: -8px;
+}
+.user-change-group .group-body {
+    text-align: center;
+}
+.user-change-group .group-body .btn-success:hover, .btn-success:active, .btn-success.active {
+    background: #d42e28;
+    border-color: #d42e28;
+    color: #fff;
+}
+
+button.btn.SortCollection {
+  bottom: 20px;
+  line-height: 0px;
+  border-radius: 16px;
+  background: #000;
+  opacity: 0.6;
+  color: #ffffff;
+  font-size: 10px;
+}
+input#birthday {
+    color: #979797;
+}
+/*等级经验*/
+.rank-list {
+    border-top: 1px solid #dedede;
+}
+.rank-title {
+    font-size: 10px;
+    font-weight: bold;
+    color: #DC143C;
+    line-height: 50px;
+}
+.rank-date {
+    font-size: 9px;
+    line-height: 50px;
+}
+.rank-add {
+    font-size: 12px;
+    color: #DC143C;
+    line-height: 50px;
+    font-weight: bold;
+}
+.rankLevel {
+    width: 50%;
+    display: inline-block;
+    float: left;
+    height: 50px;
+    margin-top: -20px;
+}
+.rankProcess {
+    display: inline-block;
+    height: 50px;
+    color: #696969;
+    width: 50%
+}
+span.levelNum {
+    width: 100%;
+    display: block;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+span.expNumber {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+span.nextRank {
+  width: 100%;
+  display: block;
+  line-height: 0px;
+  font-size: 12px;
+  text-align: center;
+}
+span.givePointNumber {
+    font-size: 12px;
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+}
+/*个人详情*/
+// .me-card .card {
+//     margin: -30px 0px;
+// }
+.me-card .card {
+    margin: -45px -14px 0px;
+    box-shadow: 0 0px 0px #fff;
+    -webkit-box-shadow:0 0px 0px #fff;
+}
+.me-card .card .card-body {
+    display: none;
+}
+.me-card{
+  background: url("../i/wallet.png");
+}
+li.item.item-input.nickName {
+    border-top: 0px;
+}
+
+.savePersonInfo {
+  width: 100px;
+  height: 38px;
+  background: white;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 25px;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 26px;
+  border: 1px solid #dedede;
+  box-shadow: 0 0 1px #dedede;
+  -webkit-box-shadow:0 1px 1px #dedede;
+}
+/*号码绑定*/
+.phone-send-group .group-body {
+    text-align: center;
+}
+.btn.phonesend-dis-btn {
+    border: 1px solid #06A79B;
+    color: #06A79B;
+    width: 325px;
+    border-radius: 20px;
+    margin-right: -8px;
+    background:#fff;
+}
+
+.btn.phoneInput-dis-btn {
+  border: 1px solid #06A79B;
+  color: #fff;
+  width: 325px;
+  border-radius: 20px;
+  margin-right: -8px;
+  background: #06A79B;
+}
+.phoneInputArea {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.phone-send-group {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/*钱包*/
+.wallet-header {
+    width: 100%;
+    height: 150px;
+    background: #5fb5f8;
+}
+.wallet-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 6px;
+}
+.wallet-kytitle {
+    text-align: center;
+    font-size: 12px;
+    color: #5b5b5b;
+    margin-top: 10px;
+}
+.wallet-kymoney {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 40px;
+    color: #fff;
+    margin-top: 0px;
+}
+.wallet-sxmoney {
+    text-align: center;
+    color: red;
+    font-size: 10px;
+    margin-top: 0px;
+}
+li.item.item-linked.shareMoney {
+    margin-top: -30px;
+}
+.shareMoney a .item-main .item-title {
+    color: #FF0033;
+}
+.savemoney-list {
+    margin-top: 10px;
+}
+.helpCenter {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: 18px;
+    right: 0;
+    font-size: 12px;
+    color: #888888;
+}
+
+.helpCenter a {
+    color: #888888;
+}
+.sharePage {
+  text-align: center;
+  width: 50%;
+  margin: 90px auto 30px;
+  border: 1px solid #888888;
+}
+.getMoney {
+    display: block;
+    font-size: 40px;
+    font-weight: bold;
+    color: #DC143C;
+}
+.shareRule {
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.shareLink {
+    font-size: 17px;
+    text-align: center;
+    width: 80%;
+    margin:0 auto 20px
+}
+.shareButton {
+  width: 60%;
+  height: 50px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 21px;
+  bottom: 40px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  border: 1px solid;
+  border-radius: 30px;
+}
+/*会员卡*/
+.card-box {
+  height: 70px;
+  border-bottom: 1px solid #dddddd;
+  box-shadow: 0px 4px 4px #e5e5e5;
+  margin-top: 30px;
+}
+.card-box-wallet {
+  height: 224px;
+  margin-top: 50px;
+}
+.my-cardlist {
+  margin-top: 20px;
+  font-size: 36px;
+  margin-left: 20px;
+  color: #494949;
+}
+.club-card-body {
+    width: 90%;
+    margin: 0 auto;
+    background: #00b767;
+    height: 70px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #fff;
+    padding-top: 10px;
+}
+.club-card-body-wallet {
+  margin: 0 auto;
+  height: 224px;
+  // padding-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  line-height: 224px;
+}
+.club-name {
+  text-indent: 25px;
+  font-size: 18px;
+  float: left;
+  line-height: 46px;
+}
+.club-name-wallet {
+  margin-left: 30px;
+  font-size: 11px;
+  color: #a0a0a0;
+  float: left;
+  line-height: 11px;
+  font-family: PingFangSC-Regular, sans-serif;
+  margin-top: 8px;
+}
+.club-discount {
+  line-height: 45px;
+font-size: 26px;
+font-weight: bold;
+float: right;
+margin-right: 25px;
+}
+.club-discount-wallet {
+  margin-left: 30px;
+  font-size: 28px;
+  color: #a0a0a0;
+  // float: left;
+  line-height: 28px;
+  padding-top: 90px;
+  font-family: PingFangSC-Regular, sans-serif;
+}
+.card-d-title-dis {
+    // width: 66%;
+    // height: 100px;
+    // background: #009ed3;
+    // margin: 0 auto;
+    // margin-top: 10px;
+    // border-radius: 13px;
+    text-align: center;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    // margin-top: 20px;
+    // margin-right: 15px;
+    // margin-left: 15px;
+    // margin-bottom: 30px;
+}
+.card-discount {
+  font-size: 44px;
+  color: #6c5201;
+  text-align: left;
+  text-indent: 30px;
+  line-height: 134px;
+}
+.card-d-title-dis .card-name {
+    font-size: 18px;
+    color: #6c5201;
+    text-align: left;
+    text-indent: 30px;
+}
+
+.card-d-title {
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 25px;
+}
+span.card-total-money {
+    display: block;
+    float: left;
+    color: #6c5201;
+    font-size: 18px;
+    text-indent: 30px;
+}
+
+// span.card-total-money {
+//     display: block;
+//     float: left;
+//     width: 50%;
+//     color: #6c5201;
+//     font-size: 18px;
+//     text-indent: -17px;
+// }
+span.card-give-money {
+  display: block;
+float: left;
+width: 50%;
+color: #6c5201;
+font-size: 18px;
+text-align: right;
+}
+.card-time {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #888888;
+    font-size: 12px;
+}
+.card-hytq ,.card-kymd{
+    font-size: 16px;
+    text-indent: 10px;
+    width: 90%;
+    border-bottom: 1px solid #dedede;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.card-tqmx {
+    color: #888888;
+    font-size: 9px;
+    text-indent: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.card-op {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  margin-left: 5%;
+}
+.total-save {
+  height: 42px;
+  line-height: 42px;
+  width: 50%;
+  float: left;
+  color: #474747;
+  font-size: 18px;
+}
+.card-back {
+  height: 42px;
+line-height: 42px;
+text-align: center;
+width: 80px;
+float: right;
+background: #06a79b;
+color: #fff;
+border-radius: 30px;
+// margin-top: 10px;
+// margin-right: 10px;
+}
+.confirm-card-back {
+  height: 42px;
+  line-height: 42px;
+  color: #fff;
+  text-align: center;
+}
+
+.sst_head {
+    margin-top: 50px;
+    margin-left: 25px;
+    line-height: 44px;
+    font-size: 44px;
+    color: #fff;
+}
+.sst_shead {
+    margin-top: 7px;
+    margin-left: 25px;
+    color: #fff;
+    margin-bottom: 50px;
+}
+.title_0 {
+    font-size: 21px;
+    margin-left: 25px;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 21px;
+}
+.title_0_0 {
+    margin-left: 45px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.5;
+}
+.wddyj_title {
+    font-size: 18px;
+    color: #fff;
+    line-height: 18px;
+    padding-top: 22px;
+    font-family: PingFangSC-Regular, sans-serif;
+    padding-left: 25px;
+}
+.wddyj_count {
+    text-align: right;
+    padding-right: 25px;
+    color: #fff;
+    font-size: 24px;
+    font-family: PingFangSC-Regular, sans-serif;
+    line-height: 24px;
+    margin-top: 10px;
+}
+.getFiveRMB {
+    display: inline-block;
+    margin-top: 40px;
+    color: #ff5161;
+    font-size: 18px;
+    font-family: PingFangSC-Regular, sans-serif;
+}
+/*退卡*/
+.backTitle {
+    margin-left: 25px;
+    margin-top: 50px;
+    font-size: 24px;
+    color: #b3b3b3;
+    line-height: 24px;
+}
+.backSuccess {
+    margin-left: 25px;
+    margin-top: 50px;
+    font-size: 44px;
+    color: #00a698;
+    line-height: 44px;
+}
+.backInfo {
+    margin-top: 100px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+span.backInfoTitle {
+    display: block;
+    font-size: 12px;
+    color: #474747;
+}
+span.backInfoDis {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+div.border-top-line {
+    width: 100%;
+    height: 1px;
+    background: #dfe0df;
+    margin-top: 15px;
+    margin-bottom:15px;
+}
+
+.btn-backhome {
+  width: 80%;
+  height: 40px;
+  background: #00a698;
+  color: #fff;
+  font-size: 21px;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 40px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 100px;
+}
+.name-info {
+    margin: 50px 25px 0px;
+}
+.wallet-info {
+  margin-top: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+span.personName {
+  font-size: 36px;
+  color: #474747;
+  line-height: 36px;
+}
+span.personEdit {
+  color: #a0a0a0;
+  font-size: 13px;
+  display: inline-block;
+  line-height: 13px;
+  margin-top: 10px;
+}
+.personName, .personhead {
+    display: block;
+}
+.personhead {
+    width: 50%;
+    display: inline-block;
+    right: 0px;
+    position: relative;
+}
+.headImage {
+    width: 120px;
+    height: 120px;
+    background: #b7a17c;
+    border-radius: 50%;
+    float: right;
+}
+.me-dis {
+    width: 50%;
+    float: left;
+}
+.wallet-dis {
+  line-height: 36px;
+  margin-bottom: 50px;
+}
+.rank-exp,.person-coll ,.person-phone,.pserson-wechat{
+    // width: 90%;
+    // margin: 10px auto 10px;
+}
+
+.home-saveMoney,.home-tradelist {
+    padding-left: 25px;
+    font-size: 32px;
+    margin-top: 50px;
+    color: #474747;
+    line-height: 32px;
+    margin-bottom: 50px;
+}
+
+.saveItem {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+span.data-before {
+  width: 80%;
+display: inline-block;
+float: left;
+font-size: 18px;
+color: #474747;
+margin-top: 25px;
+margin-bottom: 25px;
+}
+span.wallet-right {
+  font-size: 16px;
+  color: #474747;
+  display: inline-block;
+  float: right;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  width: 20%;
+  text-align: right;
+  line-height: 16px;
+}
+
+.rank-exp {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.wallet-line {
+    height: 1px;
+    background: #dfe0df;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.closeBtn {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 77px;
+    text-align: center;
+}
+span.wallet-left {
+  font-size: 16px;
+  color: #474747;
+  display: inline-block;
+  float: left;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  width: 80%;
+  line-height: 16px;
+}
+span.data-after {
+  float: right;
+  font-size: 18px;
+  color: #00a698;
+  line-height: 18px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  width: 20%;
+  text-align: right;
+}
+
+span.info-before {
+  float: left;
+  font-size: 18px;
+  color: #474747;
+  line-height: 18px;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-bottom: 25px;
+}
+.reduceDYJ {
+  text-align: left;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-size: 18px;
+  color: #a0a0a0;
+  line-height: 15px;
+}
+.reduceYH {
+  text-align: left;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-size: 18px;
+  color: #a0a0a0;
+  margin-top: 10px;
+  line-height: 18px;
+  margin-bottom: 15px;
+}
+
+.giveBack {
+  text-align: left;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-size: 18px;
+  color: #a0a0a0;
+  margin-top: 15px;
+  margin-bottom: 40px;
+  line-height: 18px;
+}
+span.info-after {
+  display: block;
+float: right;
+font-size: 18px;
+color: #a0a0a0;
+}
+li.item.modal-actions-header.reduce-detail {
+  font-size: 24px;
+  color: #474747;
+  border-bottom: 0px;
+  line-height: 24px;
+  margin-left: 25px;
+  padding: 0px;
+  margin-right: 25px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.modal-special{
+  margin: 0px !important;
+}
+.modal-actions-group{
+  margin: 0px !important;
+}
+.modal-actions-group .btn-secondary.btn-block {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background: #fff !important;
+    color: #a0a0a0;
+    border: 0px solid #fff !important;
+}
+
+.me-top-line {
+    display: inline-block;
+    width: 90%;
+    height: 1px;
+    background: #dfe0df;
+    border: 1px;
+    margin-left: 5%;
+}
+.me-top-short {
+  width: 100px;
+  height: 1px;
+  background: #dfe0df;
+  border: 1px;
+  margin-left: 25px;
+}
+
+
+.head-wallet {
+  width: 120px;
+height: 80px;
+background: #b7a17c;
+border-radius: 50%;
+float: right;
+}
+
+.cardDiscount{
+    margin-left: 40px;
+    line-height: 145px;
+    color: #6c5201;
+    font-size: 44px;
+}
+
+.cardDetail_name ,.cardDetail_deadline{
+    margin-left: 40px;
+    font-size: 16px;
+    color: #6c5201;
+}
+.cardDetail_price {
+    float: right;
+    margin-right: 30px;
+    margin-top: -26px;
+    color: #6c5201;
+}
+.cardDetail-list {
+    margin: 10px auto 10px;
+    width: 90%;
+    left: 0;
+    right: 0;
+    color: #474747;
+}
+.Wallet_C_D_Border {
+  height: 1px;
+  background: #dfe0df;
+  border: 1px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.CardList {
+    display: inline-block;
+    width: 90%;
+    margin-left: 5%;
+}
+.CardList a {
+    display: flex;
+    display: -webkit-flex; /* Safari */
+}
+.btn-cancel-card {
+  margin: 0 auto;
+  height: 40px;
+  border: 1px solid #00a698;
+  border-radius: 20px;
+  line-height: 40px;
+  color: #fff;
+  margin-left: 25px;
+  margin-right: 25px;
+  background: #00a698;
+}
+.border_back {
+    height: 1px;
+    background: #dedede;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.blank {
+    height: 18px;
+}
+
+.card-data-after{
+  display: block;
+  float: right;
+  font-size: 18px;
+  color: #a0a0a0;
+  margin-right: 10px;
+}
+
+
+span.info-after {
+    float: right;
+    display: inline-block;
+    color: #06a79b;
+}
+.cardDetail-top-line {
+  height: 1px;
+  width: 90%;
+  background: #dfe0df;
+  margin: 0 auto;
+}
+
+.CardDetailBtn {
+    width: 180px;
+    height: 50px;
+    background: #00a699;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 30px;
+    float: right;
+    margin-right: 5%;
+    margin-top: 40px;
+}
+.likeOrNot{
+
+  width: 40px;
+  display: inline-block;
+  float: left;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  text-align: center;
+  color: #a0a0a0;
+  border: 1px solid #dedede;
+  line-height: 46px;
+  box-shadow: 0px 1px 1px #dedede;
+  -webkit-box-shadow:0px 1px 1px #dedede
+}
+/*绑定手机*/
+.home-mephone {
+    font-size: 36px;
+    line-height: 36px;
+    margin-left: 25px;
+    margin-top: 50px;
+}
+.bindPhone {
+    font-size: 13px;
+    margin-left: 25px;
+    line-height: 13px;
+    margin-top: 10px;
+}
+.phoneInput .item-input {
+    border-top: 0px;
+}
+
+.shareHotel{
+  width: 40px;
+  display: inline-block;
+  float: left;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  text-align: center;
+  color: #a0a0a0;
+  border: 1px solid #dedede;
+  line-height: 40px;
+  box-shadow: 0px 1px 1px #dedede;
+  -webkit-box-shadow:0px 1px 1px #dedede
+}
+
+.likeOrNot {
+    margin-right: 10px;
+}
+span.icon.icon-dislike {
+    font-size: 28px;
+}
+span.icon.icon-transmit {
+    font-size: 25px;
+}
+.remark {
+    background: #000000;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    position: absolute;
+}
+
+input#nickname ,input#lastName,input#firstName,input#gender,input#identity,input#birthday,select#genderSelect{
+  text-align: right;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  font-size: 18px;
+  line-height: 18px;
+}
+// input#birthday{
+//   padding-top: 30px;
+//   padding-bottom: 30px;
+// }
+.me-detail .group-body {
+    padding: 0px;
+}
+.me-detail li.item.item-input {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+input[type="date"], input[type="datetime"], input[type="datetime-local"] {
+  // height: 0rem !important;
+}
+.me-detail ul li span.field-label {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+$ratchicons-path: "../../node_modules/amazeui-touch/fonts/";
+
+@import "~amazeui-touch/scss/amazeui.touch.scss";
+
+/* Container `fade` 动画示例 */
+.view-transition-fade-enter {
+  opacity: 0.01;
+}
+
+.view-transition-fade-enter.view-transition-fade-enter-active {
+  opacity: 1;
+  transition: opacity 450ms ease-in;
+}
+
+.view-transition-fade-leave {
+  opacity: 1;
+}
+
+.view-transition-fade-leave.view-transition-fade-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+/*交易记录*/
+
+.saveItem .list .item{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.tradelist .item-content {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+.tradelist >a .item-subtitle {
+    margin-top: 10px;
+}
+.hotel-card .card-header {
+    padding: 0px;
+}
+/*取消收藏*/
