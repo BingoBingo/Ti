@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Card-Apps.">
+  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+  <script src="http://libs.cdnjs.net/zepto/1.2.0/zepto.min.js"></script>
+  <title></title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="format-detection" content="telephone=no" />
+</head>
+<style type="text/css">
+.pageTitle {
+    margin-top: 1.066667rem;
+    margin-left: 0.666667rem;
+    margin-right: 0.666667rem;
+    font-size: 64px;
+    color: #474747;
+}
+.pageTitle_second{
+  margin-top: 0.266667rem;
+  font-size: 32px;
+  color: #a0a0a0;
+  margin-left: 0.666667rem;
+  margin-right: 0.666667rem;
+}
+.pageBody{
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  margin-top: 1.066667rem;
+}
+.leftCard{
+  margin-left: 0.4rem;
+  border:2px solid #5bb6da;
+  padding-top: 0.666667rem;
+  /*height: 50px;*/
+}
+.rightCard{
+  margin-right: 0.4rem;
+  border:2px solid #81ca4f;
+  padding-top: 0.666667rem;
+  /*height: 50px;*/
+}
+.t1{background-color: #fff;position: absolute;left: 0;right: 50%;margin-right: 0.2rem;}
+.t2{background-color: #fff;position: absolute;left: 50%;margin-left: -0.2rem;}
+.t3{background-color: #fff;position: absolute;right: 0;left: 50%;margin-left: 0.2rem;}
+.t2{width: 0.4rem;}
+
+.headpic{
+  width: 1.333333rem;
+  height: 1.333333rem;
+  background-color: #dedede;
+  border-radius: 50%;
+  margin-top: 50px;
+  margin:0 auto;
+}
+.username{
+  margin-top: 0.4rem;
+  font-size: 32px;
+  color: #474747;
+  text-align: center;
+}
+.counttype{
+  margin-top:0.266667rem;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 0.666667rem;
+}
+.rightCard .ounttype{
+  color: #81ca4f;
+}
+.leftCard .ounttype{
+  color: #5bb6da;
+}
+.rightCard .cardback{
+  background:url(http://dev.taihuiyuan.com/hotel-img/rightC.png) no-repeat center top;
+  height: 3.52rem;
+  background-size: 100%;
+  margin-bottom: 0.933333rem;
+}
+.leftCard .cardback{
+  background:url(http://dev.taihuiyuan.com/hotel-img/leftC.png) no-repeat center top;
+  height: 3.52rem;
+  background-size: 100%;
+  margin-bottom: 0.933333rem;
+}
+
+.linkLock{
+  margin-top: 1.893333rem;
+  margin-left: -0.266667rem;
+  width: 0.92rem;
+  height: 0.533333rem;
+  padding-top: 0.133333rem;
+  background-color: #fff;
+}
+
+</style>
+<body>
+  <div class="root" id="root">
+    <div class="pageTitle">准备关联的账号</div>
+    <div class="pageTitle_second">关联后可查看、共用全部信息</div>
+    <div class="pageBody">
+      <div class="t3">
+        <div class="rightCard">
+          <div class="headpic"></div>
+          <div class="username">小王</div>
+          <div class="counttype">微信账号</div>
+          <div class="cardback"></div>
+        </div>
+      </div>
+      <div class="t1">
+        <div class="leftCard">
+          <div class="headpic"></div>
+          <div class="username">大王</div>
+          <div class="counttype">支付宝账号</div>
+          <div class="cardback"></div>
+        </div>
+      </div>
+      <div class="t2">
+        <div class="linkLock"><img src="http://dev.taihuiyuan.com/hotel-img/linkLock.png"/></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
