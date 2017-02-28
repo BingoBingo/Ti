@@ -1,8 +1,3 @@
-
-Ti会员app主页应用
-## 目录结构
-
-
 ### 构建生产环境版本
 
 ```
@@ -16,7 +11,11 @@ npm run preview
 ```
 
 自定义icon
-----------------------------
+// User custom variables
+// =============================================================================
+
+// Custom font icon
+// -----------------------------------------------------------------------------
 $icon-fonts: (
  // font-family
  YourFont: (
@@ -34,17 +33,17 @@ $icon-fonts: (
 // icon name-unicode map
 $icons: (
  location: \e612,
- home: \e605,
- search:\3434,
- wallet:\e609,
- me:\e629,
+ home: \e60b,
+ search:\e606,
+ wallet:\e607,
+ me:\e630,
  share:\e617,
  mycard:\e674,
  changelist:\e60a,
  help:\3459,
  close:\e660,
  like:\e600,
- dislike:\e661,
- transmit:\e65e
+ dislike:\e603,
+ transmit:\e610,
+ save:\e60f
 );
-------------------------------
