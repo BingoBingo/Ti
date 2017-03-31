@@ -343,12 +343,12 @@ render() {
               </div>
 
               <div className="payCostMoney">
-              <span className="data-before">{this.state.cardDiscount}折卡</span><span className="data-after">￥{this.state.cardPrice.toFixed(2)}</span>
+              <span className="data-before">储值卡</span><span className="data-after">￥{this.state.cardPrice.toFixed(2)}</span>
               </div>
 
-              <div className="payCostMoney" >
+              {/* <div className="payCostMoney" >
               <span className="data-before reduce-dyj">会员折扣</span><span className="data-after reduce-dyj">￥{this.state.discountMoney}</span>
-              </div>
+              </div> */}
 
               <div className="card-border-line"></div>
               <div className="payTrueMoney">

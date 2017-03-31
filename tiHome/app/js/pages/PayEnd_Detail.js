@@ -288,7 +288,7 @@ render() {
               <span className="data-before">消费金额</span><span className="data-after">￥{payTrue}</span>
               </div>
               <div className="payDiscountMoney" >
-              <span className="data-before reduce-dyj">抵用金</span><span className="data-after reduce-dyj">￥-{availablePoint}</span>
+              <span className="data-before reduce-dyj">储值</span><span className="data-after reduce-dyj">￥-{availablePoint}</span>
               </div>
               <div className="dyj-border-line"></div>
               <div className="payTrueMoney">

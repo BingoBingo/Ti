@@ -352,11 +352,11 @@ newUserPay(){
 chooseGood(){
 
   const payMemberMoney= document.getElementById("payMemberMoney").value;
-  var exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
-  if(!exp.test(payMemberMoney) || payMemberMoney == 0){
-      alert("输入正确的金额");
-      return false;
-  }
+  // var exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
+  // if(!exp.test(payMemberMoney) || payMemberMoney == 0){
+  //     alert("输入正确的金额");
+  //     return false;
+  // }
   if(payMemberMoney > 9999.99){
     alert("单笔支付金额不能超过1w元");
     return false;
@@ -582,18 +582,18 @@ render() {
 
         <div className="vipCopration" style={{display:"none"}}>由钛会员&reg;提供技术支持</div>
 
-        <div className="vipDiscount">
+        {/* <div className="vipDiscount">
           <div className="discount-card" style={cardBack}>
-            <div className="discount-level">{this.state.ownCard_discount}折</div>
-            <div className="discount-deadline">有效期至 {this.state.ownCard_deadline}</div>
+            <div className="discount-level"></div>
+            <div className="discount-deadline"></div>
           </div>
           <div className="moreCards">
             <div className="vipBig">尊享优惠<span id="vipReduce">￥0</span></div>
             <div onClick={this.oldUserChousePay} className="vipMoreCards">更多会员卡</div>
           </div>
-        </div>
+        </div> */}
 
-        <div className={this.state.btnPayNotPut} onClick={this.oldUserPay} id="vipPayBtn">支付</div>
+        <div className="btn-pay-notput" onClick={this.oldUserChousePay} id="vipPayBtn">去选优惠</div>
 
       </Container>
 

@@ -263,12 +263,14 @@ const New_User_Welfare = React.createClass({
             <div className="card-list">
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
-                  <div className="card-discount"><span>{discount}</span>折卡</div>
-                  <div className="card-money">售价￥{item.price}</div>
+                  <div className="card-discount">
+                  <span></span>
+                  </div>
+                  <div className="card-money"></div>
                 </div>
                 <div className="card-reduce">
-                  <div className="card-reduceMoney">购卡立减￥{payReduce}</div>
-                  <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
+                  <div className="card-reduceMoney" style={{paddingTop:"0.5rem"}}>了解详情</div>
+                  <div className="card-giveMoney"></div>
                 </div>
               </div>
               <div className="cardlist-border"></div>
@@ -307,8 +309,8 @@ const New_User_Welfare = React.createClass({
 
           <div style={cardBack}>
             <Link to={{pathname:"Dyj_Detail",query:{pathType:"sstsm"}}}>
-            <div className="bigTitle">随时退</div>
-            <div className="smallTitle">购卡后任意时间可退卡，钛会员 &reg;保障</div>
+            <div className="bigTitle">请选优惠</div>
+            <div className="smallTitle">储值金额永久有效，多储多赠</div>
             </Link>
           </div>
 
@@ -316,12 +318,12 @@ const New_User_Welfare = React.createClass({
             <div className="card-list" style={{display:hasDYJ}}>
               <div className="hotelcard-list">
                 <div className="dyj-type" style={cardStyle}>
-                  <div className="dyj-discount">我的抵用金</div>
+                  <div className="dyj-discount" style={{fontSize:"0.6rem"}}>储值余额</div>
                   <div className="dyj-money">{this.state.availablePoint}元</div>
                 </div>
                 <div className="card-reduce">
-                  <div className="card-reduceMoney">使用抵用金</div>
-                  <div className="card-giveMoney">本单最多可用{this.state.canUsePoint}元</div>
+                  <div className="card-reduceMoney" style={{paddingTop:"0.5rem"}}>用储值支付</div>
+                  <div className="card-giveMoney"></div>
                 </div>
               </div>
               <div className="cardlist-border"></div>

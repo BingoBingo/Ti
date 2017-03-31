@@ -165,13 +165,13 @@ const CardDetail_Buy = React.createClass({
       <View>
         <Container scrollable>
           <div style={cardBack}>
-            <div className="cardDiscount">{this.state.cardDiscount} 折卡</div>
-            <div className="cardDetail_name">{this.state.cardName}</div>
-            <div className="cardDetail_deadline">有效期{this.state.cardDeadLine}天</div>
-            <div className="cardDetail_price">售价{this.state.cardPrice}元</div>
+            <div className="cardDiscount"></div>
+            <div className="cardDetail_name"></div>
+            <div className="cardDetail_deadline"></div>
+            <div className="cardDetail_price"></div>
           </div>
 
-          <Link to={{pathname:"Dyj_Detail",query:{pathType:"dyjsm"}}}>
+          {/* <Link to={{pathname:"Dyj_Detail",query:{pathType:"dyjsm"}}}>
             <div className="cardDetail-list">
               <span className="info-before">赠抵用金</span>
               <span className="info-after">{this.state.cardGivePoint}元</span>
@@ -184,7 +184,7 @@ const CardDetail_Buy = React.createClass({
               <span className="info-before">随时退</span>
               <span className="info-after">详情</span>
             </div>
-          </Link>
+          </Link> */}
 
           <Link to={{pathname:"Dyj_Detail",query:{pathType:"hyksm",about:about}}}>
             <div className="cardDetail-top-line"></div>
@@ -207,13 +207,13 @@ const CardDetail_Buy = React.createClass({
 
         <div className="CardDetailBtn">
             <Link to={{pathname:"PayEnd_WithCard",query:{cardId:cardId,cardPrice:this.state.cardPrice ,cardDiscount:this.state.cardDiscount,userPayMoney:payTrue,itemPhoto:this.state.itemPhoto}}}>
-              省￥{this.state.payReduce}&gt;
+              确认储值
             </Link>
         </div>
 
-        <div className="CardDetailBtn" style={{display:"none"}} onClick={this.newPayMoney}>
+        {/* <div className="CardDetailBtn" style={{display:"none"}} onClick={this.newPayMoney}>
               省￥{this.state.payReduce}&gt;
-        </div>
+        </div> */}
         </Container>
       </View>
     )
