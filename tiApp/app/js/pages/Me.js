@@ -64,6 +64,7 @@ export default class Me extends React.Component {
       backgroundSize:"cover",
       backgroundColor:"#b7a17c"
     };
+    const linkLinkPay1 = "/linkPay1.html?uid=" + localStorage.getItem("uid");
     return (
       <View>
 
@@ -127,6 +128,16 @@ export default class Me extends React.Component {
             <span className="wallet-left">微信</span>
             <span className="wallet-right">{this.state.bindWechat}</span>
             </Link>
+          </div>
+          <div className="cf"></div>
+          <div className="wallet-line"></div>
+
+          <div className="rank-exp">
+            <a href={linkLinkPay1} target="_blank" >
+            <span className="wallet-left" style={{marginBottom:"10px"}}>支付宝</span>
+            <span className="wallet-right" style={{marginBottom:"10px"}}>未关联</span>
+            <span className="linkInfo">关联后，微信支付宝都可以使用会员卡哦</span>
+            </a>
           </div>
           <div className="cf"></div>
           <div className="wallet-line"></div>

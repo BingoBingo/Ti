@@ -4,23 +4,52 @@
   <meta charset="utf-8">
   <meta name="description" content="Card-Apps.">
   <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-  <script src="http://libs.cdnjs.net/zepto/1.2.0/zepto.min.js"></script>
+  <script src="zepto.min.js"></script>
   <title></title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <meta name="format-detection" content="telephone=no" />
 </head>
+
+<body>
+  <div class="root" id="root">
+    <div class="pageTitle">准备关联的账号</div>
+    <div class="pageTitle_second">关联后可查看、共用全部信息</div>
+    <div class="pageBody">
+      <div class="t3">
+        <div class="rightCard">
+          <div class="headpic"></div>
+          <div class="username">小王</div>
+          <div class="counttype">微信账号</div>
+          <div class="cardback"></div>
+        </div>
+      </div>
+      <div class="t1">
+        <div class="leftCard">
+          <div class="headpic"></div>
+          <div class="username">大王</div>
+          <div class="counttype">支付宝账号</div>
+          <div class="cardback"></div>
+        </div>
+      </div>
+      <div class="t2">
+        <div class="linkLock"><img width="35px" height="15px" src="http://taihuiyuan.com/hotel-img/linkLock.png"/></div>
+      </div>
+    </div>
+    <div class="linkBtn">确认关联</div>
+  </div>
+</body>
 <style type="text/css">
 .pageTitle {
     margin-top: 1.066667rem;
     margin-left: 0.666667rem;
     margin-right: 0.666667rem;
-    font-size: 64px;
+    font-size: 0.853333rem;
     color: #474747;
 }
 .pageTitle_second{
   margin-top: 0.266667rem;
-  font-size: 32px;
+  font-size: 0.426667rem;
   color: #a0a0a0;
   margin-left: 0.666667rem;
   margin-right: 0.666667rem;
@@ -52,35 +81,35 @@
   height: 1.333333rem;
   background-color: #dedede;
   border-radius: 50%;
-  margin-top: 50px;
+  margin-top: 0.666667rem;
   margin:0 auto;
 }
 .username{
   margin-top: 0.4rem;
-  font-size: 32px;
+  font-size: 0.426667rem;
   color: #474747;
   text-align: center;
 }
 .counttype{
   margin-top:0.266667rem;
-  font-size: 26px;
+  font-size: 0.346667rem;
   text-align: center;
   margin-bottom: 0.666667rem;
 }
-.rightCard .ounttype{
+.rightCard .counttype{
   color: #81ca4f;
 }
-.leftCard .ounttype{
+.leftCard .counttype{
   color: #5bb6da;
 }
 .rightCard .cardback{
-  background:url(http://dev.taihuiyuan.com/hotel-img/rightC.png) no-repeat center top;
+  background:url(http://taihuiyuan.com/hotel-img/rightC.png) no-repeat center top;
   height: 3.52rem;
   background-size: 100%;
   margin-bottom: 0.933333rem;
 }
 .leftCard .cardback{
-  background:url(http://dev.taihuiyuan.com/hotel-img/leftC.png) no-repeat center top;
+  background:url(http://taihuiyuan.com/hotel-img/leftC.png) no-repeat center top;
   height: 3.52rem;
   background-size: 100%;
   margin-bottom: 0.933333rem;
@@ -94,36 +123,44 @@
   padding-top: 0.133333rem;
   background-color: #fff;
 }
-.linkBtn{
-
+.linkBtn {
+    margin: 0 auto;
+    width: 3.733333rem;
+    height: 1.066667rem;
+    text-align: center;
+    color: #fff;
+    font-size: 0.48rem;
+    line-height: 1.066667rem;
+    background-color: #00a698;
+    margin-top: 11.46667rem;
+    position: relative;
+    border-radius: 0.533333rem;
 }
 </style>
-<body>
-  <div class="root" id="root">
-    <div class="pageTitle">准备关联的账号</div>
-    <div class="pageTitle_second">关联后可查看、共用全部信息</div>
-    <div class="pageBody">
-      <div class="t3">
-        <div class="rightCard">
-          <div class="headpic"></div>
-          <div class="username">小王</div>
-          <div class="counttype">微信账号</div>
-          <div class="cardback"></div>
-        </div>
-      </div>
-      <div class="t1">
-        <div class="leftCard">
-          <div class="headpic"></div>
-          <div class="username">大王</div>
-          <div class="counttype">支付宝账号</div>
-          <div class="cardback"></div>
-        </div>
-      </div>
-      <div class="t2">
-        <div class="linkLock"><img src="http://dev.taihuiyuan.com/hotel-img/linkLock.png"/></div>
-      </div>
-      <div class="linkBtn"></div>
-    </div>
-  </div>
-</body>
+
+<script type="text/javascript">
+
+function GetQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
+
+var key = GetQueryString("key");
+//http://域名/api/relation/ali/info/参数值
+var linkPay2 = "/api/relation/ali/info/" + key;
+$.ajax({
+  type: 'GET',
+  url: linkPay2,
+  data: {},
+  dataType: 'json',
+  success: function(response){
+      var data = response.data;
+      alert(JSON.stringfy(data));
+  },
+  error: function(xhr, type){
+    alert('error!')
+  }
+})
+</script>
 </html>

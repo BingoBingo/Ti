@@ -2,39 +2,91 @@
 <html lang="">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Card-Apps.">
-  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
-  <script src="http://libs.cdnjs.net/zepto/1.2.0/zepto.min.js"></script>
+  <meta name="description"
+        content="Card-Apps.">
+  <!-- <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"> -->
   <title></title>
+
+  <!-- Set render engine for 360 browser -->
   <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <meta name="format-detection" content="telephone=no" />
+  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+  <script src="zepto.min.js"></script>
+<!-- <script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(e,t){var a=e||100,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=a/2*s*n+"px"},e.exports=t["default"]}]);  flex(100, 1);</script> -->
+
 </head>
-<style type="text/css">
-.pageTitle {
-    margin-top: 1.333333rem;
-    margin-left: 0.666667rem;
-    margin-right: 0.666667rem;
-    font-size: 64px;
-    color: #474747;
-}
-.pageBody{
-  margin-left: 0.666667rem;
-  margin-right: 0.666667rem;
-  font-size: 42px;
-  margin-top: 0.666667rem;
-  line-height: 0.8rem;
-}
-.wechatImg{
-    height: 42px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-</style>
+
 <body>
   <div class="root" id="root">
     <div class="pageTitle">管理方式</div>
-    <div class="pageBody">点击右上角<img class="wechatImg" src="http://dev.taihuiyuan.com/hotel-img/linkdot.png"/>在浏览器中打开支付宝，获取我的可用优惠。</div>
+    <div class="pageBody">点击右上角<img class="wechatImg" width="35px" height="25px" style="margin-right:0.266667rem;margin-left:0.266667rem"  src="http://taihuiyuan.com/hotel-img/linkdot.png"/>在浏览器中打开支付宝，获取我的可用优惠。</div>
   </div>
+  <style type="text/css">
+  .pageTitle {
+      margin-top: 1.333333rem;
+      margin-left: 0.666667rem;
+      margin-right: 0.666667rem;
+      font-size: 0.853333rem;
+      color: #474747;
+  }
+  .pageBody{
+    margin-left: 0.666667rem;
+    margin-right: 0.666667rem;
+    font-size: 0.56rem;
+    margin-top: 0.666667rem;
+    line-height: 0.8rem;
+  }
+  /*.wechatImg{
+      height: 0.56rem
+      margin-left: 0.133333rem;
+      margin-right: 0.133333rem;
+  }*/
+  </style>
 </body>
+
+
+<script type="text/javascript">
+function gotoAli(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+    }else{
+      window.location.href = "alipays://platformapi/startapp?appId=20000909&url=" + encodeURIComponent("http://dev.taihuiyuan.com/linkPay2.html");
+    }
+}
+function GetQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
+
+var uid = GetQueryString("uid");
+var linkPay2 = "/api/relation/wechat/ali/" + uid;
+
+$.ajax({
+  type: 'GET',
+  url: linkPay2,
+  data: { },
+  dataType: 'json',
+  success: function(response){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/aplipay/i) == 'aplipay'){
+      //alert("wechat")
+    }else{
+      var data = response.data;
+      //var relationUrl = data.relationUrl;
+      var key = data.key
+      var relationUrl = encodeURIComponent("http://dev.taihuiyuan.com/linkPay2.html?key="+ key + "&uid=" + uid)
+      console.log(relationUrl);
+      console.log(key);
+      window.location.href = "alipays://platformapi/startapp?appId=20000909&url=" + relationUrl;
+    }
+  },
+  error: function(xhr, type){
+    alert('error!')
+  }
+})
+</script>
+
 </html>
