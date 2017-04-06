@@ -47,7 +47,8 @@ const Dyj_Detail = React.createClass({
     }
     if(pathType == "hyksm"){
         var about = this.props.location.query.about;
-        var aboutArray = about.split("@@");
+
+        var aboutArray = (typeof(about) == "undefined") ? [] : about.split("@@");
         var specialArray = [];
         if(aboutArray.length == 0){
           specialArray.push(<div className="title_0">本卡暂无特权</div>)

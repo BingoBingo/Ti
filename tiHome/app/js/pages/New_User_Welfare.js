@@ -74,11 +74,6 @@ const New_User_Welfare = React.createClass({
     let hotelId = localStorage.getItem("hotelId");
     // let device = localStorage.getItem("device")
     let device = Tools.GetQueryString("device");
-
-    // var ownCard = localStorage.getItem("ownCard");
-    // ownCard = eval("("+ownCard+")");
-    // let userVipId = ownCard.cardId;
-
     var url = "/spotpayment";
     var payParam = {
       device :device,
@@ -308,10 +303,10 @@ const New_User_Welfare = React.createClass({
         <Container scrollable>
 
           <div style={cardBack}>
-            <Link to={{pathname:"Dyj_Detail",query:{pathType:"sstsm"}}}>
+
             <div className="bigTitle">请选优惠</div>
             <div className="smallTitle">储值金额永久有效，多储多赠</div>
-            </Link>
+
           </div>
 
           <Link to={{pathname:"PayEnd_Detail",query:{availablePoint:this.state.trueUsePoint,userPayMoney:userPayMoney,payType:"useDYJ"}}}>

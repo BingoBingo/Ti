@@ -56,7 +56,7 @@ const Old_User_Welfare = React.createClass({
   getMoreGood(){
     let payOldMoney = localStorage.getItem("payOldMoney");
     const path = `/New_User_Welfare/`
-    this.context.router.push({pathname:path,query:{userPayMoney:payOldMoney,vipgoback:"返回"}});
+    this.context.router.push({pathname:path,query:{userPayMoney:payOldMoney,vipgoback:"放弃优惠"}});
   },
   oldPayMoney(){
 
@@ -64,7 +64,7 @@ const Old_User_Welfare = React.createClass({
     var ownCard = localStorage.getItem("ownCard");
     ownCard = eval("("+ownCard+")");
     let userVipId = ownCard.cardId;
-    
+
     let uid = localStorage.getItem("uid");
     let hotelId = localStorage.getItem("hotelId");
     let device = Tools.GetQueryString("device");
