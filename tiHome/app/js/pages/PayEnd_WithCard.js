@@ -10,13 +10,10 @@ import {
 } from 'amazeui-touch';
 import {Link} from 'react-router';
 import Tools from '../util/tools';
-
 const Index = React.createClass({
-
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-
   getInitialState() {
     return {
       isNewUser: "",
@@ -104,7 +101,6 @@ const Index = React.createClass({
       alert("输入正确的金额");
       return false;
     }
-    //localStorage.setItem("newUserPayMoney",newUserPayMoney);
     const path = `/New_User_Welfare/`
     this.context.router.push({
       pathname: path,
@@ -122,26 +118,25 @@ const Index = React.createClass({
   },
 
   goForPay() {
-    var userPayMoney = this.props.location.query.userPayMoney;
+    var userPayMoney = this.props.location.query.userPayMoney * 1;
+    userPayMoney = userPayMoney.toFixed(2);
+    var isBuyCard = localStorage.getItem("isBuyCard");
+    (isBuyCard === "zk")
+      ? userPayMoney = 0
+      : userPayMoney;
     var discountMoney = this.state.trueCost;
     var cardId = this.props.location.query.cardId;
-
     var payBtnInfo = <div className="loader-inner ball-pulse">
       <div></div>
       <div></div>
       <div></div>
     </div>;
-
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "payEnd payend-loading"})
-
     let uid = localStorage.getItem("uid");
     let hotelId = localStorage.getItem("hotelId");
-    // let device = localStorage.getItem("device");
     let device = Tools.GetQueryString("device");
     var ownCard = localStorage.getItem("ownCard");
     ownCard = eval("(" + ownCard + ")");
-    //let userVipId = ownCard.cardId ? ownCard.cardId :"";
-
     var url = "/spotpayment";
     var payParam = {
       device: device,
@@ -152,9 +147,7 @@ const Index = React.createClass({
       usePoint: false,
       userVipId: ""
     }
-    console.log(payParam);
     var _this = this;
-
     Tools.ajax({
       url: url, //请求地址
       type: "POST", //请求方式
@@ -181,52 +174,47 @@ const Index = React.createClass({
                 var uid = localStorage.getItem("uid");
                 var cardPrice_buy = localStorage.getItem("cardPrice_buy");
                 if (window.location.host == "taihuiyuan.com") {
-                  //window.location.href=  "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards")+"&code=" +code+"&exp=" +exp+"&p=" +p ;
                   window.location.href = "http://taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
                 } else {
-                  //window.location.href=  "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards")+"&code=" +code+"&exp=" +exp+"&p=" +p ;
                   window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
                 }
-
               }
             });
           }
-
           if (device == "alipay") {
-              var alipayForm = payInfo.data.alipayParam;
-              alipayForm = eval('(' + alipayForm + ')');
-              var _input_charset = alipayForm._input_charset;
-              var subject = alipayForm.subject;
-              var sign = alipayForm.sign;
-              var it_b_pay = alipayForm.it_b_pay;
-              var notify_url = alipayForm.notify_url;
-              var body = alipayForm.body;
-              var payment_type = alipayForm.payment_type;
-              var out_trade_no = alipayForm.out_trade_no;
-              var partner = alipayForm.partner;
-              var service = alipayForm.service;
-              var total_fee = alipayForm.total_fee;
-              var return_url = alipayForm.return_url;
-              var sign_type = alipayForm.sign_type;
-              var seller_id = alipayForm.seller_id;
-
-              _this.setState({
-                _input_charset: _input_charset,
-                subject: subject,
-                sign: sign,
-                it_b_pay: it_b_pay,
-                notify_url: notify_url,
-                body: body,
-                payment_type: payment_type,
-                out_trade_no: out_trade_no,
-                partner: partner,
-                service: service,
-                total_fee: total_fee,
-                return_url: return_url,
-                sign_type: sign_type,
-                seller_id: seller_id
-              })
-              document.forms['alipaysubmit'].submit();
+            var alipayForm = payInfo.data.alipayParam;
+            alipayForm = eval('(' + alipayForm + ')');
+            var _input_charset = alipayForm._input_charset;
+            var subject = alipayForm.subject;
+            var sign = alipayForm.sign;
+            var it_b_pay = alipayForm.it_b_pay;
+            var notify_url = alipayForm.notify_url;
+            var body = alipayForm.body;
+            var payment_type = alipayForm.payment_type;
+            var out_trade_no = alipayForm.out_trade_no;
+            var partner = alipayForm.partner;
+            var service = alipayForm.service;
+            var total_fee = alipayForm.total_fee;
+            var return_url = alipayForm.return_url;
+            var sign_type = alipayForm.sign_type;
+            var seller_id = alipayForm.seller_id;
+            _this.setState({
+              _input_charset: _input_charset,
+              subject: subject,
+              sign: sign,
+              it_b_pay: it_b_pay,
+              notify_url: notify_url,
+              body: body,
+              payment_type: payment_type,
+              out_trade_no: out_trade_no,
+              partner: partner,
+              service: service,
+              total_fee: total_fee,
+              return_url: return_url,
+              sign_type: sign_type,
+              seller_id: seller_id
+            })
+            document.forms['alipaysubmit'].submit();
           }
         } else {
           var path = "Pay_Success_Fail";
@@ -245,11 +233,8 @@ const Index = React.createClass({
         console.log(status);
       }
     });
-
   },
-
   componentDidMount() {
-
     var isNewUser = Tools.GetQueryString("ut");
     var hotelId = Tools.GetQueryString("hid");
     var uid = Tools.GetQueryString("uid");
@@ -259,31 +244,26 @@ const Index = React.createClass({
     var payTrue = this.props.location.query.userPayMoney * 1;
     payTrue = payTrue.toFixed(2);
     var isBuyCard = localStorage.getItem("isBuyCard");
-    console.log(isBuyCard);
-    (isBuyCard === "zk") ? payTrue = 0 : payTrue;
+    (isBuyCard === "zk")
+      ? payTrue = 0
+      : payTrue;
     //扣减抵用金
     //var availablePoint = this.props.location.query.availablePoint * 1;
-
     //卡折扣
     var cardDiscount = this.props.location.query.cardDiscount * 1;
-
     //卡售价
     var cardPrice = this.props.location.query.cardPrice * 1;
     var itemPhoto = this.props.location.query.itemPhoto;
-
     //存储，支付成功页使用
     localStorage.setItem("cardDiscount_buy", cardDiscount);
     localStorage.setItem("cardPrice_buy", cardPrice);
     localStorage.setItem("card_buy", "true");
     localStorage.setItem("itemPhoto_buy", itemPhoto)
     //会员折扣
-
     var discountMoney = payTrue * (1 - cardDiscount / 10);
     discountMoney = discountMoney.toFixed(2);
-
     var trueCost = payTrue * 1 + cardPrice * 1 - discountMoney * 1
     trueCost = trueCost.toFixed(2);
-
     this.setState({
       trueCost: trueCost,
       discountMoney: discountMoney,
@@ -292,11 +272,8 @@ const Index = React.createClass({
       cardPrice: cardPrice,
       itemPhoto: itemPhoto
     })
-
   },
   changeBtn(e) {
-    //console.log(event.target.elements);
-    //const mobileNum = event.target.elements[0].value;
     const payOldMoney = document.getElementById("payOldMoney").value;
     if (payOldMoney != "") {
       this.setState({btnPayNotPut: "btn-pay-input"})
@@ -305,8 +282,6 @@ const Index = React.createClass({
     }
   },
   changeNewBtn(e) {
-    //console.log(event.target.elements);
-    //const mobileNum = event.target.elements[0].value;
     const userType = this.state.isNewUser;
     if (userType == "new") {
       const payMoney = document.getElementById("payNewMoney").value;
@@ -324,7 +299,6 @@ const Index = React.createClass({
         this.setState({btnPayNewNotPut: "btn-pay-newnotput"})
       }
     }
-
   },
   render() {
     return (
@@ -378,13 +352,9 @@ const Index = React.createClass({
           <input type="submit" value="Confirm" style={{
             display: "none"
           }}/>
-
         </form>
       </View>
     );
-
   }
 })
-
 export default Index;
-/*首页*/
