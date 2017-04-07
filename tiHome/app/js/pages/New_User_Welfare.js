@@ -283,6 +283,7 @@ const New_User_Welfare = React.createClass({
       alert("您未输入消费金额");
       return false;
     }
+    localStorage.setItem("isBuyCard","czk");
     const path = `/PayEnd_Detail/`
     this.context.router.push({
       pathname: path,

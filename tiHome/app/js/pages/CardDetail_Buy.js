@@ -16,8 +16,10 @@ import Tools from '../util/tools';
 import card_bak from '../../i/card-bak.jpg';
 
 const CardDetail_Buy = React.createClass({
+  contextTypes: {
+        router: React.PropTypes.object.isRequired,
+  },
   getInitialState() {
-
     var payReduce = this.props.location.query.payReduce;
     return {
       btnPayNotPut: "btn-pay-input",
@@ -76,6 +78,22 @@ const CardDetail_Buy = React.createClass({
       }
     });
   },
+  confirmCZ(){
+    const path = `/PayEnd_WithCard/`;
+    var payTrue = this.props.location.query.payTrue;
+    var cardId = this.props.location.query.cardId;
+    var about = this.props.location.query.about;
+    localStorage.setItem("isBuyCard","zk");
+    this.context.router.push({
+      pathname:path,
+      query: {
+          cardId: cardId,
+          cardPrice: this.state.cardPrice,
+          cardDiscount: this.state.cardDiscount,
+          userPayMoney: payTrue,
+          itemPhoto: this.state.itemPhoto
+      }});
+  },
   componentDidMount() {
 
     var cardDetail = localStorage.getItem("saleCards");
@@ -122,10 +140,7 @@ const CardDetail_Buy = React.createClass({
   },
 
   renderCards() {
-
     var saleCards = this.state.saleCards;
-    console.log(saleCards);
-
     if (saleCards !== "" && saleCards.length > 0) {
       return saleCards.map((item, index) => {
         var cardStyle = {
@@ -179,11 +194,6 @@ const CardDetail_Buy = React.createClass({
       margin: "0.666667rem",
       borderRadius: "0.3rem"
     };
-
-    var payTrue = this.props.location.query.payTrue;
-    var cardId = this.props.location.query.cardId;
-    var about = this.props.location.query.about;
-
     return (
       <View>
         <Container scrollable>
@@ -238,8 +248,7 @@ const CardDetail_Buy = React.createClass({
             </div>
           </Link>
           <div className="cardDetail-top-line"></div>
-
-          <div className="CardDetailBtn">
+          <div className="CardDetailBtn" onClick={this.confirmCZ}>
             <Link to={{
               pathname: "PayEnd_WithCard",
               query: {
@@ -253,10 +262,6 @@ const CardDetail_Buy = React.createClass({
               确认储值
             </Link>
           </div>
-
-          {/* <div className="CardDetailBtn" style={{display:"none"}} onClick={this.newPayMoney}>
-              省￥{this.state.payReduce}&gt;
-        </div> */}
         </Container>
       </View>
     )

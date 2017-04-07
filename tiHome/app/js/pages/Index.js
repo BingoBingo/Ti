@@ -347,14 +347,8 @@ const Index = React.createClass({
   },
 
   chooseGood() {
-
     const payMemberMoney = document.getElementById("payMemberMoney").value;
     const cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
-    // var exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
-    // if(!exp.test(payMemberMoney) || payMemberMoney == 0){
-    //     alert("输入正确的金额");
-    //     return false;
-    // }
     if (payMemberMoney > 9999.99) {
       alert("单笔支付金额不能超过1w元");
       return false;
@@ -365,9 +359,7 @@ const Index = React.createClass({
       <div></div>
       <div></div>
     </div>;
-
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotloading"})
-
     if (!isSaleCards) {
       this.noCardPayMoney(payMemberMoney);
     } else {
@@ -442,10 +434,8 @@ const Index = React.createClass({
             payBtnInfo = "支付";
           }
           localStorage.setItem("isBuyCard","zk");
-
           _this.setState({payBtnInfo: payBtnInfo, isSaleCards: isSaleCards})
           localStorage.setItem("isSaleCards", isSaleCards);
-
           if (isNewUser == "vip") {
 
             let ownCard = JSON.stringify(cardInfo.data.ownCard);
@@ -467,7 +457,6 @@ const Index = React.createClass({
               ownCard_cardName: ownCard_cardName,
               ownCard_hotelName: ownCard_hotelName,
               ownCard_hotelPhoto: ownCard_hotelPhoto
-
             })
             localStorage.setItem("ownCard_discount", ownCard_discount);
           }
