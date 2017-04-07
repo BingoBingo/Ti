@@ -16,6 +16,9 @@ import Tools from '../util/tools';
 import card_bak from '../../i/card-bak.jpg';
 import dyj from '../../i/dyj.png';
 const New_User_Welfare = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
   getInitialState() {
     let payOldMoney = localStorage.getItem("payOldMoney");
     let ownCard_discount = localStorage.getItem("ownCard_discount");

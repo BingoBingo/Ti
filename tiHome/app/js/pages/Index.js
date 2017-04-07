@@ -56,7 +56,6 @@ const Index = React.createClass({
   },
 
   noCardPayMoney(payMoney) {
-    console.log("payMoney" + payMoney);
     var payMoney = payMoney;
     var _this = this;
     let uid = localStorage.getItem("uid");
@@ -79,8 +78,7 @@ const Index = React.createClass({
       data: payParam, //请求参数
       dataType: "json",
       success: function(response, xml) {
-        var payBtnInfo = "支付"
-
+        var payBtnInfo = "支付";
         _this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotput"})
         var payInfo = eval('(' + response + ')');
         if (payInfo.status == "success") {
@@ -390,9 +388,7 @@ const Index = React.createClass({
       return unescape(r[2]);
     return null;
   },
-
   componentDidMount() {
-
     /*获取url的uid*/
     var _this = this;
     var isNewUser = Tools.GetQueryString("ut");
@@ -401,8 +397,6 @@ const Index = React.createClass({
     var device = Tools.GetQueryString("device");
     var hname = Tools.GetQueryString("hname");
     var cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
-    console.log("~~~~");
-    console.log(cardPrice_buy);
     localStorage.setItem("uid", uid);
     localStorage.setItem("isNewUser", isNewUser);
     localStorage.setItem("hotelId", hotelId);
@@ -429,7 +423,6 @@ const Index = React.createClass({
       payOldMoney.onclick = Tools.KeyBoard(payOldMoney, cursorVip, vipReduce, vipPayBtn);
     }
     if(cardPrice_buy === null){
-      console.log("test");
       var url = "/hotel/" + hotelId + "/data";
       Tools.ajax({
         url: url, //请求地址
@@ -480,7 +473,6 @@ const Index = React.createClass({
           }
         },
         fail: function(status) {
-          console.log(status);
         }
       });
     }else{

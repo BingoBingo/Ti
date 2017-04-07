@@ -12,9 +12,6 @@ import {Link} from 'react-router';
 import Tools from '../util/tools';
 
 const Index = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
 
   contextTypes: {
     router: React.PropTypes.object.isRequired
@@ -185,7 +182,7 @@ const Index = React.createClass({
                 var cardPrice_buy = localStorage.getItem("cardPrice_buy");
                 if (window.location.host == "taihuiyuan.com") {
                   //window.location.href=  "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards")+"&code=" +code+"&exp=" +exp+"&p=" +p ;
-                  window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
+                  window.location.href = "http://taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
                 } else {
                   //window.location.href=  "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards")+"&code=" +code+"&exp=" +exp+"&p=" +p ;
                   window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
