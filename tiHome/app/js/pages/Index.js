@@ -414,7 +414,7 @@ const Index = React.createClass({
       var vipPayBtn = document.getElementById("vipPayBtn");
       payOldMoney.onclick = Tools.KeyBoard(payOldMoney, cursorVip, vipReduce, vipPayBtn);
     }
-    if(cardPrice_buy === null){
+    if (cardPrice_buy === null) {
       var url = "/hotel/" + hotelId + "/data";
       Tools.ajax({
         url: url, //请求地址
@@ -433,7 +433,7 @@ const Index = React.createClass({
           } else {
             payBtnInfo = "支付";
           }
-          localStorage.setItem("isBuyCard","zk");
+          localStorage.setItem("isBuyCard", "zk");
           _this.setState({payBtnInfo: payBtnInfo, isSaleCards: isSaleCards})
           localStorage.setItem("isSaleCards", isSaleCards);
           if (isNewUser == "vip") {
@@ -461,12 +461,42 @@ const Index = React.createClass({
             localStorage.setItem("ownCard_discount", ownCard_discount);
           }
         },
-        fail: function(status) {
-        }
+        fail: function(status) {}
       });
-    }else{
+    } else {
       _this.setState({payBtnInfo: "储值卡支付"});
-      localStorage.setItem("isBuyCard","czk");
+      localStorage.setItem("isBuyCard", "czk");
+      let url = "/hotel/" + hotelId + "/data";
+      Tools.ajax({
+        url: url, //请求地址
+        type: "GET", //请求方式
+        data: {
+          uid: uid
+        }, //请求参数
+        dataType: "json",
+        success: function(response, xml) {
+          let cardInfo = eval('(' + response + ')')
+          let availablePoint = cardInfo.data.availablePoint;
+          let isSaleCards = cardInfo.data.isSaleCards;
+          let url = "/spotpayment";
+          let payParam = {
+            price: availablePoint,
+            device: device,
+            uid: "be3858a1-4efb-4859-a81d-3d774a9cdf29",
+            hotelId: "ee8576e8-1ef3-4f3f-b139-feb534ad87c4",
+            usePoint: true
+          }
+          Tools.ajax({
+            url: url, //请求地址
+            type: "POST", //请求方式
+            data: payParam, //请求参数
+            dataType: "json",
+            success: function(response, xml) {},
+            fail: function(status) {}
+          })
+        },
+        fail: function(status) {}
+      });
     }
   },
   changeBtn() {
@@ -499,25 +529,16 @@ const Index = React.createClass({
 
   },
   render() {
-
-    // var isNewUser = this.state.isNewUser;
-    // var hotelId = this.state.hotelId
-    // var uid = this.state.uid
-    // var device = this.state.device
-
     var isNewUser = Tools.GetQueryString("ut");
     var hotelId = Tools.GetQueryString("hid");
     var uid = Tools.GetQueryString("uid");
     var device = Tools.GetQueryString("device");
     var hname = Tools.GetQueryString("hname");
-
     if (isNewUser == "vip") {
-
       var card_bak = this.state.ownCard_hotelPhoto;
       var cardBack = {
         background: "#dedede url(" + card_bak + ") no-repeat"
       };
-
       var specialVipInput = {
         border: "0px",
         background: "transparent",
@@ -527,13 +548,10 @@ const Index = React.createClass({
         paddingTop: "7px",
         marginBottom: "0px"
       }
-
       return (
         <View className="vipBack">
           <Container scrollable>
-
             <div className="home-title">请输入折前金额</div>
-
             <div className="inputMoney">
               {/* <span className="inputVipBefore">￥</span><div  className="moneyVipInputArea"><input className="specialInput_vip" id="payOldMoney" readOnly="readonly" onChange={this.changeBtn} type="number"  min="1"/></div> */}
               <div className="moneyVipInputArea">
@@ -542,26 +560,11 @@ const Index = React.createClass({
                 <div className="inputSpecialBox"><input readOnly="readonly" className="specialInput_vip" id="payOldMoney" onChange={this.changeBtn}/></div>
               </div>
             </div>
-
             <div className="vipCopration" style={{
               display: "none"
             }}>由钛会员&reg;提供技术支持</div>
-
-            {/* <div className="vipDiscount">
-          <div className="discount-card" style={cardBack}>
-            <div className="discount-level"></div>
-            <div className="discount-deadline"></div>
-          </div>
-          <div className="moreCards">
-            <div className="vipBig">尊享优惠<span id="vipReduce">￥0</span></div>
-            <div onClick={this.oldUserChousePay} className="vipMoreCards">更多会员卡</div>
-          </div>
-        </div> */}
-
             <div className="btn-pay-notput" onClick={this.oldUserChousePay} id="vipPayBtn">去选优惠</div>
-
           </Container>
-
           <form id="alipaysubmit" name="alipaysubmit" style={{
             display: "none"
           }} action="https://mapi.alipay.com/gateway.do?_input_charset=UTF-8" method="POST">
@@ -583,12 +586,10 @@ const Index = React.createClass({
               display: "none"
             }}/>
           </form>
-
         </View>
       );
     }
     if (isNewUser == "member") {
-
       var specialInput = {
         border: "0 rem",
         background: "transparent",
@@ -599,7 +600,6 @@ const Index = React.createClass({
         marginBottom: "0 rem",
         paddingBottom: "0.2 rem"
       }
-
       return (
         <View className="new-background">
           <Container scrollable>
@@ -641,7 +641,6 @@ const Index = React.createClass({
               display: "none"
             }}/>
           </form>
-
         </View>
       );
     }

@@ -82,7 +82,6 @@ const CardDetail_Buy = React.createClass({
     const path = `/PayEnd_WithCard/`;
     var payTrue = this.props.location.query.payTrue;
     var cardId = this.props.location.query.cardId;
-    var about = this.props.location.query.about;
     localStorage.setItem("isBuyCard","zk");
     this.context.router.push({
       pathname:path,
@@ -194,6 +193,8 @@ const CardDetail_Buy = React.createClass({
       margin: "0.666667rem",
       borderRadius: "0.3rem"
     };
+    var about = this.props.location.query.about;
+    var cardId = this.props.location.query.cardId;
     return (
       <View>
         <Container scrollable>
@@ -249,18 +250,7 @@ const CardDetail_Buy = React.createClass({
           </Link>
           <div className="cardDetail-top-line"></div>
           <div className="CardDetailBtn" onClick={this.confirmCZ}>
-            <Link to={{
-              pathname: "PayEnd_WithCard",
-              query: {
-                cardId: cardId,
-                cardPrice: this.state.cardPrice,
-                cardDiscount: this.state.cardDiscount,
-                userPayMoney: payTrue,
-                itemPhoto: this.state.itemPhoto
-              }
-            }}>
               确认储值
-            </Link>
           </div>
         </Container>
       </View>
