@@ -466,24 +466,26 @@ const Index = React.createClass({
     } else {
       _this.setState({payBtnInfo: "储值卡支付"});
       localStorage.setItem("isBuyCard", "czk");
-      let url = "/hotel/" + hotelId + "/data";
-      Tools.ajax({
-        url: url, //请求地址
-        type: "GET", //请求方式
-        data: {
-          uid: uid
-        }, //请求参数
-        dataType: "json",
-        success: function(response, xml) {
-          let cardInfo = eval('(' + response + ')')
-          let availablePoint = cardInfo.data.availablePoint;
-          let isSaleCards = cardInfo.data.isSaleCards;
+    }
+
+    let printCardUrl = "/hotel/" + hotelId + "/data";
+    Tools.ajax({
+      url: printCardUrl, //请求地址
+      type: "GET", //请求方式
+      data: {
+        uid: uid
+      }, //请求参数
+      dataType: "json",
+      success: function(response, xml) {
+        let cardInfo = eval('(' + response + ')')
+        let availablePoint = cardInfo.data.availablePoint * 1;
+        if(availablePoint > 0){
           let url = "/spotpayment";
           let payParam = {
             price: availablePoint,
             device: device,
-            uid: "be3858a1-4efb-4859-a81d-3d774a9cdf29",
-            hotelId: "ee8576e8-1ef3-4f3f-b139-feb534ad87c4",
+            uid: (window.location.host == "taihuiyuan.com") ? "be3858a1-4efb-4859-a81d-3d774a9cdf29" : "c02c5ba5-b2f2-49c6-b362-e223cde03794",
+            hotelId: (window.location.host == "taihuiyuan.com") ? "ee8576e8-1ef3-4f3f-b139-feb534ad87c4" : "41016c19-b0ad-4977-b424-57314848066b",
             usePoint: true
           }
           Tools.ajax({
@@ -494,10 +496,10 @@ const Index = React.createClass({
             success: function(response, xml) {},
             fail: function(status) {}
           })
-        },
-        fail: function(status) {}
-      });
-    }
+        }
+      },
+      fail: function(status) {}
+    });
   },
   changeBtn() {
     const payOldMoney = document.getElementById("payOldMoney").value;
