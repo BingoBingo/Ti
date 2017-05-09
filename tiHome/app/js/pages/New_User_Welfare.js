@@ -208,6 +208,7 @@ const New_User_Welfare = React.createClass({
           saleCards: cardInfo.data.saleCards,//折扣卡
           saleStoredCards:cardInfo.data.saleStoredCards,//储值卡
           availablePoint: availablePoint,
+          defaultDiscount:cardInfo.data.defaultDiscount,
           hasDYJ: hasDYJ,
           canUsePoint: canUsePoint,
           trueUsePoint: trueUsePoint
@@ -239,9 +240,8 @@ const New_User_Welfare = React.createClass({
         var discount = item.discount
           ? (item.discount * 10).toFixed(1)
           : "";
-        var givePoint = item.givePoint
-          ? item.givePoint
-          : 0;
+        var givePoint = item.givePoint ? item.givePoint : 0;
+        var isRefund = item.isRefund ? "可退" : "";
         givePoint = givePoint.toFixed(0);
 
         return (
@@ -259,16 +259,12 @@ const New_User_Welfare = React.createClass({
             <div className="card-list">
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
-                  <div className="card-discount">
-                    <span></span>
-                  </div>
-                  <div className="card-money"></div>
+                  <div className="card-discount"><span>{isRefund}{discount}折卡</span></div>
+                  <div className="card-money">售价￥{item.price}</div>
                 </div>
                 <div className="card-reduce">
-                  <div className="card-reduceMoney" style={{
-                    paddingTop: "0.5rem"
-                  }}>了解详情</div>
-                  <div className="card-giveMoney"></div>
+                  <div className="card-reduceMoney">购卡立减￥{payReduce}</div>
+                  <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
                 </div>
               </div>
               <div className="cardlist-border"></div>
@@ -287,16 +283,13 @@ const New_User_Welfare = React.createClass({
           backgroundSize: "cover"
         };
         var userPayMoney = this.props.location.query.userPayMoney;
-        var payReduce = userPayMoney - userPayMoney * item.discount;
+        var payReduce = userPayMoney - userPayMoney * this.state.defaultDiscount;
         payReduce = payReduce.toFixed(0);
         var payTrue = userPayMoney * item.discount;
-        var discount = item.discount
-          ? (item.discount * 10).toFixed(1)
-          : "";
-        var givePoint = item.givePoint
-          ? item.givePoint
-          : 0;
+        var discount = item.discount ? (item.discount * 10).toFixed(1) : "";
+        var givePoint = item.givePoint ? item.givePoint : 0;
         givePoint = givePoint.toFixed(0);
+        var isRefund = item.isRefund ? "可退" : "";
 
         return (
           <Link to={{
@@ -313,16 +306,12 @@ const New_User_Welfare = React.createClass({
             <div className="card-list">
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
-                  <div className="card-discount">
-                    <span></span>
-                  </div>
-                  <div className="card-money"></div>
+                  <div className="card-discount"><span>{isRefund}储值卡</span></div>
+                  <div className="card-money">售价￥{item.price}</div>
                 </div>
                 <div className="card-reduce">
-                  <div className="card-reduceMoney" style={{
-                    paddingTop: "0.5rem"
-                  }}>了解详情</div>
-                  <div className="card-giveMoney"></div>
+                  <div className="card-reduceMoney">购卡立减￥{payReduce}</div>
+                  <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
                 </div>
               </div>
               <div className="cardlist-border"></div>
