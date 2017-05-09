@@ -427,6 +427,7 @@ const Index = React.createClass({
           var cardInfo = eval('(' + response + ')')
           let saleCards = JSON.stringify(cardInfo.data.saleCards);
           let isSaleCards = cardInfo.data.isSaleCards;
+          let availableStoredValue = cardInfo.data.availableStoredValue;
           var payBtnInfo = "";
           if (isSaleCards) {
             payBtnInfo = "去选折扣";
@@ -434,7 +435,7 @@ const Index = React.createClass({
             payBtnInfo = "支付";
           }
           localStorage.setItem("isBuyCard", "zk");
-          _this.setState({payBtnInfo: payBtnInfo, isSaleCards: isSaleCards})
+          _this.setState({payBtnInfo: payBtnInfo, isSaleCards: isSaleCards,availableStoredValue:availableStoredValue})
           localStorage.setItem("isSaleCards", isSaleCards);
           if (isNewUser == "vip") {
 
@@ -562,9 +563,7 @@ const Index = React.createClass({
                 <div className="inputSpecialBox"><input readOnly="readonly" className="specialInput_vip" id="payOldMoney" onChange={this.changeBtn}/></div>
               </div>
             </div>
-            <div className="vipCopration" style={{
-              display: "none"
-            }}>由钛会员&reg;提供技术支持</div>
+            <div className="vipCopration" >储值余额：{this.state.availableStoredValue}</div>
             <div className="btn-pay-notput" onClick={this.oldUserChousePay} id="vipPayBtn">去选优惠</div>
           </Container>
           <form id="alipaysubmit" name="alipaysubmit" style={{
@@ -616,9 +615,7 @@ const Index = React.createClass({
                 <div className="inputSpecialBox"><input readOnly="readonly" className="inputSpecial" id="payMemberMoney" onChange={this.changeNewBtn} style={specialInput}/></div>
               </div>
             </div>
-            <div className="copration-new" style={{
-              display: "none"
-            }}>由钛会员&reg;提供技术支持</div>
+            <div className="copration-new" >储值余额：{this.state.availableStoredValue}</div>
             <div className={this.state.btnPayNewNotPut} onClick={this.chooseGood}>{this.state.payBtnInfo}</div>
           </Container>
 
@@ -672,9 +669,7 @@ const Index = React.createClass({
               </div>
             </div>
 
-            <div className="copration-new" style={{
-              display: "none"
-            }}>由钛会员&reg;提供技术支持</div>
+            <div className="copration-new">储值余额：{this.state.availableStoredValue}</div>
             <div className={this.state.btnPayNewNotPut} onClick={this.newUserPay}>{this.state.payBtnInfo}</div>
           </Container>
 

@@ -30,6 +30,7 @@ const New_User_Welfare = React.createClass({
       payReduce: payReduce,
       ownCard_discount: ownCard_discount,
       saleCards: [],
+      saleStoredCards:[],
       availablePoint: 0,
       hasDYJ: "none",
       canUsePoint: "",
@@ -202,13 +203,19 @@ const New_User_Welfare = React.createClass({
 
         var hasDYJ = "none";
         //有抵用金就显示
-        if (availablePoint != 0) {
-          hasDYJ = "";
-        }
-
-        _this.setState({saleCards: cardInfo.data.saleCards, availablePoint: availablePoint, hasDYJ: hasDYJ, canUsePoint: canUsePoint, trueUsePoint: trueUsePoint})
+        if (availablePoint != 0) {hasDYJ = "";}
+        _this.setState({
+          saleCards: cardInfo.data.saleCards,//折扣卡
+          saleStoredCards:cardInfo.data.saleStoredCards,//储值卡
+          availablePoint: availablePoint,
+          hasDYJ: hasDYJ,
+          canUsePoint: canUsePoint,
+          trueUsePoint: trueUsePoint
+        })
         let saleCards = JSON.stringify(cardInfo.data.saleCards);
+        let saleStoredCards = JSON.stringify(cardInfo.data.saleStoredCards);
         localStorage.setItem("saleCards", saleCards);
+        localStorage.setItem("saleStoredCards", saleStoredCards);
       },
       fail: function(status) {
         console.log(status);
@@ -219,20 +226,15 @@ const New_User_Welfare = React.createClass({
 
   renderCards() {
     var saleCards = this.state.saleCards;
-
-    console.log(saleCards);
-
     if (saleCards !== "" && saleCards.length > 0) {
       return saleCards.map((item, index) => {
         var cardStyle = {
           background: "url(" + item.photo + ")",
           backgroundSize: "cover"
         };
-
         var userPayMoney = this.props.location.query.userPayMoney;
         var payReduce = userPayMoney - userPayMoney * item.discount;
         payReduce = payReduce.toFixed(0);
-
         var payTrue = userPayMoney * item.discount;
         var discount = item.discount
           ? (item.discount * 10).toFixed(1)
@@ -270,13 +272,67 @@ const New_User_Welfare = React.createClass({
                 </div>
               </div>
               <div className="cardlist-border"></div>
-
             </div>
           </Link>
         );
       });
     }
   },
+  renderStoredCards() {
+    var saleStoredCards = this.state.saleStoredCards;
+    if (saleStoredCards !== "" && saleStoredCards.length > 0) {
+      return saleStoredCards.map((item, index) => {
+        var cardStyle = {
+          background: "url(" + item.photo + ")",
+          backgroundSize: "cover"
+        };
+        var userPayMoney = this.props.location.query.userPayMoney;
+        var payReduce = userPayMoney - userPayMoney * item.discount;
+        payReduce = payReduce.toFixed(0);
+        var payTrue = userPayMoney * item.discount;
+        var discount = item.discount
+          ? (item.discount * 10).toFixed(1)
+          : "";
+        var givePoint = item.givePoint
+          ? item.givePoint
+          : 0;
+        givePoint = givePoint.toFixed(0);
+
+        return (
+          <Link to={{
+            pathname: "CardDetail_Buy",
+            query: {
+              cardId: item.cardId,
+              payReduce: payReduce,
+              payTrue: userPayMoney,
+              itemPhoto: item.photo,
+              support: item.supportCount,
+              about: item.about
+            }
+          }} key={index}>
+            <div className="card-list">
+              <div className="hotelcard-list">
+                <div className="card-type" style={cardStyle}>
+                  <div className="card-discount">
+                    <span></span>
+                  </div>
+                  <div className="card-money"></div>
+                </div>
+                <div className="card-reduce">
+                  <div className="card-reduceMoney" style={{
+                    paddingTop: "0.5rem"
+                  }}>了解详情</div>
+                  <div className="card-giveMoney"></div>
+                </div>
+              </div>
+              <div className="cardlist-border"></div>
+            </div>
+          </Link>
+        );
+      });
+    }
+  },
+
   goPayEnd() {
     var userPayMoney = this.props.location.query.userPayMoney;
     if (userPayMoney == "") {
@@ -295,7 +351,6 @@ const New_User_Welfare = React.createClass({
     });
   },
   render() {
-
     var location = window.location.host;
     var backgroundImage = "url(" + card_bak + ")";
     var background = "url(" + dyj + ")";
@@ -313,49 +368,38 @@ const New_User_Welfare = React.createClass({
       background: background,
       backgroundSize: "100% 100%"
     };
-
     var hasDYJ = this.state.hasDYJ;
     var userPayMoney = this.props.location.query.userPayMoney;
-
     return (
       <View>
         <Container scrollable>
-
           <div style={cardBack}>
-
             <div className="bigTitle">请选优惠</div>
-            <div className="smallTitle">储值金额永久有效，多储多赠</div>
-
+            <div className="smallTitle">若支付宝已购卡，请关联</div>
           </div>
-
           {/* <Link to={{pathname:"PayEnd_Detail",query:{availablePoint:this.state.trueUsePoint,userPayMoney:userPayMoney,payType:"useDYJ"}}}> */}
           <div className="card-list" style={{
             display: hasDYJ
           }} onClick={this.goPayEnd}>
             <div className="hotelcard-list">
               <div className="dyj-type" style={cardStyle}>
-                <div className="dyj-discount" style={{
-                  fontSize: "0.6rem"
-                }}>储值余额</div>
-                <div className="dyj-money">{this.state.availablePoint}元</div>
+                <div className="dyj-discount" style={{fontSize: "0.6rem"}}>使用抵用金</div>
+                {/* <div className="dyj-money">{this.state.availablePoint}元</div> */}
               </div>
               <div className="card-reduce">
                 <div className="card-reduceMoney" style={{
                   paddingTop: "0.5rem"
-                }}>用储值支付</div>
+                }}>本单抵扣{this.state.trueUsePoint}</div>
                 <div className="card-giveMoney"></div>
               </div>
             </div>
             <div className="cardlist-border"></div>
           </div>
           {/* </Link> */}
-
           {this.renderCards()}
-
+          {this.renderStoredCards()}
         </Container>
-
         <div className={this.state.btnPayNewNotPut} onClick={this.newPayMoney}>{this.state.payBtnInfo}</div>
-
         <form id="alipaysubmit" name="alipaysubmit" style={{
           display: "none"
         }} action="https://mapi.alipay.com/gateway.do?_input_charset=UTF-8" method="POST">
@@ -373,10 +417,7 @@ const New_User_Welfare = React.createClass({
           <input type="hidden" name="return_url" value={this.state.return_url}/>
           <input type="hidden" name="sign_type" value={this.state.sign_type}/>
           <input type="hidden" name="seller_id" value={this.state.seller_id}/>
-          <input type="submit" value="Confirm" style={{
-            display: "none"
-          }}/>
-
+          <input type="submit" value="Confirm" style={{display: "none"}}/>
         </form>
       </View>
 

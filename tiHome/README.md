@@ -55,3 +55,6 @@ index 不支持会员卡支付
 3.买卡支付
 4.放弃优惠支付
 5.vip 支付
+
+
+http://localhost:3000/index.html?hid=5133dd04-3603-4458-aa95-ba4de8643dc1&hname=5pil5aSp6L+e6ZSB6YWS5bqX5YWG6bqf5YWs5Zut5bqX&device=wechat&ut=member&uid=63cb429a-33cf-4017-a131-6dfa6fa43959#/?_k=4h4lht
