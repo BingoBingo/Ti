@@ -249,11 +249,14 @@ const New_User_Welfare = React.createClass({
             pathname: "CardDetail_Buy",
             query: {
               cardId: item.cardId,
+              cardType:"DiscountCard",
               payReduce: payReduce,
               payTrue: userPayMoney,
               itemPhoto: item.photo,
               support: item.supportCount,
-              about: item.about
+              about: item.about,
+              refundExpires:item.refundExpires,
+              privilegeCount:item.privilegeCount
             }
           }} key={index}>
             <div className="card-list">
@@ -263,7 +266,7 @@ const New_User_Welfare = React.createClass({
                   <div className="card-money">售价￥{item.price}</div>
                 </div>
                 <div className="card-reduce">
-                  <div className="card-reduceMoney">购卡立减￥{payReduce}</div>
+                  <div className="card-reduceMoney">本单立减￥{payReduce}</div>
                   <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
                 </div>
               </div>
@@ -296,21 +299,24 @@ const New_User_Welfare = React.createClass({
             pathname: "CardDetail_Buy",
             query: {
               cardId: item.cardId,
+              cardType:"CZCard",
               payReduce: payReduce,
               payTrue: userPayMoney,
               itemPhoto: item.photo,
               support: item.supportCount,
-              about: item.about
+              about: item.about,
+              refundExpires:item.refundExpires,
+              privilegeCount:item.privilegeCount
             }
           }} key={index}>
             <div className="card-list">
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
-                  <div className="card-discount"><span>{isRefund}储值卡</span></div>
-                  <div className="card-money">售价￥{item.price}</div>
+                  <div className="card-discount-cz"><span>{isRefund}储值卡</span></div>
+                  <div className="card-money-cz">售价￥{item.price}</div>
                 </div>
                 <div className="card-reduce">
-                  <div className="card-reduceMoney">购卡立减￥{payReduce}</div>
+                  <div className="card-reduceMoney">本单抵扣￥{payReduce}</div>
                   <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
                 </div>
               </div>
@@ -367,13 +373,12 @@ const New_User_Welfare = React.createClass({
             <div className="smallTitle">若支付宝已购卡，请关联</div>
           </div>
           {/* <Link to={{pathname:"PayEnd_Detail",query:{availablePoint:this.state.trueUsePoint,userPayMoney:userPayMoney,payType:"useDYJ"}}}> */}
-          <div className="card-list" style={{
+          {/* <div className="card-list" style={{
             display: hasDYJ
           }} onClick={this.goPayEnd}>
             <div className="hotelcard-list">
               <div className="dyj-type" style={cardStyle}>
                 <div className="dyj-discount" style={{fontSize: "0.6rem"}}>使用抵用金</div>
-                {/* <div className="dyj-money">{this.state.availablePoint}元</div> */}
               </div>
               <div className="card-reduce">
                 <div className="card-reduceMoney" style={{
@@ -383,7 +388,7 @@ const New_User_Welfare = React.createClass({
               </div>
             </div>
             <div className="cardlist-border"></div>
-          </div>
+          </div> */}
           {/* </Link> */}
           {this.renderCards()}
           {this.renderStoredCards()}

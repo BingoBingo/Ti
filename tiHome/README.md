@@ -57,4 +57,4 @@ index 不支持会员卡支付
 5.vip 支付
 
 
-http://localhost:3000/index.html?hid=5133dd04-3603-4458-aa95-ba4de8643dc1&hname=5pil5aSp6L+e6ZSB6YWS5bqX5YWG6bqf5YWs5Zut5bqX&device=wechat&ut=member&uid=63cb429a-33cf-4017-a131-6dfa6fa43959#/?_k=4h4lht
+http://localhost:3000/index.html?hid=637f4203-d8ae-4e43-9b31-a28967234594&hname=5pil5aSp6L+e6ZSB6YWS5bqX5YWG6bqf5YWs5Zut5bqX&device=wechat&ut=member&uid=71208147-6c17-4497-9bba-34d68d3acbbf#/?_k=4h4lht

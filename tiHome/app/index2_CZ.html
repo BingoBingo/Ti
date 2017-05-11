@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Card-Apps.">
+
+  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+  <title></title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="format-detection" content="telephone=no" />
+
+</head>
+<body>
+<div class="root" id="root">
+  <div class="paysuccess">储值并支付成功</div>
+  <div class="billNum">单号：<span id="code">0000000000</span></div>
+  <div class="payResult">实付 <span id="p" style="color:#474747;margin-left:0.266667rem;margin-right:0.266667rem">0</span></div>
+
+  <div class="successLog" style="display:none">
+  </div>
+  <div class="buyCards" id="card_buy" style="display:none">
+    <div class="buyTitle">已放入钱包</div>
+    <div class="hotelcard-list">
+      <div class="card-type">
+        <div class="hasBuyCard" id="hasBuyCard">
+          <div class="card-discount" >
+            <span id="cardDiscount_buy"></span>储值
+          </div>
+          <div class="card-money" id="cardPrice_buy">+0</div>
+        </div>
+      </div>
+      <div class="centerline"></div>
+      <div class="card-reduce">
+        <div class="card-reduceMoney">抵用金</div>
+        <div class="card-reduceCount" id="dyj_buy">+0</div>
+      </div>
+    </div>
+  </div>
+  <div class="center" style="display:none">
+    <div class="border-bottom"></div>
+    <div class="qcodeCenter">
+      <div class="qcode">
+        <img src="qrcode.jpg" width="140" height="140">
+      </div>
+      <div class="qcodeDis">
+        <div class="qcodeInfo">长按二维码</div>
+        <div class="gzh">进入公众号</div>
+        <div class="disInfo" id="backCard">*退卡</div>
+        <div class="disInfo">*领抵用金</div>
+        <div class="disInfo">*查商家</div>
+        <div class="blankInfo"></div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<style type="text/css">
+
+.buyCards {
+    height: 6rem;
+    background: #f8f8f8;
+    margin-top: 1rem;
+    border-bottom: 2px solid #dfe0df;
+    border-top: 2px solid #dfe0df;
+}
+.buyTitle {
+  color: #d5d5d5;
+  font-size: 0.64rem;
+  text-align: center;
+  padding-top: 1rem;
+}
+.card-type{
+  width: 2.666667rem;
+  border-radius: 0.1rem;
+  text-align: center;
+  font-size: 0.373333rem;
+  float: left;
+  background-size: cover;
+}
+.card-reduce {
+    display: inline-block;
+}
+.paysuccess {
+  color: #0dab9e;
+  width: 100%;
+  text-align: center;
+  font-size: 0.853333rem;
+  margin-top: 2.666667rem;
+  line-height: 0.853333rem;
+}
+.card-reduceCount {
+    color: #d5d5d5;
+    font-size: 0.426667rem;
+    line-height: 0.426667rem;
+}
+.card-discount {
+  text-align: left;
+  text-indent: 0.3rem;
+  color: #474747;
+}
+.centerline {
+  width: 0.026667rem;
+  height: 1.866667rem;
+  background: #d5d5d5;
+  margin-left: 0.666667rem;
+  margin-right: 0.666667rem;
+}
+.card-reduceMoney {
+    font-size: 0.56rem;
+    line-height: 0.56rem;
+    margin-bottom: 0.4rem;
+    color: #474747;
+}
+.card-discount span {
+    font-size: 0.94rem;
+}
+.card-money {
+  text-align: right;
+margin-right: 0.1rem;
+font-size: 0.32rem;
+color: #474747;
+}
+.hotelcard-list {
+    margin-top: 0.8rem;
+}
+.hasBuyCard {
+  background: #bcbcbc;
+height: 1.613333rem;
+}
+
+.billNum {
+  width: 100%;
+  text-align: center;
+  font-size: 0.293333rem;
+  margin-top: 0.4rem;
+  color: #d5d5d5;
+}
+.border-bottom {
+  width: 100%;
+  height: 1px;
+  background: #dedede;
+  margin-bottom: 0.4rem;
+}
+
+.payResult {
+  width: 100%;
+  text-align: center;
+  font-size: 0.426667rem;
+  margin-top: 0.4rem;
+  color: #474747;
+  line-height: 0.426667rem;
+}
+.center {
+  bottom: 0px;
+  position: absolute;
+  width: 100%;
+  margin-bottom: 0.266667rem;
+}
+.qcode{
+  float: left;
+  /*margin-left: 1.4rem;*/
+  display: inline-block;
+/*width: 1.866667rem;
+height: 1.866667rem;
+
+display: inline-block;
+float: left;
+margin-left: 0.4rem;*/
+}
+.qcodeCenter,.hotelcard-list {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.qcodeInfo {
+  color: #474747;
+  font-size: 0.426667rem;
+  display: inline-block;
+  margin-bottom: 0.266667rem;
+}
+/*.qcodeDis{
+width: 40%;
+display: inline-block;
+text-indent: 0.133333rem;
+}*/
+.gzh,.disInfo {
+  font-size: 0.346667rem;
+  color: #d5d5d5;
+  margin-bottom: 0.133333rem;
+}
+.blankInfo {
+    height: 0.16rem;
+}
+.successLog {
+  background: url(success.png) no-repeat;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-size: 100% 100%;
+  margin: 1rem auto 1rem;
+}
+.qcodeDis {
+  display: inline-block;
+  margin-left: 1.8rem;
+}
+</style>
+<script type="text/javascript">
+function GetQueryString(name){
+  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+  var searchURL = window.location.search;
+  searchURL = encodeURI(searchURL);
+  var r = searchURL.substr(1).match(reg);
+  if(r!=null)return  unescape(r[2]); return null;
+}
+var isSaleCards = GetQueryString("isSaleCards");
+var code = GetQueryString("code") ? GetQueryString("code") :"0";
+//var exp = GetQueryString("exp") ? GetQueryString("exp"):"0";
+var p = GetQueryString("p")?GetQueryString("p"):"0";
+
+var card_buy = localStorage.getItem("card_buy")?localStorage.getItem("card_buy"):"false";
+var cardDiscount_buy = localStorage.getItem("cardDiscount_buy")?localStorage.getItem("cardDiscount_buy"):"0";
+var cardPrice_buy = localStorage.getItem("cardPrice_buy")?localStorage.getItem("cardPrice_buy"):"0";
+var itemPhoto_buy = localStorage.getItem("itemPhoto_buy")?localStorage.getItem("itemPhoto_buy"):"http://static.dev.taihuiyuan.com/i/card/11b3f1bc716545b8a08730eea0b2a880.png";
+var dyj_buy = (cardPrice_buy*1) /2
+dyj_buy = dyj_buy.toFixed(2);
+
+if(isSaleCards == "false"){
+  document.getElementById("backCard").style.display = "none"
+}
+console.log(card_buy);
+if(card_buy == "true"){
+    document.getElementById("card_buy").style.display = "block";
+    document.getElementById("cardDiscount_buy").innerText = cardDiscount_buy;
+    document.getElementById("cardPrice_buy").innerHTML = "+" + cardPrice_buy;
+    document.getElementById("hasBuyCard").style.background = 'url("'+itemPhoto_buy+'") 0% 0% / cover'
+    document.getElementById("dyj_buy").innerText = "+" + dyj_buy;
+}
+//document.getElementById("exp").innerText = exp;
+document.getElementById("code").innerText = code;
+document.getElementById("p").innerText = "￥" + (p*1).toFixed(2);
+</script>
+</body>
+
+</html>
