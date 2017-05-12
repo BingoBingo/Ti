@@ -60,6 +60,23 @@ const New_User_Welfare = React.createClass({
     if (payBtnInfo == "返回") {
       window.history.go(-1);
     }
+    if(payBtnInfo == "跳过"){
+      var userPayMoney = this.props.location.query.userPayMoney;
+      if (userPayMoney == "") {
+        alert("您未输入消费金额");
+        return false;
+      }
+      localStorage.setItem("isBuyCard","czk");
+      const path = `/PayEnd_Detail/`
+      this.context.router.push({
+        pathname: path,
+        query: {
+          availablePoint: this.state.trueUsePoint,
+          userPayMoney: userPayMoney,
+          payType: "useDYJ"
+        }
+      });
+    }
     var payBtnInfo = <div className="loader-inner ball-pulse">
       <div></div>
       <div></div>
@@ -195,15 +212,22 @@ const New_User_Welfare = React.createClass({
         canUsePoint = canUsePoint.toFixed(2);
 
         var trueUsePoint = availablePoint - canUsePoint;
+
         if (trueUsePoint > 0) {
           trueUsePoint = canUsePoint;
         } else {
           trueUsePoint = availablePoint;
         }
-
+        console.log("抵用金——————————————");
+        console.log(trueUsePoint);
         var hasDYJ = "none";
         //有抵用金就显示
-        if (availablePoint != 0) {hasDYJ = "";}
+        if (availablePoint != 0) {
+          hasDYJ = "";
+          _this.setState({
+            payBtnInfo: "跳过"
+          })
+        }
         _this.setState({
           saleCards: cardInfo.data.saleCards,//折扣卡
           saleStoredCards:cardInfo.data.saleStoredCards,//储值卡
@@ -293,7 +317,6 @@ const New_User_Welfare = React.createClass({
         var givePoint = item.givePoint ? item.givePoint : 0;
         givePoint = givePoint.toFixed(0);
         var isRefund = item.isRefund ? "可退" : "";
-
         return (
           <Link to={{
             pathname: "CardDetail_Buy",
@@ -306,7 +329,11 @@ const New_User_Welfare = React.createClass({
               support: item.supportCount,
               about: item.about,
               refundExpires:item.refundExpires,
-              privilegeCount:item.privilegeCount
+              privilegeCount:item.privilegeCount,
+              cardPrice:item.price,
+              availablePoint: this.state.trueUsePoint,
+              userPayMoney: userPayMoney,
+              payType: "useDYJ"
             }
           }} key={index}>
             <div className="card-list">

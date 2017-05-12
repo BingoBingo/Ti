@@ -116,7 +116,8 @@ const Index = React.createClass({
   },
 
   goForPay() {
-    var userPayMoney = this.props.location.query.userPayMoney;
+    var userPayMoney = this.props.location.query.cardPrice;
+    var cardId = this.props.location.query.cardId;
     var ownCard = localStorage.getItem("ownCard");
     let uid = localStorage.getItem("uid");
     let hotelId = localStorage.getItem("hotelId");
@@ -129,7 +130,7 @@ const Index = React.createClass({
       hotelId: hotelId,
       price: userPayMoney,
       usePoint: true,
-      cardId: "",
+      cardId: cardId,
       userVipId: ""
     }
     var _this = this;
@@ -280,12 +281,18 @@ const Index = React.createClass({
     //扣减抵用金
     var availablePoint = this.props.location.query.availablePoint * 1;
     availablePoint = availablePoint.toFixed(2);
-    var payCost = payTrue - availablePoint;
-    payCost = payCost.toFixed(2);
 
-    console.log(payTrue);
-    console.log(availablePoint);
+    //本单抵扣
+    var payReduce = this.props.location.query.payReduce * 1;
+    payReduce = payReduce.toFixed(2);
+
+    var payCost = payTrue - payReduce;
+    payCost = payCost.toFixed(2);
     var cardId = this.props.location.query.cardId;
+
+    //实付
+    var cardPrice = this.props.location.query.cardPrice * 1;
+    cardPrice = cardPrice.toFixed(2);
 
     return (
       <View className="payEnd-background">
@@ -298,15 +305,15 @@ const Index = React.createClass({
             <span className="data-after">￥{payTrue}</span>
           </div>
           <div className="payDiscountMoney">
-            <span className="data-before reduce-dyj">储值</span>
-            <span className="data-after reduce-dyj">￥-{availablePoint}</span>
+            <span className="data-before reduce-dyj">抵用金</span>
+            <span className="data-after reduce-dyj">￥-{payReduce}</span>
           </div>
           <div className="dyj-border-line"></div>
           <div className="payTrueMoney">
-            <span className="data-before dyjTrueMoney">实付</span>
+            <span className="data-before dyjTrueMoney">储值支付</span>
             <span className="data-after dyjTrueMoney">￥{payCost}</span>
           </div>
-          <div className="payEnd" onClick={this.goForPay}>去支付 ￥{payCost}</div>
+          <div className="payEnd" onClick={this.goForPay}>储值 ￥{cardPrice}</div>
         </Container>
         <form id="alipaysubmit" name="alipaysubmit" style={{
           display: "none"

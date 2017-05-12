@@ -241,12 +241,15 @@ const Index = React.createClass({
     var device = Tools.GetQueryString("device");
     var hname = Tools.GetQueryString("hname");
     //实际输入
+    // var payTrue = this.props.location.query.userPayMoney * 1;
+    // payTrue = payTrue.toFixed(2);
+    // var isBuyCard = localStorage.getItem("isBuyCard");
+    // (isBuyCard === "zk")
+    //   ? payTrue = 0
+    //   : payTrue;
+    //实际输入
     var payTrue = this.props.location.query.userPayMoney * 1;
     payTrue = payTrue.toFixed(2);
-    var isBuyCard = localStorage.getItem("isBuyCard");
-    (isBuyCard === "zk")
-      ? payTrue = 0
-      : payTrue;
     //扣减抵用金
     //var availablePoint = this.props.location.query.availablePoint * 1;
     //卡折扣
@@ -305,31 +308,20 @@ const Index = React.createClass({
       <View className="payEnd-background">
         <Container scrollable>
           <div className="home-new-title">支付明细</div>
-
           <div className="payCostMoney">
-            <span className="data-before">消费金额</span>
-            <span className="data-after">￥{this.state.payTrue}</span>
+          <span className="data-before">消费金额</span><span className="data-after">￥{this.state.payTrue}</span>
           </div>
-
           <div className="payCostMoney">
-            <span className="data-before">储值卡</span>
-            <span className="data-after">￥{this.state.cardPrice.toFixed(2)}</span>
+          <span className="data-before">{this.state.cardDiscount}折卡</span><span className="data-after">￥{this.state.cardPrice.toFixed(2)}</span>
           </div>
-
-          {/* <div className="payCostMoney" >
-              <span className="data-before reduce-dyj">会员折扣</span><span className="data-after reduce-dyj">￥{this.state.discountMoney}</span>
-              </div> */}
-
+          <div className="payCostMoney" >
+          <span className="data-before reduce-dyj">会员折扣</span><span className="data-after reduce-dyj">￥{this.state.discountMoney}</span>
+          </div>
           <div className="card-border-line"></div>
           <div className="payTrueMoney">
-            <span className="data-before dyjTrueMoney">实付</span>
-            <span className="data-after dyjTrueMoney">￥{this.state.trueCost}</span>
+          <span className="data-before dyjTrueMoney">实付</span><span className="data-after dyjTrueMoney">￥{this.state.trueCost}</span>
           </div>
-          <div className="checkTK"><input type="checkbox" style={{
-        zoom: "2"
-      }} checked/>
-            <span>我同意会员协议中的条款</span>
-          </div>
+          <div className="checkTK"><input type="checkbox" style={{zoom:"2"}}  checked /><span>我同意会员协议中的条款</span></div>
           <div className={this.state.btnPayNewNotPut} onClick={this.goForPay}>{this.state.payBtnInfo}{this.state.trueCost}</div>
         </Container>
         <form id="alipaysubmit" name="alipaysubmit" style={{

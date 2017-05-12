@@ -428,6 +428,8 @@ const Index = React.createClass({
           let saleCards = JSON.stringify(cardInfo.data.saleCards);
           let isSaleCards = cardInfo.data.isSaleCards;
           let availableStoredValue = cardInfo.data.availableStoredValue;
+          console.log("~~~~余额~~~~");
+          console.log(availableStoredValue);
           var payBtnInfo = "";
           if (isSaleCards) {
             payBtnInfo = "去选折扣";

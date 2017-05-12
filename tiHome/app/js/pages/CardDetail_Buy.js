@@ -225,17 +225,17 @@ const CardDetail_Buy = React.createClass({
           </Link>
           <div className="cardDetail-top-line"></div>
           <div style={{height:"2.6rem"}}></div>
-          <div className="payEndNew">
-            {/* <div className="CardDetailBtn" onClick={this.goForPay}>
-                {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
-            </div> */}
-            <div className="CardDetailBtn">
-                <Link to={{pathname:"PayEnd_WithCard",query:{cardId:cardId,cardPrice:this.state.cardPrice ,cardDiscount:this.state.cardDiscount,userPayMoney:payTrue,itemPhoto:this.state.itemPhoto}}}>
-                  {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
-                </Link>
-            </div>
-          </div>
         </Container>
+        <div className="payEndNew">
+          <div className="CardDetailBtn">
+              <Link to={{pathname:(cardType == "DiscountCard") ? "PayEnd_WithCard" :"PayEnd_Detail",
+                  query:(cardType == "DiscountCard") ? {cardId:cardId,cardPrice:this.state.cardPrice ,cardDiscount:this.state.cardDiscount,userPayMoney:payTrue,itemPhoto:this.state.itemPhoto}
+                  :{cardId:cardId,cardPrice:this.state.cardPrice,userPayMoney:this.props.location.query.userPayMoney,payReduce: this.props.location.query.payReduce}
+              }}>
+                {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
+              </Link>
+          </div>
+        </div>
       </View>
     )
   }
