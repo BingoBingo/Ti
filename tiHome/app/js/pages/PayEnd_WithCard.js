@@ -144,7 +144,8 @@ const Index = React.createClass({
       hotelId: hotelId,
       price: userPayMoney,
       cardId: cardId,
-      usePoint: false,
+      storeId: "",
+      usePoint: true,
       userVipId: ""
     }
     var _this = this;

@@ -432,7 +432,7 @@ const Index = React.createClass({
           console.log(availableStoredValue);
           var payBtnInfo = "";
           if (isSaleCards) {
-            payBtnInfo = "去选折扣";
+            payBtnInfo = "确定";
           } else {
             payBtnInfo = "支付";
           }
