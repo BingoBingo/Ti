@@ -566,7 +566,18 @@ const Index = React.createClass({
               </div>
             </div>
             <div className="vipCopration" >储值余额：{this.state.availableStoredValue}</div>
-            <div className="btn-pay-notput" onClick={this.oldUserChousePay} id="vipPayBtn">去选优惠</div>
+            {/* <div className="btn-pay-notput" onClick={this.oldUserChousePay} id="vipPayBtn">去选优惠</div> */}
+            <div className="vipDiscount">
+              <div className="discount-card" style={cardBack}>
+                <div className="discount-level">{this.state.ownCard_discount}折</div>
+                <div className="discount-deadline">有效期至 {this.state.ownCard_deadline}</div>
+              </div>
+              <div className="moreCards">
+                <div className="vipBig">尊享优惠<span id="vipReduce">￥0</span></div>
+                <div onClick={this.oldUserChousePay} className="vipMoreCards">更多会员卡</div>
+              </div>
+            </div>
+            <div className={this.state.btnPayNotPut} onClick={this.oldUserPay} id="vipPayBtn">支付</div>
           </Container>
           <form id="alipaysubmit" name="alipaysubmit" style={{
             display: "none"
@@ -620,7 +631,6 @@ const Index = React.createClass({
             <div className="copration-new" >储值余额：{this.state.availableStoredValue}</div>
             <div className={this.state.btnPayNewNotPut} onClick={this.chooseGood}>{this.state.payBtnInfo}</div>
           </Container>
-
           <form id="alipaysubmit" name="alipaysubmit" style={{
             display: "none"
           }} action="https://mapi.alipay.com/gateway.do?_input_charset=UTF-8" method="POST">
@@ -646,7 +656,6 @@ const Index = React.createClass({
       );
     }
     if (isNewUser == "new") {
-
       var specialInput = {
         border: "0px",
         background: "transparent",

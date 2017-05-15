@@ -259,7 +259,8 @@ const New_User_Welfare = React.createClass({
         };
         var userPayMoney = this.props.location.query.userPayMoney;
         var payReduce = userPayMoney - userPayMoney * item.discount;
-        payReduce = payReduce.toFixed(0);
+        //payReduce = payReduce.toFixed(0);
+        payReduce = payReduce.split(".")[0];
         var payTrue = userPayMoney * item.discount;
         var discount = item.discount
           ? (item.discount * 10).toFixed(1)
@@ -343,7 +344,8 @@ const New_User_Welfare = React.createClass({
                   <div className="card-money-cz">售价￥{item.price}</div>
                 </div>
                 <div className="card-reduce">
-                  <div className="card-reduceMoney">本单抵扣￥{payReduce}</div>
+                  {/* <div className="card-reduceMoney">本单抵扣￥{payReduce}</div> */}
+                  <div className="card-reduceMoney"></div>
                   <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
                 </div>
               </div>
@@ -396,7 +398,7 @@ const New_User_Welfare = React.createClass({
       <View>
         <Container scrollable>
           <div style={cardBack}>
-            <div className="bigTitle">请选优惠</div>
+            <div className="bigTitle">在售会员卡</div>
             <div className="smallTitle">若支付宝已购卡，请关联</div>
           </div>
           {/* <Link to={{pathname:"PayEnd_Detail",query:{availablePoint:this.state.trueUsePoint,userPayMoney:userPayMoney,payType:"useDYJ"}}}> */}
