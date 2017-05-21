@@ -52,6 +52,150 @@ const CardDetail_Buy = React.createClass({
           itemPhoto: this.state.itemPhoto
       }});
   },
+  goForPay() {
+    //var userPayMoney = this.props.location.query.cardPrice;
+    var payTrue = this.props.location.query.userPayMoney * 1;
+    payTrue = payTrue.toFixed(2);
+    var cardId = this.props.location.query.cardId;
+    var ownCard = localStorage.getItem("ownCard");
+    let uid = localStorage.getItem("uid");
+    let hotelId = localStorage.getItem("hotelId");
+    var url = "/spotpayment";
+    let device = Tools.GetQueryString("device");
+
+    var payParam = {
+      device: device,
+      uid: uid,
+      hotelId: hotelId,
+      price: payTrue,
+      usePoint: true,
+      cardId: "",
+      storeId: (typeof(cardId) == "undefined") ? "" : cardId,
+      userVipId: ""
+    }
+    var _this = this;
+    localStorage.setItem("card_buy", "false");
+    Tools.ajax({
+      url: url, //请求地址
+      type: "POST", //请求方式
+      data: payParam, //请求参数
+      dataType: "json",
+      success: function(response, xml) {
+        var payInfo = eval('(' + response + ')');
+        var code = payInfo.data.code;
+        var exp = payInfo.data.exp;
+        var p = payInfo.data.p;
+        if (payInfo.status == "success") {
+          if (device == "wechat") {
+            var wechatPayParam = payInfo.data.wechatPayParam;
+            var isBuyCard = localStorage.getItem("isBuyCard");
+            if (wechatPayParam == "") {
+              if (window.location.host == "taihuiyuan.com") {
+                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+              }
+              if (window.location.host == "dev.taihuiyuan.com") {
+                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+              }
+            } else {
+              wechatPayParam = eval("(" + wechatPayParam + ")");
+              WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  wx.closeWindow();
+                  if (window.location.host == "taihuiyuan.com") {
+                    window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                  } else {
+                    window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                  }
+                }
+              });
+            }
+          }
+
+          if (device == "alipay") {
+            var alipayForm = payInfo.data.alipayParam;
+            var isBuyCard = localStorage.getItem("isBuyCard");
+            if (alipayForm == "") {
+              if (window.location.host == "taihuiyuan.com") {
+                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
+              }
+              if (window.location.host == "dev.taihuiyuan.com") {
+                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
+              }
+            } else {
+              alipayForm = eval('(' + alipayForm + ')');
+              var _input_charset = alipayForm._input_charset;
+              var subject = alipayForm.subject;
+              var sign = alipayForm.sign;
+              var it_b_pay = alipayForm.it_b_pay;
+              var notify_url = alipayForm.notify_url;
+              var body = alipayForm.body;
+              var payment_type = alipayForm.payment_type;
+              var out_trade_no = alipayForm.out_trade_no;
+              var partner = alipayForm.partner;
+              var service = alipayForm.service;
+              var total_fee = alipayForm.total_fee;
+              var return_url = alipayForm.return_url;
+              var sign_type = alipayForm.sign_type;
+              var seller_id = alipayForm.seller_id;
+
+              _this.setState({
+                _input_charset: _input_charset,
+                subject: subject,
+                sign: sign,
+                it_b_pay: it_b_pay,
+                notify_url: notify_url,
+                body: body,
+                payment_type: payment_type,
+                out_trade_no: out_trade_no,
+                partner: partner,
+                service: service,
+                total_fee: total_fee,
+                return_url: return_url,
+                sign_type: sign_type,
+                seller_id: seller_id
+              })
+              document.forms['alipaysubmit'].submit();
+            }
+          }
+        } else {
+          if (window.location.host == "taihuiyuan.com") {
+            window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+          } else {
+            window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+          }
+        }
+      },
+      fail: function(status) {
+        console.log(status);
+      }
+    });
+
+  },
+  chooseNext() {
+    const cardId = this.props.location.query.cardId;
+    const cardType = this.props.location.query.cardType;
+    const availablePoint = this.props.location.query.availablePoint;
+    const payTrue = this.props.location.query.payTrue;
+
+    if(cardType == "DiscountCard"){
+      const path = `/PayEnd_WithCard/`;
+      this.context.router.push({
+        pathname: path,
+        query: {
+          cardId:cardId,
+          availablePoint:availablePoint,
+          cardPrice:this.state.cardPrice ,
+          cardDiscount:this.state.cardDiscount,
+          userPayMoney:payTrue,
+          itemPhoto:this.state.itemPhoto
+        }
+      });
+    }else{
+      this.goForPay();
+    }
+  },
   componentDidMount() {
     let cardType = this.props.location.query.cardType;
     if(cardType == "DiscountCard"){
@@ -175,6 +319,7 @@ const CardDetail_Buy = React.createClass({
     var privilegeCount = this.props.location.query.privilegeCount == 0 ? "无" : this.props.location.query.privilegeCount + "项";
     var cardType = this.props.location.query.cardType;
     var payTrue = this.props.location.query.payTrue;
+    var availablePoint = this.props.location.query.availablePoint;
     return (
       <View>
         <Container scrollable>
@@ -227,13 +372,14 @@ const CardDetail_Buy = React.createClass({
           <div style={{height:"2.6rem"}}></div>
         </Container>
         <div className="payEndNew">
-          <div className="CardDetailBtn">
-              <Link to={{pathname:(cardType == "DiscountCard") ? "PayEnd_WithCard" :"PayEnd_Detail",
-                  query:(cardType == "DiscountCard") ? {cardId:cardId,cardPrice:this.state.cardPrice ,cardDiscount:this.state.cardDiscount,userPayMoney:payTrue,itemPhoto:this.state.itemPhoto}
-                  :{cardId:cardId,cardPrice:this.state.cardPrice,userPayMoney:this.props.location.query.userPayMoney,payReduce: this.props.location.query.payReduce}
+          <div className="CardDetailBtn" onClick={this.chooseNext}>
+              {/* <Link to={{pathname:(cardType == "DiscountCard") ? "PayEnd_WithCard" :"PayEnd_Detail",
+                  query:(cardType == "DiscountCard") ? {cardId:cardId,availablePoint:availablePoint,cardPrice:this.state.cardPrice ,cardDiscount:this.state.cardDiscount,userPayMoney:payTrue,itemPhoto:this.state.itemPhoto}
+                  :{cardId:cardId,availablePoint:availablePoint,cardGivePoint:this.state.cardGivePoint,cardPrice:this.state.cardPrice,userPayMoney:this.props.location.query.userPayMoney,availableStoredValue: this.props.location.query.availableStoredValue,defaultDiscount:this.props.location.query.defaultDiscount}
               }}>
                 {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
-              </Link>
+              </Link> */}
+              {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
           </div>
         </div>
       </View>

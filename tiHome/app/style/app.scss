@@ -1084,3 +1084,49 @@ $ratchicons-path: "../../node_modules/amazeui-touch/fonts/";
     color: #a0a0a0;
     line-height: 26px;
 }
+.memberDiscount {
+    margin: 0.666667rem 0.666667rem 0;
+    background: #fff;
+    // height: 400px;
+    position: relative;
+}
+.borderMiddle {
+    margin: auto;
+    width: 1px;
+    background: red;
+    height: 1.066667rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+.storeMoney {
+    width: 50%;
+    display: inline-block;
+    float: left;
+    margin-left: 0.4rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+.discountMoney{
+    margin-top: 0.8rem;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
+.discountMoney>div:first-child {
+    font-size: 0.48rem;
+    color: #00a698;
+}
+.discountMoney>div:nth-child(2) {
+    font-size: 0.426667rem;
+    color: #a0a0a0;
+}
+.storeMoney>div:first-child {
+    font-size: 0.48rem;
+    color: #00a698;
+}
+.storeMoney >div:nth-child(2) {
+    font-size: 0.426667rem;
+    color: #a0a0a0;
+}

@@ -10,16 +10,11 @@ import {
 } from 'amazeui-touch';
 import {Link} from 'react-router';
 import Tools from '../util/tools';
-
+let clickOnce = true;
 const Index = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
-  },
-
   getInitialState() {
     return {
       isNewUser: "",
@@ -27,7 +22,8 @@ const Index = React.createClass({
       uid: "",
       device: "",
       btnPayNotPut: "btn-pay-notput",
-      btnPayNewNotPut: "btn-pay-newnotput",
+      //btnPayNewNotPut: "",
+      btnPayNewNotPut: "payEnd",
       payOldDeadline: "",
       payOldAvailable: "",
       ownCard: "",
@@ -91,7 +87,6 @@ const Index = React.createClass({
       }
     });
   },
-
   chooseGood() {
     const payMemberMoney = document.getElementById("payMemberMoney").value;
     var exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
@@ -114,9 +109,21 @@ const Index = React.createClass({
       return unescape(r[2]);
     return null;
   },
-
   goForPay() {
-    var userPayMoney = this.props.location.query.cardPrice;
+    if(!clickOnce){
+      return false;
+    }
+    var discountMoney = this.state.trueCost;
+    var cardId = this.props.location.query.cardId;
+    var payBtnInfo = <div className="loader-inner ball-pulse">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>;
+    this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "payEnd payend-loading"})
+
+    var payTrue = this.props.location.query.userPayMoney * 1;
+    payTrue = payTrue.toFixed(2);
     var cardId = this.props.location.query.cardId;
     var ownCard = localStorage.getItem("ownCard");
     let uid = localStorage.getItem("uid");
@@ -128,10 +135,10 @@ const Index = React.createClass({
       device: device,
       uid: uid,
       hotelId: hotelId,
-      price: userPayMoney,
+      price: payTrue,
       usePoint: true,
       cardId: "",
-      storeId:cardId,
+      storeId: (typeof(cardId) == "undefined") ? "" : cardId,
       userVipId: ""
     }
     var _this = this;
@@ -142,10 +149,15 @@ const Index = React.createClass({
       data: payParam, //请求参数
       dataType: "json",
       success: function(response, xml) {
+        clickOnce = false;
         var payInfo = eval('(' + response + ')');
         var code = payInfo.data.code;
         var exp = payInfo.data.exp;
         var p = payInfo.data.p;
+        var cardPrice = _this.props.location.query.cardPrice * 1;
+        cardPrice = cardPrice.toFixed(2);
+        var payBtnInfo = (_this.props.location.query.payBtnInfo == "jump" ) ? "确认支付" : `储值 ￥${cardPrice}`;
+        _this.setState({payBtnInfo: "", btnPayNewNotPut: "payEnd"});
         if (payInfo.status == "success") {
           if (device == "wechat") {
             var wechatPayParam = payInfo.data.wechatPayParam;
@@ -279,21 +291,54 @@ const Index = React.createClass({
     //实际输入
     var payTrue = this.props.location.query.userPayMoney * 1;
     payTrue = payTrue.toFixed(2);
-    //扣减抵用金
+
+    //已有抵用金
     var availablePoint = this.props.location.query.availablePoint * 1;
     availablePoint = availablePoint.toFixed(2);
 
-    //本单抵扣
-    var payReduce = this.props.location.query.payReduce * 1;
-    payReduce = payReduce.toFixed(2);
+    //赠送抵用金
+    var cardGivePoint = this.props.location.query.cardGivePoint * 1;
+    cardGivePoint = cardGivePoint.toFixed(2);
 
-    var payCost = payTrue - payReduce;
+    //共有抵用金
+    availablePoint = availablePoint*1 + cardGivePoint*1;
+
+    console.log("共有抵用金"+availablePoint);
+    //可用抵用金
+    console.log("defaultDiscount"+this.props.location.query.defaultDiscount);
+    var canUsePoint = (1 - this.props.location.query.defaultDiscount) * payTrue;
+    canUsePoint = canUsePoint.toFixed(2);
+    console.log("--------"+canUsePoint);
+    var trueUsePoint = availablePoint - canUsePoint;
+
+    if (trueUsePoint > 0) {
+      trueUsePoint = canUsePoint;
+    } else {
+      trueUsePoint = availablePoint;
+    }
+
+    //储值余额
+    var availableStoredValue = this.props.location.query.availableStoredValue * 1;
+    availableStoredValue = availableStoredValue.toFixed(2);
+    //储值支付
+    console.log("可用抵用金"+trueUsePoint);
+    console.log("储值余额"+ availableStoredValue);
+    console.log("实际输入"+payTrue);
+    console.log(trueUsePoint*1 + availableStoredValue*1 - payTrue*1);
+    var payCost = (trueUsePoint*1 + availableStoredValue*1 - payTrue*1) > 0 ? (payTrue*1 - trueUsePoint*1) : availableStoredValue*1;
+
+    console.log("储值支付"+payCost);
     payCost = payCost.toFixed(2);
-    var cardId = this.props.location.query.cardId;
 
     //实付
+    var trueCost = (payTrue*1 - trueUsePoint*1 - payCost*1) > 0 ?  (payTrue*1 - trueUsePoint*1 - payCost*1) : 0;
+    trueCost = trueCost.toFixed(2) * 1;
+    console.log("实付"+trueCost);
+    var cardId = this.props.location.query.cardId;
     var cardPrice = this.props.location.query.cardPrice * 1;
     cardPrice = cardPrice.toFixed(2);
+
+    var payBtnInfo = this.props.location.query.payBtnInfo;
 
     return (
       <View className="payEnd-background">
@@ -305,16 +350,24 @@ const Index = React.createClass({
             <span className="data-before">消费金额</span>
             <span className="data-after">￥{payTrue}</span>
           </div>
-          <div className="payDiscountMoney">
+          <div className="payDiscountMoney" >
+            <span className="data-before reduce-dyj">抵用金</span><span className="data-after reduce-dyj">￥-{trueUsePoint}</span>
+          </div>
+          {/* <div className="payDiscountMoney">
             <span className="data-before reduce-dyj">抵用金</span>
             <span className="data-after reduce-dyj">￥-{payReduce}</span>
-          </div>
+          </div> */}
           <div className="dyj-border-line"></div>
           <div className="payTrueMoney">
             <span className="data-before dyjTrueMoney">储值支付</span>
             <span className="data-after dyjTrueMoney">￥{payCost}</span>
           </div>
-          <div className="payEnd" onClick={this.goForPay}>储值 ￥{cardPrice}</div>
+          <div className="payTrueMoney" style={{display: (trueCost !== 0) ? "" : "none"}}>
+            <span className="data-before dyjTrueMoney">实付</span>
+            <span className="data-after dyjTrueMoney">￥{trueCost}</span>
+          </div>
+          <div className="checkTK"><input type="checkbox" style={{zoom:"2"}}  checked /><span>我同意《会员协议》中的条款</span></div>
+          <div className={this.state.btnPayNewNotPut} onClick={this.goForPay}>{this.state.payBtnInfo}{(payBtnInfo == "jump" ) ? "确认支付" : `储值 ￥${cardPrice}`}</div>
         </Container>
         <form id="alipaysubmit" name="alipaysubmit" style={{
           display: "none"

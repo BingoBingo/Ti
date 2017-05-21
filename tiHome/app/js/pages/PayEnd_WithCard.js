@@ -120,10 +120,10 @@ const Index = React.createClass({
   goForPay() {
     var userPayMoney = this.props.location.query.userPayMoney * 1;
     userPayMoney = userPayMoney.toFixed(2);
-    var isBuyCard = localStorage.getItem("isBuyCard");
-    (isBuyCard === "zk")
-      ? userPayMoney = 0
-      : userPayMoney;
+    //var isBuyCard = localStorage.getItem("isBuyCard");
+    // (isBuyCard === "zk")
+    //   ? userPayMoney = 0
+    //   : userPayMoney;
     var discountMoney = this.state.trueCost;
     var cardId = this.props.location.query.cardId;
     var payBtnInfo = <div className="loader-inner ball-pulse">
@@ -322,7 +322,7 @@ const Index = React.createClass({
           <div className="payTrueMoney">
           <span className="data-before dyjTrueMoney">实付</span><span className="data-after dyjTrueMoney">￥{this.state.trueCost}</span>
           </div>
-          <div className="checkTK"><input type="checkbox" style={{zoom:"2"}}  checked /><span>我同意会员协议中的条款</span></div>
+          <div className="checkTK"><input type="checkbox" style={{zoom:"2"}}  checked /><span>我同意《会员协议》中的条款</span></div>
           <div className={this.state.btnPayNewNotPut} onClick={this.goForPay}>{this.state.payBtnInfo}{this.state.trueCost}</div>
         </Container>
         <form id="alipaysubmit" name="alipaysubmit" style={{

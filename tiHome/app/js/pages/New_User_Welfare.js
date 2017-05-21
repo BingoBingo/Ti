@@ -2,16 +2,10 @@ import React from 'react';
 import {
   Container,
   List,
-  NavBar,
-  Group,
   View,
-  Card,
-  Icon,
-  Field,
-  Button
+  Card
 } from 'amazeui-touch';
 import {Link, Router, Route} from 'react-router';
-
 import Tools from '../util/tools';
 import card_bak from '../../i/card-bak.jpg';
 import dyj from '../../i/dyj.png';
@@ -61,21 +55,29 @@ const New_User_Welfare = React.createClass({
       window.history.go(-1);
     }
     if(payBtnInfo == "跳过"){
-      var userPayMoney = this.props.location.query.userPayMoney;
+      let userPayMoney = this.props.location.query.userPayMoney;
+      // var payReduce = userPayMoney - userPayMoney * this.state.defaultDiscount;//本单立减
+      // payReduce = payReduce.toFixed(0);
       if (userPayMoney == "") {
         alert("您未输入消费金额");
         return false;
       }
       localStorage.setItem("isBuyCard","czk");
-      const path = `/PayEnd_Detail/`
+      let path = `/PayEnd_Detail/`
       this.context.router.push({
         pathname: path,
         query: {
           availablePoint: this.state.trueUsePoint,
+          cardGivePoint: 0,
+          payReduce:0,
           userPayMoney: userPayMoney,
-          payType: "useDYJ"
+          payType: "useDYJ",
+          availableStoredValue:this.state.availableStoredValue,
+          defaultDiscount:this.state.defaultDiscount,
+          payBtnInfo:"jump"
         }
       });
+      return false;
     }
     var payBtnInfo = <div className="loader-inner ball-pulse">
       <div></div>
@@ -100,7 +102,6 @@ const New_User_Welfare = React.createClass({
       usePoint: false
     }
     var _this = this;
-
     Tools.ajax({
       url: url, //请求地址
       type: "POST", //请求方式
@@ -132,7 +133,6 @@ const New_User_Welfare = React.createClass({
           }
 
           if (device == "alipay") {
-
             localStorage.setItem("card_buy", "false");
             var alipayForm = payInfo.data.alipayParam;
             alipayForm = eval('(' + alipayForm + ')');
@@ -206,11 +206,13 @@ const New_User_Welfare = React.createClass({
         let cardInfo = eval('(' + response + ')')
         //可用抵用金
         let availablePoint = cardInfo.data.availablePoint;
+        let availableStoredValue = cardInfo.data.availableStoredValue;
         let defaultDiscount = cardInfo.data.defaultDiscount;
         //var canUsePoint = (availablePoint - availablePoint * defaultDiscount) * 100;
         var canUsePoint = (1 - defaultDiscount) * userPayMoney;
         canUsePoint = canUsePoint.toFixed(2);
-
+        console.log("可用抵用金" + canUsePoint);
+        console.log("实际抵用金" + availablePoint);
         var trueUsePoint = availablePoint - canUsePoint;
 
         if (trueUsePoint > 0) {
@@ -218,11 +220,12 @@ const New_User_Welfare = React.createClass({
         } else {
           trueUsePoint = availablePoint;
         }
-        console.log("抵用金——————————————");
-        console.log(trueUsePoint);
+        if(availablePoint <= 0){
+          trueUsePoint = 0;
+        }
         var hasDYJ = "none";
         //有抵用金就显示
-        if (availablePoint != 0) {
+        if (availablePoint != 0 || availableStoredValue != 0) {
           hasDYJ = "";
           _this.setState({
             payBtnInfo: "跳过"
@@ -235,7 +238,8 @@ const New_User_Welfare = React.createClass({
           defaultDiscount:cardInfo.data.defaultDiscount,
           hasDYJ: hasDYJ,
           canUsePoint: canUsePoint,
-          trueUsePoint: trueUsePoint
+          trueUsePoint: trueUsePoint,
+          availableStoredValue:cardInfo.data.availableStoredValue//储值余额
         })
         let saleCards = JSON.stringify(cardInfo.data.saleCards);
         let saleStoredCards = JSON.stringify(cardInfo.data.saleStoredCards);
@@ -259,9 +263,11 @@ const New_User_Welfare = React.createClass({
         };
         var userPayMoney = this.props.location.query.userPayMoney;
         var payReduce = userPayMoney - userPayMoney * item.discount;
-        //payReduce = payReduce.toFixed(0);
-        payReduce = payReduce.split(".")[0];
+        payReduce = payReduce.toFixed(0);
+        //payReduce = parseInt(payReduce.substring(0,payReduce.indexOf('.')));
+
         var payTrue = userPayMoney * item.discount;
+        console.log(payTrue);
         var discount = item.discount
           ? (item.discount * 10).toFixed(1)
           : "";
@@ -281,6 +287,7 @@ const New_User_Welfare = React.createClass({
               support: item.supportCount,
               about: item.about,
               refundExpires:item.refundExpires,
+              availablePoint: this.state.trueUsePoint,
               privilegeCount:item.privilegeCount
             }
           }} key={index}>
@@ -310,7 +317,20 @@ const New_User_Welfare = React.createClass({
           background: "url(" + item.photo + ")",
           backgroundSize: "cover"
         };
+        //原价
         var userPayMoney = this.props.location.query.userPayMoney;
+        //本次可用抵用金(1 - this.props.location.query.defaultDiscount) * payTrue;
+        var availablePoint =(1-this.state.defaultDiscount*1) * userPayMoney;
+        //储值金额
+        var price = item.price
+        //储值余额
+        var availableStoredValue = this.state.availableStoredValue;
+
+        //余额 < 原价-抵扣 < 储值金额+余额
+        var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
+        var diff1 = price*1 + availableStoredValue*1 - (userPayMoney*1 - availablePoint*1);
+        console.log(diff0);
+        console.log(diff1);
         var payReduce = userPayMoney - userPayMoney * this.state.defaultDiscount;
         payReduce = payReduce.toFixed(0);
         var payTrue = userPayMoney * item.discount;
@@ -318,7 +338,7 @@ const New_User_Welfare = React.createClass({
         var givePoint = item.givePoint ? item.givePoint : 0;
         givePoint = givePoint.toFixed(0);
         var isRefund = item.isRefund ? "可退" : "";
-        return (
+        return (diff0 > 0 && diff1 > 0) ? (
           <Link to={{
             pathname: "CardDetail_Buy",
             query: {
@@ -332,8 +352,10 @@ const New_User_Welfare = React.createClass({
               refundExpires:item.refundExpires,
               privilegeCount:item.privilegeCount,
               cardPrice:item.price,
-              availablePoint: this.state.trueUsePoint,
+              availablePoint: this.state.availablePoint,
               userPayMoney: userPayMoney,
+              availableStoredValue:this.state.availableStoredValue,
+              defaultDiscount:this.state.defaultDiscount,
               payType: "useDYJ"
             }
           }} key={index}>
@@ -352,7 +374,7 @@ const New_User_Welfare = React.createClass({
               <div className="cardlist-border"></div>
             </div>
           </Link>
-        );
+        ) : "";
       });
     }
   },

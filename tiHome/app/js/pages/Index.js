@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  List,
-  NavBar,
-  Group,
-  View,
-  Field,
-  Button,
-  Icon
-} from 'amazeui-touch';
+import {Container,View} from 'amazeui-touch';
 import {Link} from 'react-router';
 import Tools from '../util/tools';
 
@@ -51,18 +42,19 @@ const Index = React.createClass({
       total_fee: "",
       return_url: "",
       sign_type: "",
-      seller_id: ""
+      seller_id: "",
+      availablePoint:0,
+      availableStoredValue:0
     };
   },
 
   noCardPayMoney(payMoney) {
-    var payMoney = payMoney;
-    var _this = this;
+    let _this = this;
     let uid = localStorage.getItem("uid");
     let hotelId = localStorage.getItem("hotelId");
     let device = localStorage.getItem("device");
-    var url = "/spotpayment";
-    var payParam = {
+    let url = "/spotpayment";
+    let payParam = {
       price: payMoney,
       device: device,
       uid: uid,
@@ -71,7 +63,6 @@ const Index = React.createClass({
       usePoint: false,
       cardId: ""
     }
-
     Tools.ajax({
       url: url, //请求地址
       type: "POST", //请求方式
@@ -161,19 +152,15 @@ const Index = React.createClass({
   },
 
   vipPayMoney(payMoney, payDiscountMoney) {
-    var payMoney = payMoney;
-    var ownCard = localStorage.getItem("ownCard");
+    let ownCard = localStorage.getItem("ownCard");
     ownCard = eval("(" + ownCard + ")");
-    let userVipId = ownCard.cardId
-      ? ownCard.cardId
-      : "";
-
-    var _this = this;
+    let userVipId = ownCard.cardId? ownCard.cardId: "";
+    let _this = this;
     let uid = localStorage.getItem("uid");
     let hotelId = localStorage.getItem("hotelId");
     let device = localStorage.getItem("device");
-    var url = "/spotpayment";
-    var payParam = {
+    let url = "/spotpayment";
+    let payParam = {
       device: device,
       uid: uid,
       hotelId: hotelId,
@@ -182,7 +169,6 @@ const Index = React.createClass({
       cardId: "",
       usePoint: false
     }
-
     Tools.ajax({
       url: url,
       type: "POST",
@@ -190,7 +176,6 @@ const Index = React.createClass({
       dataType: "json",
       success: function(response, xml) {
         var payBtnInfo = "支付"
-
         document.getElementById("vipPayBtn").innerText = "支付 ￥" + payDiscountMoney;
         var payInfo = eval('(' + response + ')');
         if (payInfo.status == "success") {
@@ -231,7 +216,6 @@ const Index = React.createClass({
             var return_url = alipayForm.return_url;
             var sign_type = alipayForm.sign_type;
             var seller_id = alipayForm.seller_id;
-
             _this.setState({
               _input_charset: _input_charset,
               subject: subject,
@@ -249,7 +233,6 @@ const Index = React.createClass({
               seller_id: seller_id
             })
             document.forms['alipaysubmit'].submit();
-
           }
         } else {
           var path = "Pay_Success_Fail";
@@ -305,10 +288,90 @@ const Index = React.createClass({
     // const path = `/Old_User_Welfare/`
     // this.context.router.push({pathname:path,query:{payOldMoney:payOldMoney,ownCard_discount:ownCard_discount}});
   },
+  chooseNext(payMoney){
+    let isSaleCards = this.state.isSaleCards;
+    let availablePoint = this.state.availablePoint;
+    let availableStoredValue = this.state.availableStoredValue;
+    let defaultDiscount = this.state.defaultDiscount;
+    let discountCards = this.state.discountCards;
+    let storeCards = this.state.storeCards;
+    let canBuyCards = [];
+    if (storeCards.length > 0) {
+        storeCards.map((item, index) => {
+        //原价
+        var userPayMoney = payMoney;
+        //本次可用抵用金(1 - this.props.location.query.defaultDiscount) * payTrue;
+        var availablePoint =(1-defaultDiscount*1) * userPayMoney;
+        //储值金额
+        //var price = item.price
+        //储值余额 availableStoredValue
 
+        //余额 < 原价-抵扣 < 储值金额+余额
+        var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
+        console.log(diff0);
+        var diff1 = item.price*1 + availableStoredValue*1 - (userPayMoney*1 - availablePoint*1);
+        console.log(diff1);
+        if (diff0 > 0 && diff1 > 0) {
+            canBuyCards.push(item)
+        }
+      });
+    }
+    console.log("----------------");
+    console.log(canBuyCards.length);
+    if (!isSaleCards) {
+      this.noCardPayMoney(payMoney);
+    }
+    if(discountCards.length == 0 && storeCards.length == 0 && availablePoint == 0 && availableStoredValue == 0){
+      this.noCardPayMoney(payMoney);
+    }
+    if(discountCards.length == 0 && storeCards.length == 0 && (availablePoint != 0 || availableStoredValue !=0)) {
+      document.getElementById("xdd-keybord").style.display = "none";
+      let path = `/PayEnd_Detail/`
+      this.context.router.push({
+        pathname: path,
+        query: {
+          availablePoint: availablePoint,
+          cardGivePoint: 0,
+          payReduce:0,
+          userPayMoney: payMoney,
+          payType: "useDYJ",
+          availableStoredValue:availableStoredValue,
+          defaultDiscount:defaultDiscount,
+          payBtnInfo:"jump"
+        }
+      });
+    }
+    if(canBuyCards.length == 0 && discountCards.length == 0){
+      document.getElementById("xdd-keybord").style.display = "none";
+      let path = `/PayEnd_Detail/`
+      this.context.router.push({
+        pathname: path,
+        query: {
+          availablePoint: availablePoint,
+          cardGivePoint: 0,
+          payReduce:0,
+          userPayMoney: payMoney,
+          payType: "useDYJ",
+          availableStoredValue:availableStoredValue,
+          defaultDiscount:defaultDiscount,
+          payBtnInfo:"jump"
+        }
+      });
+    }
+    if(isSaleCards && (discountCards.length != 0 || storeCards.length != 0) && (canBuyCards.length !=0 || discountCards.length != 0)) {
+      document.getElementById("xdd-keybord").style.display = "none";
+      const path = `/New_User_Welfare/`
+      this.context.router.push({
+        pathname: path,
+        query: {
+          userPayMoney: payMoney
+        }
+      });
+    }
+  },
   newUserPay() {
-    const newUserPayMoney = document.getElementById("payNewMoney").value;
-    var exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
+    let newUserPayMoney = document.getElementById("payNewMoney").value;
+    let exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
     if (!exp.test(newUserPayMoney) || newUserPayMoney == 0) {
       alert("输入正确的金额");
       return false;
@@ -317,61 +380,29 @@ const Index = React.createClass({
       alert("单笔支付金额不能超过1w元");
       return false;
     }
-
     localStorage.setItem("newUserPayMoney", newUserPayMoney);
-
-    var isSaleCards = this.state.isSaleCards;
-    //var isSaleCards = false;
-
-    var payBtnInfo = <div className="loader-inner ball-pulse">
+    let payBtnInfo = <div className="loader-inner ball-pulse">
       <div></div>
       <div></div>
       <div></div>
     </div>;
-
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotloading"})
-    //return false;
-
-    if (!isSaleCards) {
-      this.noCardPayMoney(newUserPayMoney);
-    } else {
-      document.getElementById("xdd-keybord").style.display = "none";
-      const path = `/New_User_Welfare/`
-      this.context.router.push({
-        pathname: path,
-        query: {
-          userPayMoney: newUserPayMoney
-        }
-      });
-    }
+    this.chooseNext(newUserPayMoney);
   },
-
   chooseGood() {
-    const payMemberMoney = document.getElementById("payMemberMoney").value;
-    const cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
+    let payMemberMoney = document.getElementById("payMemberMoney").value;
+    let cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
     if (payMemberMoney > 9999.99) {
       alert("单笔支付金额不能超过1w元");
       return false;
     }
-    var isSaleCards = this.state.isSaleCards;
-    var payBtnInfo = <div className="loader-inner ball-pulse">
+    let payBtnInfo = <div className="loader-inner ball-pulse">
       <div></div>
       <div></div>
       <div></div>
     </div>;
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotloading"})
-    if (!isSaleCards) {
-      this.noCardPayMoney(payMemberMoney);
-    } else {
-      document.getElementById("xdd-keybord").style.display = "none";
-      const path = `/New_User_Welfare/`
-      this.context.router.push({
-        pathname: path,
-        query: {
-          userPayMoney: payMemberMoney
-        }
-      });
-    }
+    this.chooseNext(payMemberMoney);
   },
   GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -424,12 +455,14 @@ const Index = React.createClass({
         }, //请求参数
         dataType: "json",
         success: function(response, xml) {
-          var cardInfo = eval('(' + response + ')')
+          let cardInfo = eval('(' + response + ')')
           let saleCards = JSON.stringify(cardInfo.data.saleCards);
+          let discountCards = cardInfo.data.saleCards;
+          let storeCards = cardInfo.data.saleStoredCards;
           let isSaleCards = cardInfo.data.isSaleCards;
           let availableStoredValue = cardInfo.data.availableStoredValue;
-          console.log("~~~~余额~~~~");
-          console.log(availableStoredValue);
+          let availablePoint = cardInfo.data.availablePoint;
+          let defaultDiscount = cardInfo.data.defaultDiscount;
           var payBtnInfo = "";
           if (isSaleCards) {
             payBtnInfo = "确定";
@@ -437,10 +470,9 @@ const Index = React.createClass({
             payBtnInfo = "支付";
           }
           localStorage.setItem("isBuyCard", "zk");
-          _this.setState({payBtnInfo: payBtnInfo, isSaleCards: isSaleCards,availableStoredValue:availableStoredValue})
+          _this.setState({payBtnInfo: payBtnInfo, isSaleCards: isSaleCards,discountCards:discountCards,storeCards:storeCards,availableStoredValue:availableStoredValue,availablePoint:availablePoint,defaultDiscount:defaultDiscount})
           localStorage.setItem("isSaleCards", isSaleCards);
           if (isNewUser == "vip") {
-
             let ownCard = JSON.stringify(cardInfo.data.ownCard);
             localStorage.setItem("ownCard", ownCard);
             localStorage.setItem("saleCards", saleCards);
@@ -451,7 +483,6 @@ const Index = React.createClass({
             let ownCard_cardName = cardInfo.data.ownCard.cardName;
             let ownCard_hotelName = cardInfo.data.ownCard.hotelName;
             let ownCard_hotelPhoto = cardInfo.data.ownCard.photo;
-
             _this.setState({
               ownCard: ownCard,
               saleCards: saleCards,
@@ -603,7 +634,7 @@ const Index = React.createClass({
         </View>
       );
     }
-    if (isNewUser == "member") {
+    if (isNewUser == "member" && this.state.availableStoredValue == 0) {
       var specialInput = {
         border: "0 rem",
         background: "transparent",
@@ -628,7 +659,7 @@ const Index = React.createClass({
                 <div className="inputSpecialBox"><input readOnly="readonly" className="inputSpecial" id="payMemberMoney" onChange={this.changeNewBtn} style={specialInput}/></div>
               </div>
             </div>
-            <div className="copration-new" >储值余额：{this.state.availableStoredValue}</div>
+            {/* <div className="copration-new" >储值余额：{this.state.availableStoredValue}</div> */}
             <div className={this.state.btnPayNewNotPut} onClick={this.chooseGood}>{this.state.payBtnInfo}</div>
           </Container>
           <form id="alipaysubmit" name="alipaysubmit" style={{
@@ -655,6 +686,68 @@ const Index = React.createClass({
         </View>
       );
     }
+
+    if (isNewUser == "member" && this.state.availableStoredValue != 0) {
+      var specialInput = {
+        border: "0 rem",
+        background: "transparent",
+        marginLeft: "0.8 rem",
+        color: "#fff",
+        fontSize: "0.58 rem",
+        paddingTop: "0.19 rem",
+        marginBottom: "0 rem",
+        paddingBottom: "0.2 rem"
+      }
+      return (
+        <View className="vipBack">
+          <Container scrollable>
+            <div className="home-title">请输入折前金额</div>
+            <div className="inputMoney">
+              <div className="moneyVipInputArea">
+                <div className="inputVipBefore">￥</div>
+                <div className="cursorVipInput flash" id="cursorVip"></div>
+                <div className="inputSpecialBox"><input readOnly="readonly" className="specialInput_vip" id="payOldMoney" onChange={this.changeBtn}/></div>
+              </div>
+            </div>
+            {/* <div className="vipCopration" >储值余额：{this.state.availableStoredValue}</div> */}
+            <div className="memberDiscount">
+              <div className="storeMoney">
+                <div>{this.state.availableStoredValue}元</div>
+                <div>本店储值余额</div>
+              </div>
+              <div className="borderMiddle"></div>
+              <div className="discountMoney">
+                <div>{this.state.availablePoint}元</div>
+                <div>抵用金余额</div>
+              </div>
+            </div>
+            <div className={this.state.btnPayNotPut} onClick={this.oldUserPay} id="vipPayBtn">支付</div>
+          </Container>
+          <form id="alipaysubmit" name="alipaysubmit" style={{
+            display: "none"
+          }} action="https://mapi.alipay.com/gateway.do?_input_charset=UTF-8" method="POST">
+            <input type="hidden" name="_input_charset" value={this.state._input_charset}/>
+            <input type="hidden" name="subject" value={this.state.subject}/>
+            <input type="hidden" name="sign" value={this.state.sign}/>
+            <input type="hidden" name="it_b_pay" value={this.state.it_b_pay}/>
+            <input type="hidden" name="notify_url" value={this.state.notify_url}/>
+            <input type="hidden" name="body" value={this.state.body}/>
+            <input type="hidden" name="payment_type" value={this.state.payment_type}/>
+            <input type="hidden" name="out_trade_no" value={this.state.out_trade_no}/>
+            <input type="hidden" name="partner" value={this.state.partner}/>
+            <input type="hidden" name="service" value={this.state.service}/>
+            <input type="hidden" name="total_fee" value={this.state.total_fee}/>
+            <input type="hidden" name="return_url" value={this.state.return_url}/>
+            <input type="hidden" name="sign_type" value={this.state.sign_type}/>
+            <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+            <input type="submit" value="Confirm" style={{
+              display: "none"
+            }}/>
+          </form>
+        </View>
+      );
+    }
+
     if (isNewUser == "new") {
       var specialInput = {
         border: "0px",
