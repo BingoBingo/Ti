@@ -157,7 +157,8 @@ const Index = React.createClass({
       success: function(response, xml) {
         var payInfo = eval('(' + response + ')');
         var payBtnInfo = "去支付 ￥";
-        _this.setState({payBtnInfo: payBtnInfo, trueCost: discountMoney, btnPayNewNotPut: "payEnd"})
+        // _this.setState({payBtnInfo: payBtnInfo, trueCost: discountMoney, btnPayNewNotPut: "payEnd"})
+        _this.setState({trueCost: discountMoney})
         if (payInfo.status == "success") {
           if (device == "wechat") {
             var wechatPayParam = payInfo.data.wechatPayParam;

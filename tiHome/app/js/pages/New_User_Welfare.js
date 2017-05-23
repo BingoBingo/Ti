@@ -294,8 +294,9 @@ const New_User_Welfare = React.createClass({
             <div className="card-list">
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
+                  {/* <img src={item.photo}/> */}
                   <div className="card-discount"><span>{isRefund}{discount}折卡</span></div>
-                  <div className="card-money">售价￥{item.price}</div>
+                  <div className="card-money">￥{item.price}</div>
                 </div>
                 <div className="card-reduce">
                   <div className="card-reduceMoney">本单立减￥{payReduce}</div>
@@ -320,15 +321,18 @@ const New_User_Welfare = React.createClass({
         //原价
         var userPayMoney = this.props.location.query.userPayMoney;
         //本次可用抵用金(1 - this.props.location.query.defaultDiscount) * payTrue;
-        var availablePoint =(1-this.state.defaultDiscount*1) * userPayMoney;
+        //var availablePoint =(1-this.state.defaultDiscount*1) * userPayMoney;
+
+        var trueUsePoint = this.state.trueUsePoint;
+
         //储值金额
         var price = item.price
         //储值余额
         var availableStoredValue = this.state.availableStoredValue;
 
         //余额 < 原价-抵扣 < 储值金额+余额
-        var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
-        var diff1 = price*1 + availableStoredValue*1 - (userPayMoney*1 - availablePoint*1);
+        var diff0 = userPayMoney*1 - trueUsePoint*1 -availableStoredValue*1;
+        var diff1 = price*1 + availableStoredValue*1 - (userPayMoney*1 - trueUsePoint*1);
         console.log(diff0);
         console.log(diff1);
         var payReduce = userPayMoney - userPayMoney * this.state.defaultDiscount;
@@ -363,12 +367,12 @@ const New_User_Welfare = React.createClass({
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
                   <div className="card-discount-cz"><span>{isRefund}储值卡</span></div>
-                  <div className="card-money-cz">售价￥{item.price}</div>
+                  <div className="card-money-cz">￥{item.price}</div>
                 </div>
-                <div className="card-reduce">
+                <div className="card-reduce-czk">
                   {/* <div className="card-reduceMoney">本单抵扣￥{payReduce}</div> */}
                   <div className="card-reduceMoney"></div>
-                  <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
+                  <div className="card-giveCZ">赠{givePoint}元抵用金</div>
                 </div>
               </div>
               <div className="cardlist-border"></div>
@@ -408,7 +412,7 @@ const New_User_Welfare = React.createClass({
       backgroundImage: backgroundImage,
       backgroundSize: "cover",
       backgroundColor: "#fff",
-      height: "6.933333rem"
+      height: "5.333333rem"
     };
     var cardStyle = {
       background: background,
@@ -421,7 +425,7 @@ const New_User_Welfare = React.createClass({
         <Container scrollable>
           <div style={cardBack}>
             <div className="bigTitle">在售会员卡</div>
-            <div className="smallTitle">若支付宝已购卡，请关联</div>
+            <div className="smallTitle">若支付宝已购卡，请关联 ></div>
           </div>
           {/* <Link to={{pathname:"PayEnd_Detail",query:{availablePoint:this.state.trueUsePoint,userPayMoney:userPayMoney,payType:"useDYJ"}}}> */}
           {/* <div className="card-list" style={{
@@ -443,6 +447,7 @@ const New_User_Welfare = React.createClass({
           {/* </Link> */}
           {this.renderCards()}
           {this.renderStoredCards()}
+          <div style={{height:"1.333333rem"}}></div>
         </Container>
         <div className={this.state.btnPayNewNotPut} onClick={this.newPayMoney}>{this.state.payBtnInfo}</div>
         <form id="alipaysubmit" name="alipaysubmit" style={{

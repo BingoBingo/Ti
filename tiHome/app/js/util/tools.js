@@ -210,8 +210,6 @@ var Tools = {
     var ownCard_discount = localStorage.getItem("ownCard_discount");
     var body = document.getElementsByTagName('body')[0];
 		var DIV_ID = options && options.divId || 'xdd-keybord';
-    console.log("------------");
-    console.log(input)
 		if(document.getElementById(DIV_ID)){
 			body.removeChild(document.getElementById(DIV_ID));
 		}
@@ -269,28 +267,29 @@ var Tools = {
 		function addEvent(e){
 			var ev = e || window.event;
 			var clickEl = ev.element || ev.target;
-
       clickEl.style.backgroundColor = "#CECDCE";
 			var value = clickEl.textContent || clickEl.innerText;
-
 			if(clickEl.tagName.toLocaleLowerCase() === 'td' && value !== "删除"){
 				if(self.input && value != "."){
-          self.input.value += value;
+            self.input.value += value;
+            console.log(self);
+            console.log(self.input);
+            console.log(self.input.value);
 				}else if(value === "." && self.input.value.indexOf('.')===-1){
             self.input.value = self.input.value + ".";
         }
         if(self.input.value.indexOf(".") > 0){
-          self.input.value = (self.input.value).substring(0,self.input.value.indexOf(".")+3);
+            self.input.value = (self.input.value).substring(0,self.input.value.indexOf(".")+3);
         }
         //self.input.value = lookBetter(self.input.value);
 			}else if(clickEl.tagName.toLocaleLowerCase() === 'div' && value === "完成"){
-				body.removeChild(self.el);
+				    body.removeChild(self.el);
 			}else if(clickEl.tagName.toLocaleLowerCase() === 'div'){
-				var num = self.input.value;
-				if(num){
-					var newNum = num.substr(0, num.length - 1);
-					self.input.value = newNum;
-				}
+				    var num = self.input.value;
+    				if(num){
+    					var newNum = num.substr(0, num.length - 1);
+    					self.input.value = newNum;
+    				}
 			}
       if(self.input.value != ""){
         var reduceMoney = self.input.value *1 - (self.input.value * ownCard_discount)/10;

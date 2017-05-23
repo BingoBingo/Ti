@@ -14,6 +14,7 @@ import {Link, Router, Route} from 'react-router';
 
 import Tools from '../util/tools';
 import card_bak from '../../i/card-bak.jpg';
+import pay_back from '../../i/pay-back.png';
 
 const CardDetail_Buy = React.createClass({
   contextTypes: {
@@ -34,7 +35,9 @@ const CardDetail_Buy = React.createClass({
       cardGivePoint: "",
       cardTQ: "",
       cardMD: "",
-      supportCount: ""
+      supportCount: "",
+      payBtnInfo:"储值并支付",
+      btnPayNewNotPut: "btn-pay-czzf",
     }
   },
   confirmCZ(){
@@ -53,7 +56,12 @@ const CardDetail_Buy = React.createClass({
       }});
   },
   goForPay() {
-    //var userPayMoney = this.props.location.query.cardPrice;
+    let payBtnInfo = <div className="loader-inner ball-pulse">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>;
+    this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-cczfloading"})
     var payTrue = this.props.location.query.userPayMoney * 1;
     payTrue = payTrue.toFixed(2);
     var cardId = this.props.location.query.cardId;
@@ -303,6 +311,9 @@ const CardDetail_Buy = React.createClass({
       }
     }
   },
+  goback() {
+    window.history.go(-1);
+  },
   render() {
     var cardBack = {
       backgroundImage: "url(" + this.state.cardPhoto + ")",
@@ -320,11 +331,27 @@ const CardDetail_Buy = React.createClass({
     var cardType = this.props.location.query.cardType;
     var payTrue = this.props.location.query.payTrue;
     var availablePoint = this.props.location.query.availablePoint;
+
+
+    var location = window.location.host;
+    var backgroundImage = "url(" + pay_back + ")";
+    if (location == "taihuiyuan.com" || location == "dev.taihuiyuan.com") {
+      backgroundImage = "url(pay/" + pay_back + ")"
+    }
+    var payback = {
+      backgroundImage: backgroundImage,
+      backgroundSize: "cover",
+      backgroundColor: "#fff",
+      height: "0.853333rem",
+      width: "0.853333rem"
+    };
+
     return (
       <View>
         <Container scrollable>
           <div style={cardBack}>
-            <div className="cardDiscount">{cardType == "DiscountCard" ? `${this.state.cardDiscount}折卡·${this.state.deviDays}`:`储值·${this.state.cardPrice}元`}</div>
+            <div className="cardDiscount">{cardType == "DiscountCard" ? <div><span style={{fontSize:"0.64rem",color:"#a0a0a0"}}>{this.state.cardDiscount}折卡</span> · <span style={{fontSize:"0.64rem"}}>{this.state.deviDays}</span></div>
+            : <div><span style={{fontSize:"0.64rem",color:"#a0a0a0"}}>储值</span> · <span style={{fontSize:"0.64rem"}}>{this.state.cardPrice}元</span></div>}</div>
             <div className="cardDetail_name">{this.state.cardName}</div>
             <div className="cardDetail_deadline">
             {/* 有效期{this.state.cardDeadLine}天 */}
@@ -333,8 +360,8 @@ const CardDetail_Buy = React.createClass({
             {/* 售价{this.state.cardPrice}元 */}
             </div>
           </div>
-          <div className="cardDetail-top-line"></div>
-          <div className="cardDetail-list">
+          <div className="cardDetail-top-line" style={{display: this.state.refundExpires == "不可退" ? "none" : ""}}></div>
+          <div className="cardDetail-list" style={{display: this.state.refundExpires == "不可退" ? "none" : ""}}>
             <span className="info-before">无理由退卡</span>
             <span className="info-after">{this.state.refundExpires}</span>
           </div>
@@ -345,13 +372,13 @@ const CardDetail_Buy = React.createClass({
               <span className="info-after">{this.state.cardGivePoint}元</span>
             </div>
           </Link>
-          <Link to={{pathname:"Dyj_Detail",query:{pathType:"sstsm"}}}>
+          {/* <Link to={{pathname:"Dyj_Detail",query:{pathType:"sstsm"}}}>
             <div className="cardDetail-top-line"></div>
             <div className="cardDetail-list">
               <span className="info-before">随时退</span>
               <span className="info-after">详情</span>
             </div>
-          </Link>
+          </Link> */}
           <Link to={{pathname: "Dyj_Detail",query: {pathType: "hyksm",about: about}}}>
             <div className="cardDetail-top-line"></div>
             <div className="cardDetail-list">
@@ -359,7 +386,7 @@ const CardDetail_Buy = React.createClass({
               <span className="info-after">{privilegeCount}</span>
             </div>
           </Link>
-          <Link to={{pathname: "Wallet_SupportHotel",query: {cardId: cardId}}}>
+          <Link to={{pathname: "Wallet_SupportHotel",query: {cardId: cardId,cardType:cardType}}}>
             <div className="cardDetail-top-line"></div>
             <div className="cardDetail-list">
               <div className="pserson-wechat">
@@ -372,16 +399,38 @@ const CardDetail_Buy = React.createClass({
           <div style={{height:"2.6rem"}}></div>
         </Container>
         <div className="payEndNew">
-          <div className="CardDetailBtn" onClick={this.chooseNext}>
+          <div className="btn-pay-back" style={payback} onClick={this.goback}></div>
+          <div className={this.state.btnPayNewNotPut} onClick={this.chooseNext}>
               {/* <Link to={{pathname:(cardType == "DiscountCard") ? "PayEnd_WithCard" :"PayEnd_Detail",
                   query:(cardType == "DiscountCard") ? {cardId:cardId,availablePoint:availablePoint,cardPrice:this.state.cardPrice ,cardDiscount:this.state.cardDiscount,userPayMoney:payTrue,itemPhoto:this.state.itemPhoto}
                   :{cardId:cardId,availablePoint:availablePoint,cardGivePoint:this.state.cardGivePoint,cardPrice:this.state.cardPrice,userPayMoney:this.props.location.query.userPayMoney,availableStoredValue: this.props.location.query.availableStoredValue,defaultDiscount:this.props.location.query.defaultDiscount}
               }}>
                 {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
               </Link> */}
-              {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
+              {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : this.state.payBtnInfo}
           </div>
         </div>
+        <form id="alipaysubmit" name="alipaysubmit" style={{
+          display: "none"
+        }} action="https://mapi.alipay.com/gateway.do?_input_charset=UTF-8" method="POST">
+          <input type="hidden" name="_input_charset" value={this.state._input_charset}/>
+          <input type="hidden" name="subject" value={this.state.subject}/>
+          <input type="hidden" name="sign" value={this.state.sign}/>
+          <input type="hidden" name="it_b_pay" value={this.state.it_b_pay}/>
+          <input type="hidden" name="notify_url" value={this.state.notify_url}/>
+          <input type="hidden" name="body" value={this.state.body}/>
+          <input type="hidden" name="payment_type" value={this.state.payment_type}/>
+          <input type="hidden" name="out_trade_no" value={this.state.out_trade_no}/>
+          <input type="hidden" name="partner" value={this.state.partner}/>
+          <input type="hidden" name="service" value={this.state.service}/>
+          <input type="hidden" name="total_fee" value={this.state.total_fee}/>
+          <input type="hidden" name="return_url" value={this.state.return_url}/>
+          <input type="hidden" name="sign_type" value={this.state.sign_type}/>
+          <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+          <input type="submit" value="Confirm" style={{
+            display: "none"
+          }}/>
+        </form>
       </View>
     )
   }

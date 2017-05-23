@@ -113,6 +113,7 @@ const Index = React.createClass({
     if(!clickOnce){
       return false;
     }
+    clickOnce = false;
     var discountMoney = this.state.trueCost;
     var cardId = this.props.location.query.cardId;
     var payBtnInfo = <div className="loader-inner ball-pulse">
@@ -149,7 +150,6 @@ const Index = React.createClass({
       data: payParam, //请求参数
       dataType: "json",
       success: function(response, xml) {
-        clickOnce = false;
         var payInfo = eval('(' + response + ')');
         var code = payInfo.data.code;
         var exp = payInfo.data.exp;
@@ -157,7 +157,8 @@ const Index = React.createClass({
         var cardPrice = _this.props.location.query.cardPrice * 1;
         cardPrice = cardPrice.toFixed(2);
         var payBtnInfo = (_this.props.location.query.payBtnInfo == "jump" ) ? "确认支付" : `储值 ￥${cardPrice}`;
-        _this.setState({payBtnInfo: "", btnPayNewNotPut: "payEnd"});
+        // _this.setState({payBtnInfo: "", btnPayNewNotPut: "payEnd"});
+         //_this.setState({payBtnInfo: ""});
         if (payInfo.status == "success") {
           if (device == "wechat") {
             var wechatPayParam = payInfo.data.wechatPayParam;
@@ -366,7 +367,7 @@ const Index = React.createClass({
             <span className="data-before dyjTrueMoney">实付</span>
             <span className="data-after dyjTrueMoney">￥{trueCost}</span>
           </div>
-          <div className="checkTK"><input type="checkbox" style={{zoom:"2"}}  checked /><span>我同意《会员协议》中的条款</span></div>
+          <div className="checkTK" style={{display: payBtnInfo == "jump" ? "none" : ""}}><input type="checkbox" style={{zoom:"2"}}  checked /><span>我同意《会员协议》中的条款</span></div>
           <div className={this.state.btnPayNewNotPut} onClick={this.goForPay}>{this.state.payBtnInfo}{(payBtnInfo == "jump" ) ? "确认支付" : `储值 ￥${cardPrice}`}</div>
         </Container>
         <form id="alipaysubmit" name="alipaysubmit" style={{

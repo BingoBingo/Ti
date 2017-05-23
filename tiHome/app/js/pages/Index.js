@@ -15,6 +15,7 @@ const Index = React.createClass({
       device: "",
       btnPayNotPut: "btn-pay-notput",
       btnPayNewNotPut: "btn-pay-newnotput",
+      btnPayNewNotPut_CZ: "btn-pay-newnotput_CZ",
       payOldDeadline: "",
       payOldAvailable: "",
       ownCard: "",
@@ -404,6 +405,21 @@ const Index = React.createClass({
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotloading"})
     this.chooseNext(payMemberMoney);
   },
+  chooseGood_CZ() {
+    let payMemberMoney = document.getElementById("payMemberMoney_CZ").value;
+    let cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
+    if (payMemberMoney > 9999.99) {
+      alert("单笔支付金额不能超过1w元");
+      return false;
+    }
+    let payBtnInfo = <div className="loader-inner ball-pulse">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>;
+    this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotloading"})
+    this.chooseNext(payMemberMoney);
+  },
   GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
@@ -420,6 +436,8 @@ const Index = React.createClass({
     var device = Tools.GetQueryString("device");
     var hname = Tools.GetQueryString("hname");
     var cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
+    let availableStoredValue = 0;
+    let availablePoint = 0;
     localStorage.setItem("uid", uid);
     localStorage.setItem("isNewUser", isNewUser);
     localStorage.setItem("hotelId", hotelId);
@@ -428,8 +446,9 @@ const Index = React.createClass({
     hname = decodeURI(hname)
     hname = Tools.Base64(hname);
     this.setState({isNewUser: isNewUser, hname: hname})
+
     if (isNewUser == "member") {
-      var payMemberMoney = document.getElementById('payMemberMoney');
+       var payMemberMoney = document.getElementById('payMemberMoney');
       var cursorMember = document.getElementById('cursorMember');
       payMemberMoney.onclick = Tools.KeyBoard(payMemberMoney, cursorMember);
     }
@@ -445,6 +464,7 @@ const Index = React.createClass({
       var vipPayBtn = document.getElementById("vipPayBtn");
       payOldMoney.onclick = Tools.KeyBoard(payOldMoney, cursorVip, vipReduce, vipPayBtn);
     }
+
     if (cardPrice_buy === null) {
       var url = "/hotel/" + hotelId + "/data";
       Tools.ajax({
@@ -460,8 +480,8 @@ const Index = React.createClass({
           let discountCards = cardInfo.data.saleCards;
           let storeCards = cardInfo.data.saleStoredCards;
           let isSaleCards = cardInfo.data.isSaleCards;
-          let availableStoredValue = cardInfo.data.availableStoredValue;
-          let availablePoint = cardInfo.data.availablePoint;
+          availableStoredValue = cardInfo.data.availableStoredValue;
+          availablePoint = cardInfo.data.availablePoint;
           let defaultDiscount = cardInfo.data.defaultDiscount;
           var payBtnInfo = "";
           if (isSaleCards) {
@@ -494,6 +514,11 @@ const Index = React.createClass({
             })
             localStorage.setItem("ownCard_discount", ownCard_discount);
           }
+          if (isNewUser == "member" && availableStoredValue != 0) {
+            var payMemberMoney_CZ = document.getElementById('payMemberMoney_CZ');
+            var cursorMember_CZ = document.getElementById('cursorMember_CZ');
+            payMemberMoney_CZ.onclick = Tools.KeyBoard(payMemberMoney_CZ, cursorMember_CZ);
+          }
         },
         fail: function(status) {}
       });
@@ -501,7 +526,6 @@ const Index = React.createClass({
       _this.setState({payBtnInfo: "储值卡支付"});
       localStorage.setItem("isBuyCard", "czk");
     }
-
     let printCardUrl = "/hotel/" + hotelId + "/data";
     Tools.ajax({
       url: printCardUrl, //请求地址
@@ -555,7 +579,9 @@ const Index = React.createClass({
     }
     if (userType == "member") {
       const payMemberMoney = document.getElementById("payMemberMoney").value;
-      if (payMemberMoney != "") {
+      const payMemberMoney_CZ = document.getElementById("payMemberMoney_CZ").value;
+
+      if (payMemberMoney != "" || payMemberMoney_CZ != "") {
 
         this.setState({btnPayNewNotPut: "btn-pay-newinput"})
       } else {
@@ -565,17 +591,18 @@ const Index = React.createClass({
 
   },
   render() {
-    var isNewUser = Tools.GetQueryString("ut");
-    var hotelId = Tools.GetQueryString("hid");
-    var uid = Tools.GetQueryString("uid");
-    var device = Tools.GetQueryString("device");
-    var hname = Tools.GetQueryString("hname");
+    let isNewUser = Tools.GetQueryString("ut");
+    let hotelId = Tools.GetQueryString("hid");
+    let uid = Tools.GetQueryString("uid");
+    let device = Tools.GetQueryString("device");
+    let hname = Tools.GetQueryString("hname");
+    let availableStoredValue = this.state.availableStoredValue;
     if (isNewUser == "vip") {
-      var card_bak = this.state.ownCard_hotelPhoto;
-      var cardBack = {
+      let card_bak = this.state.ownCard_hotelPhoto;
+      let cardBack = {
         background: "#dedede url(" + card_bak + ") no-repeat"
       };
-      var specialVipInput = {
+      let specialVipInput = {
         border: "0px",
         background: "transparent",
         marginLeft: "50px",
@@ -596,7 +623,7 @@ const Index = React.createClass({
                 <div className="inputSpecialBox"><input readOnly="readonly" className="specialInput_vip" id="payOldMoney" onChange={this.changeBtn}/></div>
               </div>
             </div>
-            <div className="vipCopration" >储值余额：{this.state.availableStoredValue}</div>
+            <div className="vipCopration" >储值余额：{availableStoredValue}</div>
             {/* <div className="btn-pay-notput" onClick={this.oldUserChousePay} id="vipPayBtn">去选优惠</div> */}
             <div className="vipDiscount">
               <div className="discount-card" style={cardBack}>
@@ -634,7 +661,7 @@ const Index = React.createClass({
         </View>
       );
     }
-    if (isNewUser == "member" && this.state.availableStoredValue == 0) {
+    if (isNewUser == "member" && availableStoredValue == 0) {
       var specialInput = {
         border: "0 rem",
         background: "transparent",
@@ -652,7 +679,6 @@ const Index = React.createClass({
             <div className="hotel-card-new">{this.state.hname}</div>
 
             <div className="inputMoney">
-              {/* <div  className="moneyInputArea"><div className="inputBefore">￥</div><input readOnly="readonly" className="specialInput_member" id="payMemberMoney" onChange={this.changeNewBtn} pattern="[0-9]*" type="number"  min="1"/></div> */}
               <div className="moneyInputArea">
                 <div className="inputBefore">￥</div>
                 <div className="cursorInput flash" id="cursorMember"></div>
@@ -687,7 +713,7 @@ const Index = React.createClass({
       );
     }
 
-    if (isNewUser == "member" && this.state.availableStoredValue != 0) {
+    if (isNewUser == "member" && availableStoredValue != 0) {
       var specialInput = {
         border: "0 rem",
         background: "transparent",
@@ -705,23 +731,23 @@ const Index = React.createClass({
             <div className="inputMoney">
               <div className="moneyVipInputArea">
                 <div className="inputVipBefore">￥</div>
-                <div className="cursorVipInput flash" id="cursorVip"></div>
-                <div className="inputSpecialBox"><input readOnly="readonly" className="specialInput_vip" id="payOldMoney" onChange={this.changeBtn}/></div>
+                <div className="cursorVipInput flash" id="cursorMember_CZ"></div>
+                <div className="inputSpecialBox"><input readOnly="readonly" className="inputSpecial" id="payMemberMoney_CZ" onChange={this.changeNewBtn}/></div>
               </div>
             </div>
             {/* <div className="vipCopration" >储值余额：{this.state.availableStoredValue}</div> */}
             <div className="memberDiscount">
               <div className="storeMoney">
-                <div>{this.state.availableStoredValue}元</div>
-                <div>本店储值余额</div>
+                <div>{availableStoredValue}元</div>
+                <span>本店储值余额</span>
               </div>
               <div className="borderMiddle"></div>
               <div className="discountMoney">
                 <div>{this.state.availablePoint}元</div>
-                <div>抵用金余额</div>
+                <span>抵用金余额</span>
               </div>
             </div>
-            <div className={this.state.btnPayNotPut} onClick={this.oldUserPay} id="vipPayBtn">支付</div>
+            <div className={this.state.btnPayNewNotPut} style={{background:"#00a698",color:"#fff"}} onClick={this.chooseGood_CZ}>{this.state.payBtnInfo}</div>
           </Container>
           <form id="alipaysubmit" name="alipaysubmit" style={{
             display: "none"
@@ -773,7 +799,7 @@ const Index = React.createClass({
               </div>
             </div>
 
-            <div className="copration-new">储值余额：{this.state.availableStoredValue}</div>
+            {/* <div className="copration-new">储值余额：{availableStoredValue}</div> */}
             <div className={this.state.btnPayNewNotPut} onClick={this.newUserPay}>{this.state.payBtnInfo}</div>
           </Container>
 
