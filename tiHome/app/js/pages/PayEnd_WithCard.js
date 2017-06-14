@@ -230,6 +230,7 @@ const Index = React.createClass({
         }
       },
       fail: function(status) {
+        alert(status);
         var payBtnInfo = "去支付 ￥";
         _this.setState({payBtnInfo: payBtnInfo, trueCost: userPayMoney, btnPayNewNotPut: "payEnd"})
         console.log(status);

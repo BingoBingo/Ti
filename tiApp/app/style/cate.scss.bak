@@ -1,0 +1,309 @@
+
+/*By HeMuYu_Ray*/
+/*全部分类列表*/
+
+.cleafix:after{clear:both;content:"\200B";display:block;height:0;}
+.cleafix{*zoom:1;}
+.categoryListBody,.cityListBody{
+	
+	padding:0em 1.750rem;
+}
+.categoryListBody .categoryTitle,.cityListBody .cityTitle{
+	width:100%;
+	height:7.500rem;
+	font-size:2.207rem;
+	line-height:7.500rem;
+	color:#b4b4b4;
+	border-bottom:1px solid #dfe0df;
+}
+.categoryListBody  ul,.cityListBody  ul  {
+	padding:0;
+}
+.categoryListBody  ul li{
+	list-style: none;
+	float:left;
+	width:100%;
+	height:3.938rem;
+	line-height:3.938rem;
+	border-bottom:1px solid #dfe0df;
+
+}
+.categoryListBody ul li a{
+	display:block;
+	width:100%;
+	height:3.938rem;
+	line-height:3.938rem;
+}
+.categoryListBody ul li span.txt{
+	font-size:1.241rem;
+	height:3.938rem;
+	line-height:3.938rem;
+	color:#474747;
+	float:left;
+}
+.categoryListBody  ul li i,.categoryListBody  ul li span,.cityListBody  ul li i,.cityListBody  ul li span{
+	display:inline-block;
+}
+.categoryListBody  ul li .l-icon{
+	margin-right:1.438rem;
+	float:left;
+	margin-top:1.375rem;
+	width:1.500rem;
+	height:1.375rem;
+	background:url('../img/cate_icon01.png') no-repeat center center;
+	background-size:cover;
+}
+
+.categoryListBody  ul li .r-icon{
+	margin-top:1.375rem;
+	width:0.688rem;
+	height:1.188rem;
+	background:url('../img/right_arrow.png') no-repeat center center;
+	background-size:cover;
+	float:right;
+}
+.categoryListBody .backUpBtn,.cityListBody .backUpBtn{
+	width:4.250rem;
+	height:4.250rem;
+	background:url('../img/left_arrow.png') no-repeat center center;
+	border:1px solid #6c6c6c;
+	border-radius: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	position: relative;
+	top: -2.125em;
+	z-index: 1;
+	margin:0 auto;
+	display:block;
+}
+
+/*城市选择*/
+.cityListBody .cityTitle{
+	border:none;
+}
+.cityListBody  ul li{
+	float:left;
+	width:100%;
+	height:3.938rem;
+	line-height:3.938rem;
+	border:none;
+	list-style: none;
+
+}
+.cityListBody ul li span.txt{
+	font-size:1.655rem;
+	height:3.938rem;
+	line-height:3.938rem;
+	color:#474747;
+	float:left;
+}
+
+
+.cityListBody  ul li .r-icon{
+	margin-left:0.750rem;
+	margin-top:1.495rem;
+	width:2.500rem;
+	height:1.063rem;
+	line-height:1.063rem;
+	background:#ff5161;
+	float:left;
+	color:#FFF;
+	font-size:0.689rem;
+	text-align:center;
+	border-radius:0.156em;
+}
+
+/*产品列表筛选*/
+.storeListBody .storeListSort{
+	height:3.438rem;
+	line-height:3.438rem;
+	border-bottom:1px solid #dfe0df;
+	position: absolute;
+	z-index: 2;
+	background: #FFF;
+	top:0;
+	left:0;
+	width:100%;
+	
+}
+.storeListBody .storeListSort ul{
+    padding:0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+}
+.storeListBody .storeListSort li{
+	height:3.438rem;
+	line-height:3.438rem;
+    text-align: center;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
+    display: block;
+}
+.storeListBody .storeListSort li span{
+	display:inline-block;
+	font-size:1.1rem;
+	color:#474747;
+	background:url('../img/down_arrow.png') no-repeat right center;
+	padding-right:1.063rem;
+	height:3.438rem;
+	line-height:3.438rem;
+	overflow: hidden;
+	max-width: 7rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.storeListBody .storeListSort li.active span{
+	background:url('../img/down_arrow_gray.png') no-repeat right center;
+	color:#a0a0a0;
+
+}
+
+.storeListBody .storeListSort li .line{
+	border-left:1px solid #dfe0df;
+	display:inline-block;
+	height:1.063rem;
+	float:right;
+	margin-top:1.188rem;
+}
+.storeListBody .storeListSort li:last-child .line{
+	display:none;
+}
+
+.storeListBody .storeListSort li .sortSelList{
+	display:none;
+	width:100%;
+	position:absolute;
+	left:0;
+	top:3.438rem;
+	z-index:2;
+	background:#FFF;
+}
+.storeListBody .storeListSort li .sortSelList li{
+	width:100%;
+	height:3.875rem;
+	line-height:3.875rem;
+	border-bottom:1px solid #dfe0df;
+}
+.storeListBody .storeListSort li .sortSelList li a{
+	display:block;
+	width:100%;
+	height:3.875rem;
+	line-height:3.875rem;
+}
+.storeListBody .storeListSort li .sortSelList li:last-child{
+	border-bottom:0px solid #dfe0df;
+}
+.storeListBody .storeListSort li .sortSelList li span{
+	background:none;
+	color:#474747;
+}
+.storeListBody .storeListSort li .sortSelList2 li span{
+	width: 30%;
+	background:url('../img/sort_asc.png') no-repeat right center;
+
+}
+.storeListBody .storeListSort li .sortSelList2 li span.desc{
+	background:url('../img/sort_desc.png') no-repeat right center;
+
+}
+
+
+.storeListBody .storeListSort li .sortSelList2 li.active span{
+	width: 30%;
+	background:url('../img/sort_h_asc.png') no-repeat right center;
+
+}
+.storeListBody .storeListSort li .sortSelList2 li.active span.desc{
+	background:url('../img/sort_h_desc.png') no-repeat right center;
+
+}
+
+.storeListBody .storeListSort li .sortSelList li.active span{
+	color:#00ab98;
+}
+.storeListBody .storeListSort li.active .sortSelList{
+	display:block;
+}
+
+.storeListContent{
+	margin-top:3.438rem;
+	padding:1.750rem;
+}
+.storeListContent .categoryTitle{
+	font-size:1.655rem;
+	color:#474747;
+	height:1.875rem;
+	line-height:1.875rem;
+
+}
+.storeListContent .item{
+	margin:1.563rem 0;
+	border: none;
+	display:block;
+}
+.storeListContent .item .image{
+	height:15.563rem;
+	width:100%;
+	background-size: cover;
+	background-position: 50%;
+	border-radius: 0.156rem;
+	background-color: #f2f2f2;
+}
+.storeListContent .item .title{
+	margin-top:1.250rem;
+	font-size:1.448rem;
+	height:1.875rem;
+	line-height:1.875rem;
+	color:#474747;
+}
+.storeListContent .item .tags{
+	height:1.563rem;
+	line-height:1.563rem;
+}
+.storeListContent .item .tags span{
+	display:inline-block;
+	font-size:0.896rem;
+	color:#a0a0a0;
+	margin-right:0.938rem;
+	float:left;
+}
+.storeListContent .item .prices{
+	text-align:right;
+	height:1.875rem;
+	line-height:1.875rem;
+}
+.storeListContent .item .prices span{
+	display:inline-block;
+}
+.storeListContent .item .prices .coupon{
+	color:#ff5161;
+	font-size:0.896rem;
+	border-radius:0.250em;
+	border:1px solid #ff5161;
+	margin-right:0.625rem;
+	height:1.250rem;
+	line-height:1.250rem;
+	padding:0 0.125rem;
+}
+.storeListContent .item .prices .price{
+	font-size:1.241rem;
+	color:#474747;
+
+}
+
+.m-mask{
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	background: rgba(0, 0, 0, 0.5);
+}
+.m-mask-show{
+	display:block;
+}

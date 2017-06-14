@@ -33,10 +33,10 @@
         </div>
       </div>
       <div class="t2">
-        <div class="linkLock"><img width="35px" height="15px" src="http://taihuiyuan.com/hotel-img/linkLock.png"/></div>
+        <div class="linkLock"><img src="http://taihuiyuan.com/hotel-img/linkLock.png"/></div>
       </div>
     </div>
-    <div class="linkBtn">确认关联</div>
+    <div class="linkBtn" onClick="getUserInfo()">确认关联</div>
   </div>
 </body>
 <style type="text/css">
@@ -46,6 +46,10 @@
     margin-right: 0.666667rem;
     font-size: 0.853333rem;
     color: #474747;
+}
+.linkLock img {
+    width: 0.92rem;
+    height: 0.4rem;
 }
 .pageTitle_second{
   margin-top: 0.266667rem;
@@ -122,6 +126,7 @@
   height: 0.533333rem;
   padding-top: 0.133333rem;
   background-color: #fff;
+  text-align: center;
 }
 .linkBtn {
     margin: 0 auto;
@@ -146,9 +151,45 @@ function GetQueryString(name){
     if(r!=null)return  unescape(r[2]); return null;
 }
 
+function linkAliPay(){
+  var key = GetQueryString("key");
+  var linkPay3 = "/api/relation/ali/" + key;
+  document.write(linkPay3);
+  $.ajax({
+    type: 'POST',
+    url: linkPay3,
+    data: {},
+    dataType: 'json',
+    success: function(response){
+        var data = response.data;
+        alert(JSON.stringfy(data));
+        window.location.href("http://www.taihuiyuan.com/linkPaySuccess.html");
+    },
+    error: function(xhr, type){
+        window.location.href("http://www.taihuiyuan.com/linkPayFail.html");
+    }
+  })
+}
+
 var key = GetQueryString("key");
-//http://域名/api/relation/ali/info/参数值
-var linkPay2 = "/api/relation/ali/info/" + key;
+var linkPay2 = "http://dev.taihuiyuan.com/api/relation/ali/info/" + key;
+
+function getUserInfo(){
+  $.ajax({
+    type: 'GET',
+    url: linkPay2,
+    data: {},
+    dataType: 'json',
+    success: function(response){
+        var data = response.data;
+        alert(JSON.stringfy(data));
+    },
+    error: function(xhr, type){
+      alert(JSON.stringify(xhr));
+    }
+  })
+}
+
 $.ajax({
   type: 'GET',
   url: linkPay2,
@@ -156,10 +197,10 @@ $.ajax({
   dataType: 'json',
   success: function(response){
       var data = response.data;
-      alert(JSON.stringfy(data));
   },
   error: function(xhr, type){
-    alert('error!')
+    alert(xhr.status);
+    setTimeout("getUserInfo()",5000)
   }
 })
 </script>

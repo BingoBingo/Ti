@@ -77,8 +77,8 @@ const Index = React.createClass({
           if (device == "wechat") {
             var wechatPayParam = payInfo.data.wechatPayParam;
             var code = payInfo.data.code;
-            var exp = payInfo.data.exp;
-            var p = payInfo.data.p;
+            var exp =  payInfo.data.exp;
+            var p =  payInfo.data.p;
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
@@ -145,7 +145,7 @@ const Index = React.createClass({
       },
       fail: function(status) {
         var payBtnInfo = "支付"
-        alert("error: " + status);
+        alert(status);
         _this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotput"})
         console.log(status);
       }
@@ -183,8 +183,8 @@ const Index = React.createClass({
           if (device == "wechat") {
             var wechatPayParam = payInfo.data.wechatPayParam;
             var code = payInfo.data.code;
-            var exp = payInfo.data.exp;
-            var p = payInfo.data.p;
+            var exp =  payInfo.data.exp;
+            var p =  payInfo.data.p;
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
@@ -247,6 +247,7 @@ const Index = React.createClass({
         }
       },
       fail: function(status) {
+        alert(status);
         document.getElementById("vipPayBtn").innerText = "支付 ￥" + payDiscountMoney;
       }
     });
@@ -307,25 +308,25 @@ const Index = React.createClass({
         //var price = item.price
         //储值余额 availableStoredValue
 
-        //余额 < 原价-抵扣 < 储值金额+余额
+        //余额 < 原价-折扣 < 储值卡金额 + 余额 + 赠送储值
         var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
-        console.log(diff0);
-        var diff1 = item.price*1 + availableStoredValue*1 - (userPayMoney*1 - availablePoint*1);
-        console.log(diff1);
+        var diff1 = item.price*1 + availableStoredValue*1 + item.storedValue*1 - (userPayMoney*1 - availablePoint*1);
         if (diff0 > 0 && diff1 > 0) {
             canBuyCards.push(item)
         }
       });
     }
-    console.log("----------------");
-    console.log(canBuyCards.length);
     if (!isSaleCards) {
       this.noCardPayMoney(payMoney);
+      return false;
     }
-    if(discountCards.length == 0 && storeCards.length == 0 && availablePoint == 0 && availableStoredValue == 0){
+    //storeCards ->canBuyCards
+    if(discountCards.length == 0 && canBuyCards.length == 0 && availablePoint == 0 && availableStoredValue == 0){
       this.noCardPayMoney(payMoney);
+      return false;
     }
-    if(discountCards.length == 0 && storeCards.length == 0 && (availablePoint != 0 || availableStoredValue !=0)) {
+    //storeCards ->canBuyCards
+    if(discountCards.length == 0 && canBuyCards.length == 0 && (availablePoint != 0 || availableStoredValue !=0)) {
       document.getElementById("xdd-keybord").style.display = "none";
       let path = `/PayEnd_Detail/`
       this.context.router.push({
@@ -342,24 +343,30 @@ const Index = React.createClass({
         }
       });
     }
+
     if(canBuyCards.length == 0 && discountCards.length == 0){
-      document.getElementById("xdd-keybord").style.display = "none";
-      let path = `/PayEnd_Detail/`
-      this.context.router.push({
-        pathname: path,
-        query: {
-          availablePoint: availablePoint,
-          cardGivePoint: 0,
-          payReduce:0,
-          userPayMoney: payMoney,
-          payType: "useDYJ",
-          availableStoredValue:availableStoredValue,
-          defaultDiscount:defaultDiscount,
-          payBtnInfo:"jump"
-        }
-      });
+      if(availablePoint == 0 && availableStoredValue ==0){
+        this.noCardPayMoney(payMoney);
+      }else{
+        document.getElementById("xdd-keybord").style.display = "none";
+        let path = `/PayEnd_Detail/`
+        this.context.router.push({
+          pathname: path,
+          query: {
+            availablePoint: availablePoint,
+            cardGivePoint: 0,
+            payReduce:0,
+            userPayMoney: payMoney,
+            payType: "useDYJ",
+            availableStoredValue:availableStoredValue,
+            defaultDiscount:defaultDiscount,
+            payBtnInfo:"jump"
+          }
+        });
+      }
     }
-    if(isSaleCards && (discountCards.length != 0 || storeCards.length != 0) && (canBuyCards.length !=0 || discountCards.length != 0)) {
+    //storeCards ->canBuyCards
+    if(isSaleCards && (canBuyCards.length !=0 || discountCards.length != 0)) {
       document.getElementById("xdd-keybord").style.display = "none";
       const path = `/New_User_Welfare/`
       this.context.router.push({

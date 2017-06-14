@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Card-Apps.">
+  <!-- <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"> -->
+  <title></title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+  <script src="zepto.min.js"></script>
+  <script src="clipboard.min.js"></script>
+<!-- <script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(e,t){var a=e||100,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=a/2*s*n+"px"},e.exports=t["default"]}]);  flex(100, 1);</script> -->
+
+</head>
+
+<body>
+  <div class="root" id="root">
+    <div class="pageTitle">关联我的微信</div>
+    <div class="pageSmTitle">关联教程</div>
+    <div class="pageBody"><img class="wechatImg"  style="width:4.8rem;height:8rem;margin-right:0.266667rem;margin-left:0.266667rem"  src="http://taihuiyuan.com/hotel-img/linkabc.gif"/></div>
+    <div class="opration"><span style="font-size:0.56rem">编码：</span> <span style="font-size:0.56rem;color:#00a698" id="relationCode">000000</span> <span class="copyBtn" data-clipboard-text="000000" onClick="alert('已复制')">复制</span></div>
+  </div>
+  <style type="text/css">
+  .pageTitle {
+      margin-top: 1.333333rem;
+      margin-left: 0.666667rem;
+      margin-right: 0.666667rem;
+      font-size: 0.853333rem;
+      color: #474747;
+      text-align: center;
+  }
+  .pageSmTitle{
+      font-size: 0.346667rem;
+      text-align: center;
+      margin-top:0.8rem;
+      margin-bottom: 0.26667rem;
+  }
+  .pageBody{
+      margin-left: 0.666667rem;
+      margin-right: 0.666667rem;
+      font-size: 0.56rem;
+      margin-top: 0.666667rem;
+      line-height: 0.8rem;
+      height: 8.933333rem;
+      background: #474747;
+      width: 5.33333rem;
+      margin: 0 auto;
+      border-radius: 0.533333rem;
+      text-align: center;
+      padding-top: 0.933333rem;
+  }
+  .copyBtn{
+      width: 1.6rem;
+      height: 0.666667rem;
+      line-height: 0.666667rem;
+      text-align: center;
+      border-radius: 0.333333rem;
+      background: #00a698;
+      color: #fff;
+      display: inline-block;
+      margin-left: 0.4rem;
+  }
+  .opration{
+      text-align: center;
+      margin-top: 0.8rem;
+      margin-bottom: 2rem;
+  }
+  </style>
+</body>
+
+
+<script type="text/javascript">
+
+function GetQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
+
+var clipboard = new Clipboard('.copyBtn');
+
+var uid = GetQueryString("uid");
+var alipayLink = "/api/relation/"+uid+"/code"
+$.ajax({
+  type: 'GET',
+  url: alipayLink,
+  data: { },
+  dataType: 'json',
+  success: function(response){
+      $("#relationCode").text(response.data.relationCode);
+      $(".copyBtn").data("clipboard-text", response.data.relationCode);
+  },
+  error: function(xhr, type){
+      alert('获取关联码失败!')
+  }
+})
+</script>
+
+</html>

@@ -122,7 +122,6 @@ const Index = React.createClass({
       <div></div>
     </div>;
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "payEnd payend-loading"})
-
     var payTrue = this.props.location.query.userPayMoney * 1;
     payTrue = payTrue.toFixed(2);
     var cardId = this.props.location.query.cardId;
@@ -165,10 +164,10 @@ const Index = React.createClass({
             var isBuyCard = localStorage.getItem("isBuyCard");
             if (wechatPayParam == "") {
               if (window.location.host == "taihuiyuan.com") {
-                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
               }
               if (window.location.host == "dev.taihuiyuan.com") {
-                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
               }
             } else {
               wechatPayParam = eval("(" + wechatPayParam + ")");
@@ -176,9 +175,9 @@ const Index = React.createClass({
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                   wx.closeWindow();
                   if (window.location.host == "taihuiyuan.com") {
-                    window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                    window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
                   } else {
-                    window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                    window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
                   }
                 }
               });
@@ -190,11 +189,11 @@ const Index = React.createClass({
             var isBuyCard = localStorage.getItem("isBuyCard");
             if (alipayForm == "") {
               if (window.location.host == "taihuiyuan.com") {
-                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
                 //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
               }
               if (window.location.host == "dev.taihuiyuan.com") {
-                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
                 //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
               }
             } else {
@@ -235,13 +234,14 @@ const Index = React.createClass({
           }
         } else {
           if (window.location.host == "taihuiyuan.com") {
-            window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+            window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
           } else {
-            window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+            window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
           }
         }
       },
       fail: function(status) {
+        alert(status);
         console.log(status);
       }
     });
@@ -283,7 +283,6 @@ const Index = React.createClass({
     // var hotelId = this.state.hotelId
     // var uid = this.state.uid
     // var device = this.state.device
-
     var isNewUser = Tools.GetQueryString("ut");
     var hotelId = Tools.GetQueryString("hid");
     var uid = Tools.GetQueryString("uid");
@@ -304,12 +303,9 @@ const Index = React.createClass({
     //共有抵用金
     availablePoint = availablePoint*1 + cardGivePoint*1;
 
-    console.log("共有抵用金"+availablePoint);
     //可用抵用金
-    console.log("defaultDiscount"+this.props.location.query.defaultDiscount);
     var canUsePoint = (1 - this.props.location.query.defaultDiscount) * payTrue;
     canUsePoint = canUsePoint.toFixed(2);
-    console.log("--------"+canUsePoint);
     var trueUsePoint = availablePoint - canUsePoint;
 
     if (trueUsePoint > 0) {
@@ -322,25 +318,19 @@ const Index = React.createClass({
     var availableStoredValue = this.props.location.query.availableStoredValue * 1;
     availableStoredValue = availableStoredValue.toFixed(2);
     //储值支付
-    console.log("可用抵用金"+trueUsePoint);
-    console.log("储值余额"+ availableStoredValue);
-    console.log("实际输入"+payTrue);
-    console.log(trueUsePoint*1 + availableStoredValue*1 - payTrue*1);
+
     var payCost = (trueUsePoint*1 + availableStoredValue*1 - payTrue*1) > 0 ? (payTrue*1 - trueUsePoint*1) : availableStoredValue*1;
 
-    console.log("储值支付"+payCost);
     payCost = payCost.toFixed(2);
 
     //实付
     var trueCost = (payTrue*1 - trueUsePoint*1 - payCost*1) > 0 ?  (payTrue*1 - trueUsePoint*1 - payCost*1) : 0;
     trueCost = trueCost.toFixed(2) * 1;
-    console.log("实付"+trueCost);
     var cardId = this.props.location.query.cardId;
     var cardPrice = this.props.location.query.cardPrice * 1;
     cardPrice = cardPrice.toFixed(2);
 
     var payBtnInfo = this.props.location.query.payBtnInfo;
-
     return (
       <View className="payEnd-background">
         <Container scrollable>

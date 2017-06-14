@@ -178,7 +178,6 @@ const New_User_Welfare = React.createClass({
       fail: function(status) {
         var payBtnInfo = "放弃优惠"
         _this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "giveUp"})
-        console.log(status);
       }
     });
   },
@@ -190,6 +189,13 @@ const New_User_Welfare = React.createClass({
     var _this = this;
     var userPayMoney = this.props.location.query.userPayMoney;
     var vipgoback = this.props.location.query.vipgoback;
+    let device = localStorage.getItem("device");
+    let linkInfo;
+    if(device == "alipay"){
+        linkInfo = "若微信端已购卡，请关联 >";
+    }else{
+        linkInfo = "若支付宝已购卡，请关联 >";
+    }
     if (vipgoback == "返回") {
       this.setState({payBtnInfo: vipgoback})
     }
@@ -205,14 +211,16 @@ const New_User_Welfare = React.createClass({
 
         let cardInfo = eval('(' + response + ')')
         //可用抵用金
+        let isRelation = cardInfo.data.isRelation;
+        if(isRelation){
+            linkInfo = "在公众号“钛会员”中管理会员卡";
+        }
         let availablePoint = cardInfo.data.availablePoint;
         let availableStoredValue = cardInfo.data.availableStoredValue;
         let defaultDiscount = cardInfo.data.defaultDiscount;
         //var canUsePoint = (availablePoint - availablePoint * defaultDiscount) * 100;
         var canUsePoint = (1 - defaultDiscount) * userPayMoney;
         canUsePoint = canUsePoint.toFixed(2);
-        console.log("可用抵用金" + canUsePoint);
-        console.log("实际抵用金" + availablePoint);
         var trueUsePoint = availablePoint - canUsePoint;
 
         if (trueUsePoint > 0) {
@@ -239,7 +247,8 @@ const New_User_Welfare = React.createClass({
           hasDYJ: hasDYJ,
           canUsePoint: canUsePoint,
           trueUsePoint: trueUsePoint,
-          availableStoredValue:cardInfo.data.availableStoredValue//储值余额
+          availableStoredValue:cardInfo.data.availableStoredValue,//储值余额
+          linkInfo:linkInfo
         })
         let saleCards = JSON.stringify(cardInfo.data.saleCards);
         let saleStoredCards = JSON.stringify(cardInfo.data.saleStoredCards);
@@ -250,7 +259,16 @@ const New_User_Welfare = React.createClass({
         console.log(status);
       }
     });
-    //}
+  },
+
+  linkAliPay() {
+    var uid = localStorage.getItem("uid");
+    let device = localStorage.getItem("device");
+    if(device == "alipay"){
+      window.location.href = "/alipayLink.html?uid=" + uid;
+    }else{
+      window.location.href = "/linkPay1.html?uid=" + uid;
+    }
   },
 
   renderCards() {
@@ -267,7 +285,6 @@ const New_User_Welfare = React.createClass({
         //payReduce = parseInt(payReduce.substring(0,payReduce.indexOf('.')));
 
         var payTrue = userPayMoney * item.discount;
-        console.log(payTrue);
         var discount = item.discount
           ? (item.discount * 10).toFixed(1)
           : "";
@@ -300,7 +317,7 @@ const New_User_Welfare = React.createClass({
                 </div>
                 <div className="card-reduce">
                   <div className="card-reduceMoney">本单立减￥{payReduce}</div>
-                  <div className="card-giveMoney">再赠抵用金{givePoint}元</div>
+                  <div className="card-giveMoney">{givePoint == 0 ? `了解详情` :`再赠抵用金${givePoint}元`}</div>
                 </div>
               </div>
               <div className="cardlist-border"></div>
@@ -332,9 +349,8 @@ const New_User_Welfare = React.createClass({
 
         //余额 < 原价-抵扣 < 储值金额+余额
         var diff0 = userPayMoney*1 - trueUsePoint*1 -availableStoredValue*1;
-        var diff1 = price*1 + availableStoredValue*1 - (userPayMoney*1 - trueUsePoint*1);
-        console.log(diff0);
-        console.log(diff1);
+        var diff1 = price*1 + availableStoredValue*1 + item.storedValue*1 - (userPayMoney*1 - trueUsePoint*1);
+
         var payReduce = userPayMoney - userPayMoney * this.state.defaultDiscount;
         payReduce = payReduce.toFixed(0);
         var payTrue = userPayMoney * item.discount;
@@ -367,12 +383,12 @@ const New_User_Welfare = React.createClass({
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
                   <div className="card-discount-cz"><span>{isRefund}储值卡</span></div>
-                  <div className="card-money-cz">￥{item.price}</div>
+                  <div className="card-money-cz">￥{item.price}{item.storedValue != 0 ? `赠${item.storedValue}元` : ""}</div>
                 </div>
                 <div className="card-reduce-czk">
                   {/* <div className="card-reduceMoney">本单抵扣￥{payReduce}</div> */}
                   <div className="card-reduceMoney"></div>
-                  <div className="card-giveCZ">赠{givePoint}元抵用金</div>
+                  <div className="card-giveCZ">{givePoint == 0 ? `了解详情` : `赠${givePoint}元抵用金`}</div>
                 </div>
               </div>
               <div className="cardlist-border"></div>
@@ -423,9 +439,9 @@ const New_User_Welfare = React.createClass({
     return (
       <View>
         <Container scrollable>
-          <div style={cardBack}>
+          <div style={cardBack} onClick={this.linkAliPay}>
             <div className="bigTitle">在售会员卡</div>
-            <div className="smallTitle">若支付宝已购卡，请关联 ></div>
+            <div className="smallTitle">{this.state.linkInfo}</div>
           </div>
           {/* <Link to={{pathname:"PayEnd_Detail",query:{availablePoint:this.state.trueUsePoint,userPayMoney:userPayMoney,payType:"useDYJ"}}}> */}
           {/* <div className="card-list" style={{

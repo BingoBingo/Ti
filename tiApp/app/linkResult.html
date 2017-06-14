@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Card-Apps.">
+  <!-- <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"> -->
+  <title></title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+  <script src="zepto.min.js"></script>
+</head>
+
+<body>
+
+  <div class="root" id="linkAliPay">
+    <div class="pageTitle">已关联的账号</div>
+    <div class="pageTitle_second">关联后可查看、共用全部信息</div>
+    <div class="pageBody">
+      <div class="t3">
+        <div class="rightCard">
+          <div class="headpic" id="wechatUserHeadPic"></div>
+          <div class="username" id="wechatUserNickname">wechat-nickname</div>
+          <div class="counttype">微信账号</div>
+          <div class="cardback" id="wechatVipCard"></div>
+        </div>
+      </div>
+      <div class="t1">
+        <div class="leftCard">
+          <div class="headpic" id="aliUserHeadPic"></div>
+          <div class="username" id="aliUserNickname">ali-nickname</div>
+          <div class="counttype">支付宝账号</div>
+          <div class="cardback" id="aliVipCard"></div>
+        </div>
+      </div>
+      <div class="t2">
+        <div class="linkLock"><img src="http://taihuiyuan.com/hotel-img/linkLock.png"/></div>
+      </div>
+    </div>
+    <div class="linkBtn" onClick="javascript:history.back(-1);">确认</div>
+  </div>
+
+  <style type="text/css">
+  #root .pageTitle {
+      margin-top: 1.333333rem;
+      margin-left: 0.666667rem;
+      margin-right: 0.666667rem;
+      font-size: 0.853333rem;
+      color: #474747;
+  }
+  #root .pageBody{
+    margin-left: 0.666667rem;
+    margin-right: 0.666667rem;
+    font-size: 0.56rem;
+    margin-top: 0.666667rem;
+    line-height: 0.8rem;
+  }
+  /*.wechatImg{
+      height: 0.56rem
+      margin-left: 0.133333rem;
+      margin-right: 0.133333rem;
+  }*/
+
+
+  .pageTitle {
+      margin-top: 1.066667rem;
+      margin-left: 0.666667rem;
+      margin-right: 0.666667rem;
+      font-size: 0.853333rem;
+      color: #474747;
+  }
+  .linkLock img {
+      width: 0.92rem;
+      height: 0.4rem;
+  }
+  .pageTitle_second{
+    margin-top: 0.266667rem;
+    font-size: 0.426667rem;
+    color: #a0a0a0;
+    margin-left: 0.666667rem;
+    margin-right: 0.666667rem;
+  }
+  .pageBody{
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    margin-top: 1.066667rem;
+  }
+  .leftCard{
+    margin-left: 0.4rem;
+    border:2px solid #5bb6da;
+    padding-top: 0.666667rem;
+    /*height: 50px;*/
+  }
+  .rightCard{
+    margin-right: 0.4rem;
+    border:2px solid #81ca4f;
+    padding-top: 0.666667rem;
+    /*height: 50px;*/
+  }
+  .t1{background-color: #fff;position: absolute;left: 0;right: 50%;margin-right: 0.2rem;}
+  .t2{background-color: #fff;position: absolute;left: 50%;margin-left: -0.2rem;}
+  .t3{background-color: #fff;position: absolute;right: 0;left: 50%;margin-left: 0.2rem;}
+  .t2{width: 0.4rem;}
+
+  .headpic{
+    width: 1.333333rem;
+    height: 1.333333rem;
+    background-color: #dedede;
+    border-radius: 50%;
+    margin-top: 0.666667rem;
+    margin:0 auto;
+  }
+  .username{
+    margin-top: 0.4rem;
+    font-size: 0.426667rem;
+    color: #474747;
+    text-align: center;
+  }
+  .counttype{
+    margin-top:0.266667rem;
+    font-size: 0.346667rem;
+    text-align: center;
+    margin-bottom: 0.666667rem;
+  }
+  .rightCard .counttype{
+    color: #81ca4f;
+  }
+  .leftCard .counttype{
+    color: #5bb6da;
+  }
+  .rightCard .cardback{
+    background:url(http://taihuiyuan.com/hotel-img/rightC.png) no-repeat center top;
+    height: 3.52rem;
+    background-size: 100%;
+    margin-bottom: 0.933333rem;
+  }
+  .leftCard .cardback{
+    background:url(http://taihuiyuan.com/hotel-img/leftC.png) no-repeat center top;
+    height: 3.52rem;
+    background-size: 100%;
+    margin-bottom: 0.933333rem;
+  }
+
+  .linkLock{
+    margin-top: 1.893333rem;
+    margin-left: -0.266667rem;
+    width: 0.92rem;
+    height: 0.533333rem;
+    padding-top: 0.133333rem;
+    background-color: #fff;
+    text-align: center;
+  }
+  .linkBtn {
+      margin: 0 auto;
+      width: 3.733333rem;
+      height: 1.066667rem;
+      text-align: center;
+      color: #fff;
+      font-size: 0.48rem;
+      line-height: 1.066667rem;
+      background-color: #00a698;
+      margin-top: 11.46667rem;
+      margin-bottom: 2rem;
+      position: relative;
+      border-radius: 0.533333rem;
+  }
+  </style>
+</body>
+
+
+
+<script type="text/javascript">
+function GetQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
+var key = GetQueryString("key");
+var url = "/api/relation/wechat/info/" + key;
+$.ajax({
+  type: 'GET',
+  url: url,
+  data: {},
+  dataType: 'json',
+  success: function(response){
+      $("#aliUserHeadPic").css("background","url("+response.data.aliUserHeadPic+")");
+      $("#wechatUserHeadPic").css("background","url("+response.data.wechatUserHeadPic+")");
+      if(typeof(response.data.aliVipCard) !== "undefined"){
+          $("#aliVipCard").css("background","url("+response.data.aliVipCard+")");
+      }
+      if(typeof(response.data.wechatVipCard) !== "undefined"){
+          $("#wechatVipCard").css("background","url("+response.data.wechatVipCard+")");
+      }
+      $("#aliUserNickname").text(response.data.aliUserNickname);
+      $("#wechatUserNickname").text(response.data.wechatUserNickname);
+  },
+  error: function(xhr, type){
+      alert("获取用户信息失败");
+  }
+})
+</script>
+
+</html>
