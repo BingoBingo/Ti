@@ -82,13 +82,13 @@ const Index = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                wx.closeWindow();
+                //wx.closeWindow();
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
-                  window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                  window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 } else {
-                  window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                  window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 }
               }
             });
@@ -188,13 +188,13 @@ const Index = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                wx.closeWindow();
+                //wx.closeWindow();
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
-                  window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                  window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 } else {
-                  window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp=" + exp + "&p=" + p;
+                  window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 }
               }
             });

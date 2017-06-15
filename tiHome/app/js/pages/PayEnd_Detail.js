@@ -164,20 +164,20 @@ const Index = React.createClass({
             var isBuyCard = localStorage.getItem("isBuyCard");
             if (wechatPayParam == "") {
               if (window.location.host == "taihuiyuan.com") {
-                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+                window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
               }
               if (window.location.host == "dev.taihuiyuan.com") {
-                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+                window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
               }
             } else {
               wechatPayParam = eval("(" + wechatPayParam + ")");
               WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  wx.closeWindow();
+                  //wx.closeWindow();
                   if (window.location.host == "taihuiyuan.com") {
-                    window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+                    window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                   } else {
-                    window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+                    window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                   }
                 }
               });
@@ -189,11 +189,11 @@ const Index = React.createClass({
             var isBuyCard = localStorage.getItem("isBuyCard");
             if (alipayForm == "") {
               if (window.location.host == "taihuiyuan.com") {
-                window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+                window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
                 //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
               }
               if (window.location.host == "dev.taihuiyuan.com") {
-                window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+                window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
                 //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
               }
             } else {
@@ -234,9 +234,9 @@ const Index = React.createClass({
           }
         } else {
           if (window.location.host == "taihuiyuan.com") {
-            window.location.href = "http://taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+            window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
           } else {
-            window.location.href = "http://dev.taihuiyuan.com/index2.html?isSaleCards=" + localStorage.getItem("isSaleCards") + "&code=" + code + "&exp="+exp+"&p="+p;
+            window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
           }
         }
       },
@@ -279,10 +279,6 @@ const Index = React.createClass({
   },
   render() {
 
-    // var isNewUser = this.state.isNewUser;
-    // var hotelId = this.state.hotelId
-    // var uid = this.state.uid
-    // var device = this.state.device
     var isNewUser = Tools.GetQueryString("ut");
     var hotelId = Tools.GetQueryString("hid");
     var uid = Tools.GetQueryString("uid");

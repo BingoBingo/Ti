@@ -168,7 +168,7 @@ const Index = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                wx.closeWindow();
+                //wx.closeWindow();
                 var hid = localStorage.getItem("hotelId");
                 var hname = localStorage.getItem("hname");
                 var device = localStorage.getItem("device");

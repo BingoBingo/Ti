@@ -12,6 +12,7 @@
   <meta name="renderer" content="webkit">
   <!-- No Baidu Siteapp-->
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
   <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
   <script src="zepto.min.js"></script>
 </head>
@@ -42,7 +43,7 @@
         <div class="linkLock"><img src="http://taihuiyuan.com/hotel-img/linkLock.png"/></div>
       </div>
     </div>
-    <div class="linkBtn" onClick="javascript:history.back(-1);">确认</div>
+    <div class="linkBtn" onClick="closeWindow()">确认</div>
   </div>
 
   <style type="text/css">
@@ -180,6 +181,10 @@ function GetQueryString(name){
     var r = window.location.search.substr(1).match(reg);
     if(r!=null)return  unescape(r[2]); return null;
 }
+function closeWindow(){
+    wx.closeWindow();
+}
+
 var key = GetQueryString("key");
 var url = "/api/relation/wechat/info/" + key;
 $.ajax({
@@ -188,6 +193,7 @@ $.ajax({
   data: {},
   dataType: 'json',
   success: function(response){
+      console.log(response);
       $("#aliUserHeadPic").css("background","url("+response.data.aliUserHeadPic+")");
       $("#wechatUserHeadPic").css("background","url("+response.data.wechatUserHeadPic+")");
       if(typeof(response.data.aliVipCard) !== "undefined"){
