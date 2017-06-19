@@ -44,9 +44,9 @@ var Tools = {
     var test = true;
     var hostUrl = window.location.host;
     if (hostUrl == "taihuiyuan.com") {
-      options.url = "http://taihuiyuan.com/api" + options.url;
+      options.url = "https://taihuiyuan.com/api" + options.url;
     } else {
-      options.url = "http://dev.taihuiyuan.com/api" + options.url;
+      options.url = "https://dev.taihuiyuan.com/api" + options.url;
       //options.url = "http://taihuiyuan.com/api" + options.url;
     }
 
