@@ -278,7 +278,7 @@ const Index = React.createClass({
       return false;
     }
     if (payOldMoney > 9999.99) {
-      alert("单笔支付金额不能超过1w元");
+      alert("输入金额请小于10000");
       return false;
     }
     localStorage.setItem("payOldMoney", payOldMoney);
@@ -385,7 +385,7 @@ const Index = React.createClass({
       return false;
     }
     if (newUserPayMoney > 9999.99) {
-      alert("单笔支付金额不能超过1w元");
+      alert("输入金额请小于10000");
       return false;
     }
     localStorage.setItem("newUserPayMoney", newUserPayMoney);
@@ -400,8 +400,13 @@ const Index = React.createClass({
   chooseGood() {
     let payMemberMoney = document.getElementById("payMemberMoney").value;
     let cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
+    let exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
+    if (!exp.test(payMemberMoney) || payMemberMoney == 0) {
+      alert("金额不能为0");
+      return false;
+    }
     if (payMemberMoney > 9999.99) {
-      alert("单笔支付金额不能超过1w元");
+      alert("输入金额请小于10000");
       return false;
     }
     let payBtnInfo = <div className="loader-inner ball-pulse">
@@ -416,7 +421,7 @@ const Index = React.createClass({
     let payMemberMoney = document.getElementById("payMemberMoney_CZ").value;
     let cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
     if (payMemberMoney > 9999.99) {
-      alert("单笔支付金额不能超过1w元");
+      alert("输入金额请小于10000");
       return false;
     }
     let payBtnInfo = <div className="loader-inner ball-pulse">
@@ -630,7 +635,7 @@ const Index = React.createClass({
                 <div className="inputSpecialBox"><input readOnly="readonly" className="specialInput_vip" id="payOldMoney" onChange={this.changeBtn}/></div>
               </div>
             </div>
-            <div className="vipCopration" >储值余额：{availableStoredValue}</div>
+            {/* <div className="vipCopration" style={{display:"none"}}>储值余额：{availableStoredValue}</div> */}
             {/* <div className="btn-pay-notput" onClick={this.oldUserChousePay} id="vipPayBtn">去选优惠</div> */}
             <div className="vipDiscount">
               <div className="discount-card" style={cardBack}>

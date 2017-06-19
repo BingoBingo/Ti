@@ -6,7 +6,8 @@
   <meta name="description">
   <meta name="x5-fullscreen" content="true">
   <link rel="stylesheet" type="text/css" href="dropload.css">
-  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+  <!-- <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script> -->
+  <script src="https://dev.taihuiyuan.com/flexible.js"></script>
   <script src="zepto.min.js"></script>
   <script src="dropload.js"></script>
   <title></title>
@@ -109,7 +110,7 @@
   .content_title {
     margin: 0 auto;
     background-color: #fff;
-    margin: 1.066667rem 0.666667rem 0;
+    margin: 0.533333rem 0.666667rem 0;
   }
 
   .content_title {
@@ -207,11 +208,36 @@
     color: #999;
   }
 
+  .footer{
+    width: 100%;
+    height: 1.733333rem;
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    text-align: center;
+    line-height: 1.733333rem;
+    z-index: 9999;
+    border-top: 1px solid #dedede;
+  }
+
+  .myTqBtn{
+    width: 4rem;
+    height: 1.066667rem;
+    text-align: center;
+    line-height: 1.066667rem;
+    background: #00a698;
+    color: #fff;
+    border-radius: 0.533333rem;
+    font-size: 0.48rem;
+    margin: 0.36rem auto;
+  }
+
   .nomore{
     font-size: 0.426667rem;
     text-align: center;
-    height: 1rem;
+    height: 2rem;
     line-height: 1rem;
+    color:#dedede
   }
 
   .opacity {
@@ -259,6 +285,9 @@
       <div class="lists"></div>
     </div>
   </div>
+  <div class="footer" onclick="myTqClick()">
+      <div class="myTqBtn">我的特权</div>
+  </div>
 
   <script type="text/javascript">
     function GetQueryString(name) {
@@ -268,6 +297,15 @@
       var r = searchURL.substr(1).match(reg);
       if (r != null) return unescape(r[2]);
       return null;
+    }
+
+    function myTqClick(){
+      var ua = window.navigator.userAgent.toLowerCase();
+      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI2NzQzNzAwNQ==&scene=124#wechat_redirect"
+      }else{
+        window.location.href = "/alipayLink.html?uid="+GetQueryString("uid");
+      }
     }
 
     $(function() {
@@ -305,7 +343,7 @@
               if (arrLen > 0) {
                 for (var i = 0; i < arrLen; i++) {
                   var disount = items[i].discountInfo.discount == 1 ? "无折扣" : (items[i].discountInfo.discount * 10 + '折')
-                  result += '<a class="item opacity" href="' + items[i].id + '">' +
+                  result += '<a class="item opacity" href="javascript:;">' +
                     '<img src="' + items[i].photo.path + '/' + items[i].photo.name + '" alt="">' +
                     '<div class="itemsDetail">' +
                     '<div class="itemsName">' + items[i].name + '</div>' +

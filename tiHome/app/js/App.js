@@ -81,6 +81,7 @@ import Dyj_Detail from './pages/Dyj_Detail'
 import Pay_Success_Fail from './pages/Pay_Success_Fail'
 import PayEnd_WithCard from './pages/PayEnd_WithCard'
 import Wallet_SupportHotel from './pages/Wallet_SupportHotel'
+import YKXZ_Detail from './pages/YKXZ_Detail'
 
 const routes = (
   <Router history={hashHistory}>
@@ -91,6 +92,7 @@ const routes = (
       <Route path="CardDetail_Buy" component={CardDetail_Buy} />
       <Route path="PayEnd_Detail" component={PayEnd_Detail} />
       <Route path="Dyj_Detail" component={Dyj_Detail} />
+      <Route path="YKXZ_Detail" component={YKXZ_Detail} />
       <Route path="Pay_Success_Fail" component={Pay_Success_Fail} />
       <Route path="PayEnd_WithCard" component={PayEnd_WithCard} />
       <Route path="Wallet_SupportHotel" component={Wallet_SupportHotel} />

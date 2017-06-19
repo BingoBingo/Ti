@@ -270,9 +270,9 @@ const CardDetail_Buy = React.createClass({
     for (let i = 0; i < cardDetail.length; i++) {
       if (cardDetail[i].cardId == cardId) {
         let start = new Date();
-        let end = cardDetail[i].expiry;
-        let devi =  new Date(end).getTime() - start.getTime();
-        let deviDays =Math.floor(devi/(24*3600*1000)) + "天"
+        //let expiry = cardDetail[i].expiry;
+        // let devi =  new Date(end).getTime() - start.getTime();
+        // let deviDays =Math.floor(devi/(24*3600*1000)) + "天"
         this.setState({
           cardDiscount: cardDetail[i].discount
             ? (cardDetail[i].discount * 10).toFixed(1)
@@ -293,7 +293,9 @@ const CardDetail_Buy = React.createClass({
             ? cardDetail[i].cardId
             : "",
           cardId: "",
-          deviDays:deviDays,
+          deviDays: cardDetail[i].expiry
+            ? cardDetail[i].expiry
+            : "",
           cardTQ: cardDetail[i].cardTQ
             ? cardDetail[i].cardTQ
             : "",
@@ -326,6 +328,7 @@ const CardDetail_Buy = React.createClass({
       borderRadius: "0.3rem"
     };
     var about = this.props.location.query.about;
+    var notice= this.props.location.query.notice;
     var cardId = this.props.location.query.cardId;
     var privilegeCount = this.props.location.query.privilegeCount == 0 ? "无" : this.props.location.query.privilegeCount + "项";
     var cardType = this.props.location.query.cardType;
@@ -386,6 +389,15 @@ const CardDetail_Buy = React.createClass({
               <span className="info-after">{privilegeCount}</span>
             </div>
           </Link>
+
+          <Link to={{pathname: "YKXZ_Detail",query: {notice: notice}}} style={{display:(notice.length == 0) ? "none":""}}>
+            <div className="cardDetail-top-line"></div>
+            <div className="cardDetail-list">
+              <span className="info-before">用卡须知</span>
+              <span className="info-after">查看</span>
+            </div>
+          </Link>
+
           <Link to={{pathname: "Wallet_SupportHotel",query: {cardId: cardId,cardType:cardType}}}>
             <div className="cardDetail-top-line"></div>
             <div className="cardDetail-list">

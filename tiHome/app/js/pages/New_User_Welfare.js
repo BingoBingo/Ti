@@ -303,6 +303,7 @@ const New_User_Welfare = React.createClass({
               itemPhoto: item.photo,
               support: item.supportCount,
               about: item.about,
+              notice:item.notice,
               refundExpires:item.refundExpires,
               availablePoint: this.state.trueUsePoint,
               privilegeCount:item.privilegeCount
@@ -369,6 +370,7 @@ const New_User_Welfare = React.createClass({
               itemPhoto: item.photo,
               support: item.supportCount,
               about: item.about,
+              notice:item.notice,
               refundExpires:item.refundExpires,
               privilegeCount:item.privilegeCount,
               cardPrice:item.price,

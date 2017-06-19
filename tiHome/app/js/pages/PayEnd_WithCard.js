@@ -58,6 +58,7 @@ const Index = React.createClass({
       cardDiscount: 0
     };
   },
+
   oldUserPay() {
     const payOldMoney = document.getElementById("payOldMoney").value;
     const ownCard_discount = this.state.ownCard_discount;
@@ -77,6 +78,7 @@ const Index = React.createClass({
       }
     });
   },
+
   newUserPay() {
     const newUserPayMoney = document.getElementById("payNewMoney").value;
     var exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
@@ -109,6 +111,7 @@ const Index = React.createClass({
       }
     });
   },
+
   GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
@@ -120,10 +123,6 @@ const Index = React.createClass({
   goForPay() {
     var userPayMoney = this.props.location.query.userPayMoney * 1;
     userPayMoney = userPayMoney.toFixed(2);
-    //var isBuyCard = localStorage.getItem("isBuyCard");
-    // (isBuyCard === "zk")
-    //   ? userPayMoney = 0
-    //   : userPayMoney;
     var discountMoney = this.state.trueCost;
     var cardId = this.props.location.query.cardId;
     var payBtnInfo = <div className="loader-inner ball-pulse">
@@ -176,9 +175,9 @@ const Index = React.createClass({
                 var uid = localStorage.getItem("uid");
                 var cardPrice_buy = localStorage.getItem("cardPrice_buy");
                 if (window.location.host == "taihuiyuan.com") {
-                  window.location.href = "http://taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
+                  window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 } else {
-                  window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
+                  window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 }
               }
             });
@@ -237,19 +236,13 @@ const Index = React.createClass({
       }
     });
   },
+
   componentDidMount() {
     var isNewUser = Tools.GetQueryString("ut");
     var hotelId = Tools.GetQueryString("hid");
     var uid = Tools.GetQueryString("uid");
     var device = Tools.GetQueryString("device");
     var hname = Tools.GetQueryString("hname");
-    //实际输入
-    // var payTrue = this.props.location.query.userPayMoney * 1;
-    // payTrue = payTrue.toFixed(2);
-    // var isBuyCard = localStorage.getItem("isBuyCard");
-    // (isBuyCard === "zk")
-    //   ? payTrue = 0
-    //   : payTrue;
     //实际输入
     var payTrue = this.props.location.query.userPayMoney * 1;
     payTrue = payTrue.toFixed(2);
@@ -279,6 +272,7 @@ const Index = React.createClass({
       itemPhoto: itemPhoto
     })
   },
+
   changeBtn(e) {
     const payOldMoney = document.getElementById("payOldMoney").value;
     if (payOldMoney != "") {
@@ -287,6 +281,7 @@ const Index = React.createClass({
       this.setState({btnPayNotPut: "btn-pay-notput"})
     }
   },
+
   changeNewBtn(e) {
     const userType = this.state.isNewUser;
     if (userType == "new") {
@@ -306,25 +301,34 @@ const Index = React.createClass({
       }
     }
   },
+  
   render() {
     return (
       <View className="payEnd-background">
         <Container scrollable>
           <div className="home-new-title">支付明细</div>
           <div className="payCostMoney">
-          <span className="data-before">消费金额</span><span className="data-after">￥{this.state.payTrue}</span>
+            <span className="data-before">消费金额</span>
+            <span className="data-after">￥{this.state.payTrue}</span>
           </div>
           <div className="payCostMoney">
-          <span className="data-before">{this.state.cardDiscount}折卡</span><span className="data-after">￥{this.state.cardPrice.toFixed(2)}</span>
+            <span className="data-before">{this.state.cardDiscount}折卡</span>
+            <span className="data-after">￥{this.state.cardPrice.toFixed(2)}</span>
           </div>
-          <div className="payCostMoney" >
-          <span className="data-before reduce-dyj">会员折扣</span><span className="data-after reduce-dyj">￥{this.state.discountMoney}</span>
+          <div className="payCostMoney">
+            <span className="data-before reduce-dyj">会员折扣</span>
+            <span className="data-after reduce-dyj">￥{this.state.discountMoney}</span>
           </div>
           <div className="card-border-line"></div>
           <div className="payTrueMoney">
-          <span className="data-before dyjTrueMoney">实付</span><span className="data-after dyjTrueMoney">￥{this.state.trueCost}</span>
+            <span className="data-before dyjTrueMoney">实付</span>
+            <span className="data-after dyjTrueMoney">￥{this.state.trueCost}</span>
           </div>
-          <div className="checkTK"><input type="checkbox" style={{zoom:"2"}}  checked /><span>我同意《会员协议》中的条款</span></div>
+          <div className="checkTK"><input type="checkbox" style={{
+        zoom: "2"
+      }} checked/>
+            <span>我同意《会员协议》中的条款</span>
+          </div>
           <div className={this.state.btnPayNewNotPut} onClick={this.goForPay}>{this.state.payBtnInfo}{this.state.trueCost}</div>
         </Container>
         <form id="alipaysubmit" name="alipaysubmit" style={{
