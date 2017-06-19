@@ -82,7 +82,7 @@ const Index = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //wx.closeWindow();
+                wx.closeWindow();
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
@@ -188,7 +188,7 @@ const Index = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //wx.closeWindow();
+                wx.closeWindow();
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
@@ -291,6 +291,17 @@ const Index = React.createClass({
     // this.context.router.push({pathname:path,query:{payOldMoney:payOldMoney,ownCard_discount:ownCard_discount}});
   },
   chooseNext(payMoney){
+    console.log("___"+payMoney.length);
+    if(payMoney.length == 0){
+      document.getElementById("xdd-keybord").style.display = "none";
+      const path = `/New_User_Welfare/`
+      this.context.router.push({
+        pathname: path,
+        query: {
+          userPayMoney: payMoney
+        }
+      });
+    }
     let isSaleCards = this.state.isSaleCards;
     let availablePoint = this.state.availablePoint;
     let availableStoredValue = this.state.availableStoredValue;
@@ -380,10 +391,10 @@ const Index = React.createClass({
   newUserPay() {
     let newUserPayMoney = document.getElementById("payNewMoney").value;
     let exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
-    if (!exp.test(newUserPayMoney) || newUserPayMoney == 0) {
-      alert("输入正确的金额");
-      return false;
-    }
+    // if (!exp.test(newUserPayMoney) || newUserPayMoney == 0) {
+    //   alert("输入正确的金额");
+    //   return false;
+    // }
     if (newUserPayMoney > 9999.99) {
       alert("输入金额请小于10000");
       return false;
@@ -401,10 +412,10 @@ const Index = React.createClass({
     let payMemberMoney = document.getElementById("payMemberMoney").value;
     let cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
     let exp = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
-    if (!exp.test(payMemberMoney) || payMemberMoney == 0) {
-      alert("金额不能为0");
-      return false;
-    }
+    // if (!exp.test(payMemberMoney) || payMemberMoney == 0) {
+    //   alert("金额不能为0");
+    //   return false;
+    // }
     if (payMemberMoney > 9999.99) {
       alert("输入金额请小于10000");
       return false;
@@ -460,14 +471,16 @@ const Index = React.createClass({
     this.setState({isNewUser: isNewUser, hname: hname})
 
     if (isNewUser == "member") {
-       var payMemberMoney = document.getElementById('payMemberMoney');
+      var payMemberMoney = document.getElementById('payMemberMoney');
       var cursorMember = document.getElementById('cursorMember');
-      payMemberMoney.onclick = Tools.KeyBoard(payMemberMoney, cursorMember);
+      var memberBtn = document.getElementById("memberBtn");
+      payMemberMoney.onclick = Tools.KeyBoard(payMemberMoney, cursorMember,memberBtn);
     }
     if (isNewUser == "new") {
+      var newBtn = document.getElementById("newBtn");
       var payNewMoney = document.getElementById('payNewMoney');
       var cursorNew = document.getElementById('cursorNew');
-      payNewMoney.onclick = Tools.KeyBoard(payNewMoney, cursorNew);
+      payNewMoney.onclick = Tools.KeyBoard(payNewMoney, cursorNew,newBtn);
     }
     if (isNewUser == "vip") {
       var payOldMoney = document.getElementById('payOldMoney');
@@ -497,7 +510,7 @@ const Index = React.createClass({
           let defaultDiscount = cardInfo.data.defaultDiscount;
           var payBtnInfo = "";
           if (isSaleCards) {
-            payBtnInfo = "确定";
+            payBtnInfo = "会员卡";
           } else {
             payBtnInfo = "支付";
           }
@@ -698,7 +711,7 @@ const Index = React.createClass({
               </div>
             </div>
             {/* <div className="copration-new" >储值余额：{this.state.availableStoredValue}</div> */}
-            <div className={this.state.btnPayNewNotPut} onClick={this.chooseGood}>{this.state.payBtnInfo}</div>
+            <div className={this.state.btnPayNewNotPut} id="memberBtn" onClick={this.chooseGood}>{this.state.payBtnInfo}</div>
           </Container>
           <form id="alipaysubmit" name="alipaysubmit" style={{
             display: "none"
@@ -812,7 +825,7 @@ const Index = React.createClass({
             </div>
 
             {/* <div className="copration-new">储值余额：{availableStoredValue}</div> */}
-            <div className={this.state.btnPayNewNotPut} onClick={this.newUserPay}>{this.state.payBtnInfo}</div>
+            <div className={this.state.btnPayNewNotPut} id="newBtn" onClick={this.newUserPay}>{this.state.payBtnInfo}</div>
           </Container>
 
           <form id="alipaysubmit" name="alipaysubmit" style={{

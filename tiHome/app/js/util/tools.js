@@ -188,7 +188,7 @@ var Tools = {
     return string;
   },
 
-  KeyBoard: function(input, cursor, vipReduce, vipPayBtn, options) {
+  KeyBoard: function(input, cursor, memberBtn, newBtn, options) {
     var ownCard_discount = localStorage.getItem("ownCard_discount");
     var body = document.getElementsByTagName('body')[0];
     var DIV_ID = options && options.divId || 'xdd-keybord';
@@ -198,8 +198,8 @@ var Tools = {
 
     this.input = input;
     this.cursor = cursor;
-    this.vipReduce = vipReduce;
-    this.vipPayBtn = vipPayBtn;
+    this.memberBtn = memberBtn;
+    this.newBtn = newBtn;
     this.el = document.createElement('div');
 
     var self = this;
@@ -289,13 +289,22 @@ var Tools = {
         reduceMoney = reduceMoney.toFixed(1);
         payTrue = payTrue.toFixed(1);
         self.cursor.style.display = "none";
-        self.vipReduce.innerText = "￥" + reduceMoney;
-        self.vipPayBtn.innerText = "支付 ￥" + payTrue;
-        self.vipPayBtn.style.opacity = 1;
+        //self.vipReduce.innerText = "￥" + reduceMoney;
+        //self.vipPayBtn.innerText = "支付 ￥" + payTrue;
+        //self.vipPayBtn.style.opacity = 1;
+        self.memberBtn.innerText = "确定";
+        self.memberBtn.style.border = "0.05rem solid #00a698;"
+        self.memberBtn.style.background = "#fff";
+        self.memberBtn.style.color = "#00a698"
+        //self.vipPayBtn.style.opacity = 1;
       } else {
         self.cursor.style.display = "";
-        self.vipReduce.innerText = "￥0";
-        self.vipPayBtn.innerText = "支付";
+        //self.vipReduce.innerText = "￥0";
+        //self.vipPayBtn.innerText = "支付";
+        self.memberBtn.style.border = "0.05rem solid #fff;"
+        self.memberBtn.style.background = "#6ac9bf";
+        self.memberBtn.style.color = "#fff"
+        self.memberBtn.innerText = "会员卡";
       }
 
     }

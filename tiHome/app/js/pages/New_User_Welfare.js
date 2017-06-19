@@ -121,7 +121,7 @@ const New_User_Welfare = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                //wx.closeWindow();
+                wx.closeWindow();
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
                   window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
@@ -359,44 +359,86 @@ const New_User_Welfare = React.createClass({
         var givePoint = item.givePoint ? item.givePoint : 0;
         givePoint = givePoint.toFixed(0);
         var isRefund = item.isRefund ? "可退" : "";
-        return (diff0 > 0 && diff1 > 0) ? (
-          <Link to={{
-            pathname: "CardDetail_Buy",
-            query: {
-              cardId: item.cardId,
-              cardType:"CZCard",
-              payReduce: payReduce,
-              payTrue: userPayMoney,
-              itemPhoto: item.photo,
-              support: item.supportCount,
-              about: item.about,
-              notice:item.notice,
-              refundExpires:item.refundExpires,
-              privilegeCount:item.privilegeCount,
-              cardPrice:item.price,
-              availablePoint: this.state.availablePoint,
-              userPayMoney: userPayMoney,
-              availableStoredValue:this.state.availableStoredValue,
-              defaultDiscount:this.state.defaultDiscount,
-              payType: "useDYJ"
-            }
-          }} key={index}>
-            <div className="card-list">
-              <div className="hotelcard-list">
-                <div className="card-type" style={cardStyle}>
-                  <div className="card-discount-cz"><span>{isRefund}储值卡</span></div>
-                  <div className="card-money-cz">￥{item.price}{item.storedValue != 0 ? `赠${item.storedValue}元` : ""}</div>
+
+        if(userPayMoney.length == 0){
+          return (
+            <Link to={{
+              pathname: "CardDetail_Buy",
+              query: {
+                cardId: item.cardId,
+                cardType:"CZCard",
+                payReduce: payReduce,
+                payTrue: userPayMoney,
+                itemPhoto: item.photo,
+                support: item.supportCount,
+                about: item.about,
+                notice:item.notice,
+                refundExpires:item.refundExpires,
+                privilegeCount:item.privilegeCount,
+                cardPrice:item.price,
+                availablePoint: this.state.availablePoint,
+                userPayMoney: userPayMoney,
+                availableStoredValue:this.state.availableStoredValue,
+                defaultDiscount:this.state.defaultDiscount,
+                payType: "useDYJ"
+              }
+            }} key={index}>
+              <div className="card-list">
+                <div className="hotelcard-list">
+                  <div className="card-type" style={cardStyle}>
+                    <div className="card-discount-cz"><span>{isRefund}储值卡</span></div>
+                    <div className="card-money-cz">￥{item.price}{item.storedValue != 0 ? `赠${item.storedValue}元` : ""}</div>
+                  </div>
+                  <div className="card-reduce-czk">
+                    {/* <div className="card-reduceMoney">本单抵扣￥{payReduce}</div> */}
+                    <div className="card-reduceMoney"></div>
+                    <div className="card-giveCZ">{givePoint == 0 ? `了解详情` : `赠${givePoint}元抵用金`}</div>
+                  </div>
                 </div>
-                <div className="card-reduce-czk">
-                  {/* <div className="card-reduceMoney">本单抵扣￥{payReduce}</div> */}
-                  <div className="card-reduceMoney"></div>
-                  <div className="card-giveCZ">{givePoint == 0 ? `了解详情` : `赠${givePoint}元抵用金`}</div>
-                </div>
+                <div className="cardlist-border"></div>
               </div>
-              <div className="cardlist-border"></div>
-            </div>
-          </Link>
-        ) : "";
+            </Link>
+          );
+        }else{
+          return (diff0 > 0 && diff1 > 0) ? (
+            <Link to={{
+              pathname: "CardDetail_Buy",
+              query: {
+                cardId: item.cardId,
+                cardType:"CZCard",
+                payReduce: payReduce,
+                payTrue: userPayMoney,
+                itemPhoto: item.photo,
+                support: item.supportCount,
+                about: item.about,
+                notice:item.notice,
+                refundExpires:item.refundExpires,
+                privilegeCount:item.privilegeCount,
+                cardPrice:item.price,
+                availablePoint: this.state.availablePoint,
+                userPayMoney: userPayMoney,
+                availableStoredValue:this.state.availableStoredValue,
+                defaultDiscount:this.state.defaultDiscount,
+                payType: "useDYJ"
+              }
+            }} key={index}>
+              <div className="card-list">
+                <div className="hotelcard-list">
+                  <div className="card-type" style={cardStyle}>
+                    <div className="card-discount-cz"><span>{isRefund}储值卡</span></div>
+                    <div className="card-money-cz">￥{item.price}{item.storedValue != 0 ? `赠${item.storedValue}元` : ""}</div>
+                  </div>
+                  <div className="card-reduce-czk">
+                    {/* <div className="card-reduceMoney">本单抵扣￥{payReduce}</div> */}
+                    <div className="card-reduceMoney"></div>
+                    <div className="card-giveCZ">{givePoint == 0 ? `了解详情` : `赠${givePoint}元抵用金`}</div>
+                  </div>
+                </div>
+                <div className="cardlist-border"></div>
+              </div>
+            </Link>
+          ) : "";
+        }
       });
     }
   },
