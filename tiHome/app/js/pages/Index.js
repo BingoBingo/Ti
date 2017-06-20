@@ -301,64 +301,43 @@ const Index = React.createClass({
           userPayMoney: payMoney
         }
       });
-    }
-    let isSaleCards = this.state.isSaleCards;
-    let availablePoint = this.state.availablePoint;
-    let availableStoredValue = this.state.availableStoredValue;
-    let defaultDiscount = this.state.defaultDiscount;
-    let discountCards = this.state.discountCards;
-    let storeCards = this.state.storeCards;
-    let canBuyCards = [];
-    if (storeCards.length > 0) {
-        storeCards.map((item, index) => {
-        //原价
-        var userPayMoney = payMoney;
-        //本次可用抵用金(1 - this.props.location.query.defaultDiscount) * payTrue;
-        var availablePoint =(1-defaultDiscount*1) * userPayMoney;
-        //储值金额
-        //var price = item.price
-        //储值余额 availableStoredValue
+    }else{
+      let isSaleCards = this.state.isSaleCards;
+      let availablePoint = this.state.availablePoint;
+      let availableStoredValue = this.state.availableStoredValue;
+      let defaultDiscount = this.state.defaultDiscount;
+      let discountCards = this.state.discountCards;
+      let storeCards = this.state.storeCards;
+      let canBuyCards = [];
+      if (storeCards.length > 0) {
+          storeCards.map((item, index) => {
+          //原价
+          var userPayMoney = payMoney;
+          //本次可用抵用金(1 - this.props.location.query.defaultDiscount) * payTrue;
+          var availablePoint =(1-defaultDiscount*1) * userPayMoney;
+          //储值金额
+          //var price = item.price
+          //储值余额 availableStoredValue
 
-        //余额 < 原价-折扣 < 储值卡金额 + 余额 + 赠送储值
-        var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
-        var diff1 = item.price*1 + availableStoredValue*1 + item.storedValue*1 - (userPayMoney*1 - availablePoint*1);
-        if (diff0 > 0 && diff1 > 0) {
-            canBuyCards.push(item)
-        }
-      });
-    }
-    if (!isSaleCards) {
-      this.noCardPayMoney(payMoney);
-      return false;
-    }
-    //storeCards ->canBuyCards
-    if(discountCards.length == 0 && canBuyCards.length == 0 && availablePoint == 0 && availableStoredValue == 0){
-      this.noCardPayMoney(payMoney);
-      return false;
-    }
-    //storeCards ->canBuyCards
-    if(discountCards.length == 0 && canBuyCards.length == 0 && (availablePoint != 0 || availableStoredValue !=0)) {
-      document.getElementById("xdd-keybord").style.display = "none";
-      let path = `/PayEnd_Detail/`
-      this.context.router.push({
-        pathname: path,
-        query: {
-          availablePoint: availablePoint,
-          cardGivePoint: 0,
-          payReduce:0,
-          userPayMoney: payMoney,
-          payType: "useDYJ",
-          availableStoredValue:availableStoredValue,
-          defaultDiscount:defaultDiscount,
-          payBtnInfo:"jump"
-        }
-      });
-    }
-
-    if(canBuyCards.length == 0 && discountCards.length == 0){
-      if(availablePoint == 0 && availableStoredValue ==0){
+          //余额 < 原价-折扣 < 储值卡金额 + 余额 + 赠送储值
+          var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
+          var diff1 = item.price*1 + availableStoredValue*1 + item.storedValue*1 - (userPayMoney*1 - availablePoint*1);
+          if (diff0 > 0 && diff1 > 0) {
+              canBuyCards.push(item)
+          }
+        });
+      }
+      if (!isSaleCards) {
         this.noCardPayMoney(payMoney);
-      }else{
+        return false;
+      }
+      //storeCards ->canBuyCards
+      if(discountCards.length == 0 && canBuyCards.length == 0 && availablePoint == 0 && availableStoredValue == 0){
+        this.noCardPayMoney(payMoney);
+        return false;
+      }
+      //storeCards ->canBuyCards
+      if(discountCards.length == 0 && canBuyCards.length == 0 && (availablePoint != 0 || availableStoredValue !=0)) {
         document.getElementById("xdd-keybord").style.display = "none";
         let path = `/PayEnd_Detail/`
         this.context.router.push({
@@ -375,17 +354,38 @@ const Index = React.createClass({
           }
         });
       }
-    }
-    //storeCards ->canBuyCards
-    if(isSaleCards && (canBuyCards.length !=0 || discountCards.length != 0)) {
-      document.getElementById("xdd-keybord").style.display = "none";
-      const path = `/New_User_Welfare/`
-      this.context.router.push({
-        pathname: path,
-        query: {
-          userPayMoney: payMoney
+
+      if(canBuyCards.length == 0 && discountCards.length == 0){
+        if(availablePoint == 0 && availableStoredValue ==0){
+          this.noCardPayMoney(payMoney);
+        }else{
+          document.getElementById("xdd-keybord").style.display = "none";
+          let path = `/PayEnd_Detail/`
+          this.context.router.push({
+            pathname: path,
+            query: {
+              availablePoint: availablePoint,
+              cardGivePoint: 0,
+              payReduce:0,
+              userPayMoney: payMoney,
+              payType: "useDYJ",
+              availableStoredValue:availableStoredValue,
+              defaultDiscount:defaultDiscount,
+              payBtnInfo:"jump"
+            }
+          });
         }
-      });
+      }
+      if(isSaleCards && (canBuyCards.length !=0 || discountCards.length != 0)) {
+        document.getElementById("xdd-keybord").style.display = "none";
+        const path = `/New_User_Welfare/`
+        this.context.router.push({
+          pathname: path,
+          query: {
+            userPayMoney: payMoney
+          }
+        });
+      }
     }
   },
   newUserPay() {
@@ -431,15 +431,15 @@ const Index = React.createClass({
   chooseGood_CZ() {
     let payMemberMoney = document.getElementById("payMemberMoney_CZ").value;
     let cardPrice_buy = Tools.GetQueryString("cardPrice_buy");
-    if (payMemberMoney > 9999.99) {
-      alert("输入金额请小于10000");
-      return false;
-    }
     let payBtnInfo = <div className="loader-inner ball-pulse">
       <div></div>
       <div></div>
       <div></div>
     </div>;
+    if (payMemberMoney > 9999.99) {
+      alert("输入金额请小于10000");
+      return false;
+    }
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotloading"})
     this.chooseNext(payMemberMoney);
   },
@@ -473,14 +473,14 @@ const Index = React.createClass({
     if (isNewUser == "member") {
       var payMemberMoney = document.getElementById('payMemberMoney');
       var cursorMember = document.getElementById('cursorMember');
-      var memberBtn = document.getElementById("memberBtn");
-      payMemberMoney.onclick = Tools.KeyBoard(payMemberMoney, cursorMember,memberBtn);
+      var btnType = document.getElementById("memberBtn");
+      payMemberMoney.onclick = Tools.KeyBoard(payMemberMoney, cursorMember,btnType);
     }
     if (isNewUser == "new") {
-      var newBtn = document.getElementById("newBtn");
       var payNewMoney = document.getElementById('payNewMoney');
       var cursorNew = document.getElementById('cursorNew');
-      payNewMoney.onclick = Tools.KeyBoard(payNewMoney, cursorNew,newBtn);
+      var btnType = document.getElementById("newBtn");
+      payNewMoney.onclick = Tools.KeyBoard(payNewMoney, cursorNew,btnType);
     }
     if (isNewUser == "vip") {
       var payOldMoney = document.getElementById('payOldMoney');
@@ -542,7 +542,8 @@ const Index = React.createClass({
           if (isNewUser == "member" && availableStoredValue != 0) {
             var payMemberMoney_CZ = document.getElementById('payMemberMoney_CZ');
             var cursorMember_CZ = document.getElementById('cursorMember_CZ');
-            payMemberMoney_CZ.onclick = Tools.KeyBoard(payMemberMoney_CZ, cursorMember_CZ);
+            var btnType = document.getElementById('memberWithStore');
+            payMemberMoney_CZ.onclick = Tools.KeyBoard(payMemberMoney_CZ, cursorMember_CZ,btnType);
           }
         },
         fail: function(status) {}
@@ -772,7 +773,7 @@ const Index = React.createClass({
                 <span>抵用金余额</span>
               </div>
             </div>
-            <div className={this.state.btnPayNewNotPut} style={{background:"#00a698",color:"#fff"}} onClick={this.chooseGood_CZ}>{this.state.payBtnInfo}</div>
+            <div className={this.state.btnPayNewNotPut} style={{background:"#00a698",color:"#fff"}} id="memberWithStore" onClick={this.chooseGood_CZ}>{this.state.payBtnInfo}</div>
           </Container>
           <form id="alipaysubmit" name="alipaysubmit" style={{
             display: "none"

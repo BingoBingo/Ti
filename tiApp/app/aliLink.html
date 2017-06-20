@@ -172,6 +172,9 @@
       position: relative;
       border-radius: 0.533333rem;
   }
+  #wechatUserHeadPic,#aliUserHeadPic,#aliVipCard,#wechatVipCard{
+      background-size:100% 100%;
+  }
   </style>
 </body>
 
@@ -210,7 +213,6 @@ function getUserInfo(){
     }
   })
 }
-
 var ua = window.navigator.userAgent.toLowerCase();
 if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/alipay/i) == 'alipay'){
 }
@@ -232,13 +234,14 @@ else{
       data: param,
       dataType: 'json',
       success: function(response){
-          $("#aliUserHeadPic").css("background","url("+response.data.aliUserHeadPic+")");
-          $("#wechatUserHeadPic").css("background","url("+response.data.wechatUserHeadPic+")");
+          alert(response.data.aliVipCard.photo)
+          $("#aliUserHeadPic").css("background","url("+response.data.aliUserHeadPic+") no-repeat center top");
+          $("#wechatUserHeadPic").css("background","url("+response.data.wechatUserHeadPic+") no-repeat center top");
           if(typeof(response.data.aliVipCard) !== "undefined"){
-              $("#aliVipCard").css("background","url("+response.data.aliVipCard+")");
+              $("#aliVipCard").css("background","url("+response.data.aliVipCard.photo+") no-repeat center top");
           }
           if(typeof(response.data.wechatVipCard) !== "undefined"){
-              $("#wechatVipCard").css("background","url("+response.data.wechatVipCard+")");
+              $("#wechatVipCard").css("background","url("+response.data.wechatVipCard.photo+") no-repeat center top");
           }
           $("#aliUserNickname").text(response.data.aliUserNickname);
           $("#wechatUserNickname").text(response.data.wechatUserNickname);

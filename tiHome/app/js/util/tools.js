@@ -188,17 +188,16 @@ var Tools = {
     return string;
   },
 
-  KeyBoard: function(input, cursor, memberBtn, newBtn, options) {
+  KeyBoard: function(input, cursor, btnType, newBtn, options) {
     var ownCard_discount = localStorage.getItem("ownCard_discount");
     var body = document.getElementsByTagName('body')[0];
     var DIV_ID = options && options.divId || 'xdd-keybord';
     if (document.getElementById(DIV_ID)) {
       body.removeChild(document.getElementById(DIV_ID));
     }
-
     this.input = input;
     this.cursor = cursor;
-    this.memberBtn = memberBtn;
+    this[btnType] = btnType;
     this.newBtn = newBtn;
     this.el = document.createElement('div');
 
@@ -289,22 +288,32 @@ var Tools = {
         reduceMoney = reduceMoney.toFixed(1);
         payTrue = payTrue.toFixed(1);
         self.cursor.style.display = "none";
-        //self.vipReduce.innerText = "￥" + reduceMoney;
-        //self.vipPayBtn.innerText = "支付 ￥" + payTrue;
-        //self.vipPayBtn.style.opacity = 1;
-        self.memberBtn.innerText = "确定";
-        self.memberBtn.style.border = "0.05rem solid #00a698;"
-        self.memberBtn.style.background = "#fff";
-        self.memberBtn.style.color = "#00a698"
-        //self.vipPayBtn.style.opacity = 1;
+        console.log(btnType);
+        if(btnType.id == "vipReduce"){
+          self[vipReduce].innerText = "￥" + reduceMoney;
+          //self[vipReduce].innerText = "支付 ￥" + payTrue;
+          self[vipReduce].style.opacity = 1;
+        }else{
+          self[btnType].innerText = "确定";
+          if(btnType.id !== "memberWithStore"){
+            self[btnType].style.border = "0.05rem solid #00a698;"
+            self[btnType].style.background = "#fff";
+            self[btnType].style.color = "#00a698"
+          }
+        }
       } else {
-        self.cursor.style.display = "";
-        //self.vipReduce.innerText = "￥0";
-        //self.vipPayBtn.innerText = "支付";
-        self.memberBtn.style.border = "0.05rem solid #fff;"
-        self.memberBtn.style.background = "#6ac9bf";
-        self.memberBtn.style.color = "#fff"
-        self.memberBtn.innerText = "会员卡";
+        if(btnType.id == "vipReduce"){
+          self.cursor.style.display = "";
+          self[vipReduce].innerText = "￥0";
+          self[vipPayBtn].innerText = "支付";
+        }else{
+          self[btnType].innerText = "会员卡";
+          if(btnType.id !== "memberWithStore"){
+            self[btnType].style.border = "0.05rem solid #fff;"
+            self[btnType].style.background = "#6ac9bf";
+            self[btnType].style.color = "#fff"
+          }
+        }
       }
 
     }
