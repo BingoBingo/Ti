@@ -82,7 +82,7 @@ const Index = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                wx.closeWindow();
+                //wx.closeWindow();
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
@@ -188,7 +188,7 @@ const Index = React.createClass({
             wechatPayParam = eval("(" + wechatPayParam + ")");
             WeixinJSBridge.invoke('getBrandWCPayRequest', wechatPayParam, function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                wx.closeWindow();
+                //wx.closeWindow();
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {

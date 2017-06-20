@@ -10,7 +10,7 @@
   <script src="https://dev.taihuiyuan.com/flexible.js"></script>
   <script src="zepto.min.js"></script>
   <script src="dropload.js"></script>
-  <title></title>
+  <title>支付成功</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp" />
   <meta name="format-detection" content="telephone=no" />
@@ -284,12 +284,26 @@
     <div class="content">
       <div class="lists"></div>
     </div>
+    <div style="text-align:center;display:none" id="qrcode">
+      <div>长按识别二维码</div>
+      <img src="qrcode.jpg" width="350px" height="350px">
+    </div>
   </div>
   <div class="footer" onclick="myTqClick()">
       <div class="myTqBtn">我的特权</div>
   </div>
 
   <script type="text/javascript">
+
+  window.alert = function(name){
+       var iframe = document.createElement("IFRAME");
+       iframe.style.display="none";
+       iframe.setAttribute("src", 'data:text/plain,');
+       document.documentElement.appendChild(iframe);
+       window.frames[0].window.alert(name);
+       iframe.parentNode.removeChild(iframe);
+  }
+
     function GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
       var searchURL = window.location.search;
@@ -302,7 +316,10 @@
     function myTqClick(){
       var ua = window.navigator.userAgent.toLowerCase();
       if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-        window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI2NzQzNzAwNQ==&scene=124#wechat_redirect"
+        //window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI2NzQzNzAwNQ==&scene=124#wechat_redirect"
+        window.location.href = "/go4wechat.html";
+        // alert("长按页面，扫描二维码关注公众号");
+        // $("#qrcode").show();
       }else{
         window.location.href = "/alipayLink.html?uid="+GetQueryString("uid");
       }
