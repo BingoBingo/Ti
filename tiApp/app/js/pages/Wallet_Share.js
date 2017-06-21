@@ -1,4 +1,5 @@
 import React from 'react';
+import Rodal from 'rodal';
 import {
   Container,
   List,
@@ -17,16 +18,43 @@ import click from '../../i/click.png';
 import arrow_right_top from '../../i/arrow-right-top.png';
 
 const Wallet_Share = React.createClass({
+   defaultProps :{
+		width           : 70,
+		height          : 20,
+		measure         : '%'
+
+	},
   getInitialState(){
     return{
       albums:[],
       share:false,
       shareInfo:"",
       shareLink:"",
-      isShow:"none"
+      isShow:"none",
+	  visibleAlert:false
+
     }
   },
+	showAlert(contents,url) {
+		document.getElementById('showAlertContent').innerHTML = contents;
+		this.setState({ visibleAlert: true});
+		if(url){
+			this.setState({ realoadUlr: url });
+		}
+	},
 
+	hideAlert() {
+		this.setState({ visibleAlert: false });
+		document.getElementById('showAlertContent').innerHTML = '';
+		if(this.state.realoadUlr && this.state.realoadUlr !='reload'){
+			this.context.router.push(this.state.realoadUlr);
+		}
+		if( this.state.realoadUlr =='reload'){
+				window.location.reload();
+		}
+
+
+	},
   callWX(){
     this.setState({
       isShow:""
@@ -76,7 +104,7 @@ const Wallet_Share = React.createClass({
             		wx.onMenuShareWeibo(shareData);
             		wx.onMenuShareQZone(shareData);
                 wx.error(function(res){
-                  alert(JSON.stringify(res));
+                  _this.showAlert(JSON.stringify(res));
                 });
               });
           },
@@ -151,6 +179,9 @@ const Wallet_Share = React.createClass({
           <div className="arrowPic" style={arrowPic}></div>
           <div className="clickPic" style={clickPic}></div>
       	</div>
+		<Rodal visible={this.state.visibleAlert} {...this.defaultProps} onClose={this.hideAlert} >
+			<div id="showAlertContent" style={{textAlign: 'center',paddingTop: '30px'}}></div>
+		</Rodal>
       </View>
     )
   }

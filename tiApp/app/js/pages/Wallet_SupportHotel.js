@@ -59,8 +59,14 @@ const Wallet_SupportHotel = React.createClass({
   componentDidMount(){
     var _this = this;
     const vid = this.props.location.query.vid;
+    const type = this.props.location.query.type;
+	if(type==0){
+		var url = "/store/"+vid+"/support";
 
-    var url = "/vip/"+vid+"/support";
+	}else{
+		var url = "/vip/"+vid+"/support";
+	
+	}
     var hid = this.props.location.query.hid;
     console.log(url);
 //http://dev.taihuiyuan.com/api/vip/6281ef1b-7ef7-11e6-9a85-bc5ff4cacf90/support?v=07401596253221006

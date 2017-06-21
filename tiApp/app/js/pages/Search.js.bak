@@ -1,4 +1,6 @@
 import React from 'react';
+import Rodal from 'rodal';
+
 import {
   Container,
   List,
@@ -39,7 +41,7 @@ const Me_Rank = React.createClass({
               var wxInfo = eval('(' + response + ')');
               wxInfo.debug = "true";
               wxInfo.jsApiList = ["getLocation"];
-              //_this.state.hotelInfo = searchResult.data.items;
+              //_this.state.shopInfo = searchResult.data.items;
 
               _this.setState({
                 wxInfo:wxInfo
@@ -76,10 +78,10 @@ const Me_Rank = React.createClass({
 
   getInitialState(){
     //this.callWX();
-    let userLng = localStorage.getItem("userLng") ? localStorage.getItem("userLng") : "" ;
-    let userLat = localStorage.getItem("userLat") ? localStorage.getItem("userLat") :"";
+    let userLng = localStorage.getItem("userLng") ? localStorage.getItem("userLng") : "0" ;
+    let userLat = localStorage.getItem("userLat") ? localStorage.getItem("userLat") :"0";
     return({
-      hotelInfo:[],
+      shopInfo:[],
       searchCount:"0",
       wxInfo:{},
       lat:"",
@@ -149,9 +151,30 @@ const Me_Rank = React.createClass({
       })
     }
   },
+	showAlert(contents,url) {
+		document.getElementById('showAlertContent').innerHTML = contents;
+		this.setState({ visibleAlert: true});
+		if(url){
+			this.setState({ realoadUlr: url });
+		}
+	},
+
+	hideAlert() {
+		this.setState({ visibleAlert: false });
+		document.getElementById('showAlertContent').innerHTML = '';
+		if(this.state.realoadUlr && this.state.realoadUlr !='reload'){
+			this.context.router.push(this.state.realoadUlr);
+		}
+		if( this.state.realoadUlr =='reload'){
+				window.location.reload();
+		}
+
+
+	},
   goNearBy(){
     this.callWX();
   },
+  hiddenLableTest(){this.showAlert('1');},
   render() {
     var lat = this.state.userLat;
     var lng = this.state.userLng;
@@ -173,7 +196,7 @@ const Me_Rank = React.createClass({
 
                 <div className="searchTitle">
                   <div className="borderRight" style={{display:this.state.hiddenLable}}></div>
-                  <input type="text" ref="searchPlace" id="searchPlace" onChange={this.hiddenLable} placeholder="您要去哪里" className="searchPlace"/>
+                  <input type="text" ref="searchPlace" id="searchPlace" onFocus={this.hiddenLableTest} onChange={this.hiddenLable} placeholder="您要去哪里" className="searchPlace"/>
                 </div>
               </Group>
               <div className="searchBorder"></div>
@@ -196,8 +219,11 @@ const Me_Rank = React.createClass({
               </dl>
 
             </form>
-
+			<Rodal visible={this.state.visibleAlert} {...this.defaultProps} onClose={this.hideAlert} >
+				<div id="showAlertContent" style={{textAlign: 'center',paddingTop: '30px'}}></div>
+			</Rodal>
           </Container>
+
         </View>
       );
   }

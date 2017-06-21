@@ -1,4 +1,6 @@
 import React from 'react';
+import Rodal from 'rodal';
+
 import {
   Container,
   List,
@@ -76,15 +78,41 @@ const SubmitPhone = React.createClass({
 
 
 const Me_Phone_Input = React.createClass({
+   defaultProps :{
+		width           : 70,
+		height          : 20,
+		measure         : '%'
 
+	},
   getInitialState(){
     return({
       phoneNotInput :"phonesend-dis-btn",
       bindOrNot:"none",
-      mobileNum:""
+      mobileNum:"",
+	  visibleAlert:false
+
     })
   },
+	showAlert(contents,url) {
+		document.getElementById('showAlertContent').innerHTML = contents;
+		this.setState({ visibleAlert: true});
+		if(url){
+			this.setState({ realoadUlr: url });
+		}
+	},
 
+	hideAlert() {
+		this.setState({ visibleAlert: false });
+		document.getElementById('showAlertContent').innerHTML = '';
+		if(this.state.realoadUlr && this.state.realoadUlr !='reload'){
+			this.context.router.push(this.state.realoadUlr);
+		}
+		if( this.state.realoadUlr =='reload'){
+				window.location.reload();
+		}
+
+
+	},
   contextTypes: {
         router: React.PropTypes.object.isRequired,
   },
@@ -97,7 +125,7 @@ const Me_Phone_Input = React.createClass({
     const reg = new RegExp("^[0-9]*$");
     var url = "/sms/";
     if(!reg.test(phoneNum)){
-        alert("请输入正确的电话号码");
+        _this.showAlert("请输入正确的电话号码");
         return false;
     }else{
       Tools.ajax({
@@ -106,14 +134,14 @@ const Me_Phone_Input = React.createClass({
             data: { mobile:phoneNum},        //请求参数
             dataType: "json",
             success: function (response, xml) {
-                alert("验证码发送成功");
                 console.log(response);
                 var appInfo = eval('(' + response + ')')
                 const path = `/Me_Phone_Code/`
-                _this.context.router.push(path);
+                _this.showAlert("验证码发送成功",path);
+
             },
             fail: function (status) {
-              alert(status);
+              _this.showAlert(status);
             }
         });
     }
@@ -189,6 +217,9 @@ const Me_Phone_Input = React.createClass({
             </SubmitPhone>
 
           </form>
+			<Rodal visible={this.state.visibleAlert} {...this.defaultProps} onClose={this.hideAlert} >
+				<div id="showAlertContent" style={{textAlign: 'center',paddingTop: '30px'}}></div>
+			</Rodal>
         </Container>
       </View>
     );

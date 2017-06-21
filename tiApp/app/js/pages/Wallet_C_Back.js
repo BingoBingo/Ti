@@ -79,9 +79,9 @@ const Wallet_C_Back = React.createClass({
                 shopInfo:appInfo.data.shopInfo,
                 visible:false
               })
-              //localStorage.setItem("histories",JSON.stringify(appInfo.data.histories));
+              localStorage.setItem("histories",JSON.stringify(appInfo.data.histories));
               localStorage.setItem("personInfo",JSON.stringify(appInfo.data.personInfo));
-              //localStorage.setItem("walletInfo",JSON.stringify(appInfo.data.walletInfo));
+              localStorage.setItem("walletInfo",JSON.stringify(appInfo.data.walletInfo));
           },
           fail: function (status) {
 

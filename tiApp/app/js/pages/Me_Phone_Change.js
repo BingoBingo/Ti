@@ -81,7 +81,6 @@ const Me_Phone_Change = React.createClass({
         router: React.PropTypes.object.isRequired,
   },
   handerSubmit(event){
-    alert(1212)
     event.preventDefault();
     var _this = this;
     const mobileNum = event.target.elements[0].value;

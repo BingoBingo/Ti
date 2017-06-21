@@ -78,38 +78,202 @@ const Wallet = React.createClass({
 
   getInitialState(){
     return({
-      totalMoney:"如何使用",
-      vipCardCount:"",
-      share:false,
+      totalCurrency:"0",
+      totalFavorablePrice:"",
+      isShare:false,
+      InvalidCardBtn:false,
+      InvalidCardBox:true,
       shareInfo:"",
       cardlist:[],
-      normalCards:[]
+      normalCards:[],
+		listTotal:0,
+		page:1,
+		size:10
     })
   },
-  componentDidMount(){
-    var walletInfo = localStorage.getItem("walletInfo");
-    walletInfo = eval("(" +walletInfo+")");
-    var totalMoney = walletInfo.totalMoney;
-    if(totalMoney == 0){
-      totalMoney = "如何使用";
-    }else{
-      totalMoney = totalMoney + "元";
-    }
-    var vipCardCount = walletInfo.vipCardCount;
-    var share = walletInfo.share;
-    var shareInfo=""
-    if(share){
-      shareInfo = "邀请好友各得5元"
-    }else{
-      shareInfo = "送好友5元抵用金"
-    }
+  showInvalidCard(){
     this.setState({
-      totalMoney :totalMoney,
-      vipCardCount:vipCardCount,
-      share:share,
-      shareInfo:shareInfo
-    })
+      InvalidCardBtn :true,
+      InvalidCardBox :false
+    })	  
+  },
+  LoadCardsScroll(e){
+	/*获取url的uid*/
+	var _this = this;
+    var visible = this.state.visible;
+	if(visible){
+		return;
+	}
 
+    var clientHeight = e.target.clientHeight; //可视区域高度
+    var scrollTop  = e.target.scrollTop;  //滚动条滚动高度
+    var scrollHeight = e.target.scrollHeight; //滚动内容高度
+
+	if((clientHeight+scrollTop+150)>=(scrollHeight)){
+		this.setState({
+		  visible:true
+		});
+
+	  /*获取url的uid*/
+
+	  var uid =  localStorage.getItem("uid");
+	  var page = this.state.page?this.state.page:1;
+	  page = page +1;
+	  var listTotal = this.state.listTotal?this.state.listTotal:10;
+	  var size = this.state.size?this.state.size:10;
+	  if((size*page-size)>=listTotal){
+		this.setState({
+		  visible:false
+		});	
+		return;
+	  }	
+		var uid = Tools.GetQueryString("uid");
+		var url = "/user/"+uid+"/cards";
+		Tools.ajax({
+			  url: url,
+			  type: "GET",
+			  data: { page: page},
+
+			  dataType: "json",
+			  success: function (response, xml) {
+
+				  var cardlist = eval('(' + response + ')');
+				  //_this.state.shopInfo = searchResult.data.items;
+				  //cardlist.length = 0;
+				  if(cardlist.length == 0){
+					_this.setState({
+					  totalCurrency:"如何使用"
+					})
+				  }
+				var oldcardlist = _this.state.cardlist;
+
+				var newCardlist = oldcardlist.concat(cardlist.data.items);
+				  _this.setState({
+					cardlist:newCardlist,
+					  listTotal:cardlist.data.total,
+					  size:size,
+					  page:page,
+					  visible:false
+				  })
+
+
+			  },
+			  fail: function (status) {
+				console.log(status);
+			  }
+		  });
+	}
+
+  },
+ saveScrollPage(){
+ 
+	var scrollTop = document.getElementById('LoadIndexScroll').scrollTop;
+	var page = this.state.page?this.state.page:1;
+	localStorage.setItem("scrollTopCard",scrollTop);
+	localStorage.setItem("scrollTopPageCard",page);
+    var cardlist = this.state.cardlist;
+	if(typeof(cardlist) != 'undefined' && cardlist !== ""){//By HeMuYu_Ray
+		if(cardlist !== "" && cardlist.length > 0){
+			sessionStorage.setItem("CardInfo", JSON.stringify(cardlist));
+		}
+	}
+	
+ },
+ loadUserInfo(){
+    /*获取url的uid*/
+    var _this = this;
+    var uid = Tools.GetQueryString("uid");
+    console.log(uid);
+    localStorage.setItem("uid",uid);
+    var url = "/user/"+uid+"/data";
+
+    var lat = localStorage.getItem("userLat") ? localStorage.getItem("userLat"):0;
+    var lng = localStorage.getItem("userLng") ? localStorage.getItem("userLng"):0;
+    //var mockurl = "http://localhost:3005/home";
+    Tools.ajax({
+          url: url,              //请求地址
+          type: "GET",                       //请求方式
+          data: {
+            uid:uid,
+            userLat:lat,
+            userLng:lng
+          },        //请求参数
+          dataType: "json",
+          success: function (response, xml) {
+
+              var appInfo = eval('(' + response + ')');
+
+              localStorage.setItem("histories",JSON.stringify(appInfo.data.histories));
+              localStorage.setItem("personInfo",JSON.stringify(appInfo.data.personInfo));
+              localStorage.setItem("walletInfo",JSON.stringify(appInfo.data.walletInfo));
+
+
+			var walletInfo = appInfo.data.walletInfo;
+			if(typeof(walletInfo)!='undefined'){
+				var totalCurrency = walletInfo.totalCurrency;
+				var totalFavorablePrice = walletInfo.totalFavorablePrice;
+				var isShare = walletInfo.isShare;
+
+			}else{
+				var totalCurrency = 0;
+				var totalFavorablePrice = 0;
+				var isShare = '';
+
+			}
+
+			if(totalCurrency == 0){
+			  totalCurrency = "0"+ "元";
+			}else{
+			  totalCurrency = totalCurrency + "元";
+			}
+			var shareInfo=""
+			if(isShare){
+			  shareInfo = " 如何使用"
+			}else{
+			  shareInfo = " 如何使用"
+			}
+			_this.setState({
+			  totalCurrency :totalCurrency,
+			  totalFavorablePrice:totalFavorablePrice,
+			  isShare:isShare,
+			  shareInfo:shareInfo
+			});
+          },
+          fail: function (status) {
+
+            console.log(status);
+          }
+      });
+  },
+  componentDidMount(){
+	var prevPathename = localStorage.getItem("prevPathename");
+	var scrollTop = localStorage.getItem("scrollTopCard")?localStorage.getItem("scrollTopCard"):0;
+	var scrollTopPage = localStorage.getItem("scrollTopPageCard")?localStorage.getItem("scrollTopPageCard"):1;
+
+  if((prevPathename=='/Wallet_C_D/' || prevPathename=='/Wallet_C_D') && scrollTopPage>1){
+				
+	var CardInfo = sessionStorage.getItem("CardInfo")?sessionStorage.getItem("CardInfo"):'';
+	CardInfo = eval("(" +CardInfo+")");
+
+	if(CardInfo){
+		this.setState({
+		  cardlist:CardInfo,
+		  page:scrollTopPage,
+		  visible:false
+		});
+
+		setTimeout(function(){
+			document.getElementById('LoadIndexScroll').scrollTop = scrollTop;
+			localStorage.removeItem("prevPathename");
+			localStorage.removeItem("scrollTopCard");
+			localStorage.removeItem("scrollTopPageCard");
+			sessionStorage.clear();
+		},1);
+
+	}
+ }else{
+	sessionStorage.clear();
+    this.loadUserInfo();
     var uid = Tools.GetQueryString("uid");
     var url = "/user/"+uid+"/cards";
     const _this = this;
@@ -120,144 +284,170 @@ const Wallet = React.createClass({
           success: function (response, xml) {
 
               var cardlist = eval('(' + response + ')');
-              console.log("---------------");
-              console.log(cardlist);
               //_this.state.shopInfo = searchResult.data.items;
               //cardlist.length = 0;
               if(cardlist.length == 0){
                 _this.setState({
-                  totalMoney:"如何使用"
+                  totalCurrency:"如何使用"
                 })
               }
               _this.setState({
                 cardlist:cardlist.data.items
-              })
+              });
+			  _this.checkInvalidCardlist();
 
-              const wallet_card = JSON.stringify(cardlist);
-              localStorage.setItem("wallet_card",wallet_card);
+			if((prevPathename=='/Wallet_C_D/' || prevPathename=='/Wallet_C_D')){
 
-              //var cardlist = this.state.cardlist;
-              var noCard = {
-                background: "url("+no_card+") no-repeat",
-                backgroundSize:"100% 100%"
-              };
-              var normalCards = [];
-              var cardlist = cardlist.data.items;
-              if(cardlist !== "" && cardlist.length > 0){
-                  cardlist.map((item, index) => {
-                    var cardStyle = {
-                      background: "url("+item.photo+") no-repeat",
-                      backgroundSize:"100% 100%"
-                    };
-
-                    var discount =  item.discount ? (item.discount*10).toFixed(1):"" ;
-                    var saveMoney = item.saveMoney ? item.saveMoney:"0";
-                    var showOrNot = "";
-                    item.status == "normal" ? showOrNot="" : showOrNot="none";
-
-                    var deadline = item.deadline;
-                    var dateCreated = item.dateCreated;
-
-                    var endtime_ms = Date.parse(new Date(deadline.replace(/-/g, "/")));
-                    var begintime_ms = Date.parse(new Date(dateCreated.replace(/-/g, "/")));
-
-                    var times = endtime_ms -begintime_ms;
-
-                    var days;
-                    if(times <= 0){
-                      days = 0;
-                    }else{
-                      days = Math.floor(times/(24*3600*1000))
-                    }
-                    if(item.status == "normal"){
-                      normalCards.push(
-                        <Link to={{pathname:"/Wallet_C_D",query:{item:item.cardId}}}  key={item.cardId}>
-                          <div className="card-box-wallet" style={{display:showOrNot}}>
-                            <div className="club-card-body-wallet" style={cardStyle}>
-                            <div className="club-discount-wallet">{discount}<span style={{fontSize:"24px"}}>折卡·</span><span style={{color:"#474747",marginRight:"8px",fontSize:"26px"}}>已省</span><span style={{color:"#474747",fontSize:"26px"}}>￥{saveMoney}</span></div>
-                            <div className="club-name-wallet">{item.cardName}·剩余{days}天</div>
-                            </div>
-                          </div>
-                        </Link>
-                      )
-                    }
-                  });
-            }
-            console.log("+++");
-            console.log(normalCards);
-
-            if(normalCards.length == 0){
-              normalCards.push(
-                <div className="card-box-wallet" style={{marginTop:"70px"}} key="no-card">
-                  <div style={{marginLeft:"22px",color:"#616161",fontFamily:"PingFangSC-Regular,sans-serif",fontSize:"24px",marginBottom:"12px"}}>如何获得可退会员卡<span fontSize={{fontSize:"26px"}}>？</span></div>
-                  <div className="club-card-body-wallet" style={noCard}>
-                  </div>
-                </div>
-              )
-            }
-
-            _this.setState({
-              normalCards:normalCards
-            })
-
+				document.getElementById('LoadIndexScroll').scrollTop = scrollTop;
+				localStorage.removeItem("prevPathename");
+				localStorage.removeItem("scrollTopCard");
+				localStorage.removeItem("scrollTopPageCard");
+			}
+				
           },
           fail: function (status) {
             console.log(status);
           }
       });
+	}
   },
   renderCardList(){
-      var cardlist = this.state.cardlist;
-      var noCard = {
-        background: "url("+no_card+") no-repeat",
-        backgroundSize:"100% 100%"
-      };
-      if(cardlist !== "" && cardlist.length > 0){
-          return cardlist.map((item, index) => {
-            var cardStyle = {
-              background: "url("+item.photo+") no-repeat",
-              backgroundSize:"100% 100%"
-            };
-            console.log(cardStyle);
-            var discount =  item.discount ? (item.discount*10).toFixed(1):"" ;
-            var saveMoney = item.saveMoney ? item.saveMoney:"0";
-            var showOrNot = "";
-            item.status == "normal" ? showOrNot="" : showOrNot="none";
+  
+	  var cardlist = this.state.cardlist;
+		const _this = this;
 
-            var deadline = item.deadline;
-            var dateCreated = item.dateCreated;
+	  if(cardlist !== "" && cardlist.length > 0){
 
-            var endtime_ms = Date.parse(new Date(deadline.replace(/-/g, "/")));
-            var begintime_ms = Date.parse(new Date(dateCreated.replace(/-/g, "/")));
+		  return cardlist.map((item, index) => {
+			var cardStyle = {
+			  background: "url("+item.photo+") no-repeat",
+			  backgroundSize:"100% 100%"
+			};
 
-            var times = endtime_ms -begintime_ms;
+			var discount =  item.discount ? (item.discount*10).toFixed(1):"" ;
+			var showOrNot = "";
+			(item.status == "refunded" || item.status == "expired"  || item.status == "invalid" ) ? showOrNot="none" : showOrNot="";
+			var deadline = item.deadline?item.deadline:'';
+			var dateCreated = item.dateCreated?item.dateCreated:'';
+			var cardName = item.name?item.name:'';
+			var cardPrice = item.price?item.price:0;
+			var cardBalance = item.balance?item.balance:0;
+			var type = item.type?item.type:'';
+			if(type==0){
+				var cardType='';
+				var cardTypeDiscount='none';
+			}else{
+				var cardType='none';
+				var cardTypeDiscount='';
+		
+			}
 
-            var days;
-            if(times <= 0){
-              days = 0;
-            }else{
-              days = Math.floor(times/(24*3600*1000))
-            }
-            return (
-              <Link to={{pathname:"/Wallet_C_D",query:{item:item.cardId}}}  key={item.cardId}>
-                <div className="card-box-wallet" style={{display:showOrNot}}>
-                  <div className="club-card-body-wallet" style={cardStyle}>
-                  <div className="club-discount-wallet">{discount}<span style={{fontSize:"24px"}}>折卡·</span><span style={{color:"#474747",marginRight:"8px",fontSize:"26px"}}>已省</span><span style={{color:"#474747",fontSize:"26px"}}>￥{saveMoney}</span></div>
-                  <div className="club-name-wallet">{item.cardName}·剩余{days}天</div>
-                  </div>
-                </div>
-              </Link>
-            );
-          });
-    }else{
-      return (
-          <div className="card-box-wallet" style={{marginTop:"70px"}}>
-            <div style={{marginLeft:"22px",color:"#616161",fontFamily:"PingFangSC-Regular,sans-serif",fontSize:"28px",marginBottom:"12px"}}>如何获得可退会员卡？</div>
-            <div className="club-card-body-wallet" style={noCard}>
-            </div>
-          </div>
-      );
-    }
+
+			if(item.status != "refunded" && item.status != "expired" && item.status != "invalid" && ( (type==0 && cardBalance >0) || (type!=0))){
+			  return(
+				<Link to={{pathname:"/Wallet_C_D",query:{item:JSON.stringify(item)}}}  key={item.id} onClick={this.saveScrollPage}>
+				  <div className="card-box-wallet" style={{display:showOrNot}}>
+					<div className="club-card-body-wallet" style={cardStyle}>
+					<div className="club-discount-wallet"><span className="bigTxt" style={{display:cardTypeDiscount}}>{discount}折卡 · </span><span className="smallTxt" style={{display:cardTypeDiscount}}>{deadline}</span><span className="bigTxt" style={{display:cardType}}>储值余额 · </span><span className="smallTxt" style={{display:cardType}}>{cardBalance}元</span></div>
+					<div className="club-name-wallet">{cardName}</div>
+					</div>
+				  </div>
+				</Link>
+			  )
+			}
+
+		});
+
+	}else{
+	
+                  
+		  var noCard = {
+			background: "url("+no_card+") no-repeat",
+			backgroundSize:"100% 100%"
+		  };
+
+		  return (
+			<div className="card-box-wallet" style={{marginTop:"70px"}} key="no-card">
+			  <div style={{marginLeft:"22px",color:"#c3c3c3",fontFamily:"PingFangSC-Regular,sans-serif",fontSize:"24px",marginBottom:"12px"}}>没有可用的会员卡<span fontSize={{fontSize:"26px"}}>...</span></div>
+			  <div className="club-card-body-wallet" style={noCard}>
+			  </div>
+			</div>
+		  );			  
+	}
+  },
+  checkInvalidCardlist(){
+  	  var cardlist = this.state.cardlist;
+      const _this = this;
+	  var InvalidCard=0;
+
+	  if(cardlist !== "" && cardlist.length > 0){
+
+			for(var i=0;i<cardlist.length;i++){
+				if(cardlist[i].status != "allow_refund" && cardlist[i].status != "not_allow_refund"){
+						InvalidCard++;
+				}
+			}
+
+	  }
+	if(InvalidCard==0){
+		_this.setState({
+		  InvalidCardBtn :true
+		});
+	}else{
+		_this.setState({
+		  InvalidCardBtn :false
+		});	
+	}
+
+  },
+  renderInvalidCardList(){
+  
+	  var cardlist = this.state.cardlist;
+      const _this = this;
+
+	  if(cardlist !== "" && cardlist.length > 0){
+
+		return cardlist.map((item, index) => {
+			var cardStyle = {
+			  background: "url("+item.photo+") no-repeat",
+			  backgroundSize:"100% 100%"
+			};
+
+
+			var discount =  item.discount ? (item.discount*10).toFixed(1):"" ;
+			var showOrValNot = "";
+			((item.status != "allow_refund" && item.status != "not_allow_refund") && _this.state.InvalidCardBox ) ? showOrValNot="none" : showOrValNot="";
+			
+			var deadline = item.deadline?item.deadline:'';
+			var dateCreated = item.dateCreated?item.dateCreated:'';
+			var cardName = item.name?item.name:'';
+			var cardPrice = item.price?item.price:0;
+			var cardBalance = item.balance?item.balance:0;
+			var type = item.type?item.type:'';
+			if(type==0){
+				var cardType='';
+				var cardTypeDiscount='none';
+			}else{
+				var cardType='none';
+				var cardTypeDiscount='';
+
+			}
+
+			if(item.status != "allow_refund" && item.status != "not_allow_refund"){
+
+			  return(
+				<Link to={{pathname:"/Wallet_C_D",query:{item:JSON.stringify(item)}}}  key={item.id} onClick={this.saveScrollPage}>
+				  <div className="card-box-wallet" style={{display:showOrValNot}}>
+					<div className="club-card-body-wallet" style={cardStyle}>
+					<div className="club-discount-wallet"><span className="bigTxt" style={{display:cardTypeDiscount}}>{discount}折卡 · </span><span className="smallTxt" style={{display:cardTypeDiscount}}>{deadline}</span><span className="bigTxt" style={{display:cardType}}>储值余额 · </span><span className="smallTxt" style={{display:cardType}}>{cardBalance}元</span></div>
+					<div className="club-name-wallet">{cardName}</div>
+					</div>
+				  </div>
+				</Link>
+			  )
+			}
+		  });
+	}
   },
   render() {
 
@@ -292,10 +482,15 @@ const Wallet = React.createClass({
     }
 
 
+	if(this.state.InvalidCardBtn){
+		var InvalidCardBtn = 'none';
+	}else{
+		var InvalidCardBtn = '';
+	}
     return (
       <View>
-        <Container scrollable>
-
+        <Container scrollable onScroll={this.LoadCardsScroll}  id="LoadIndexScroll">
+			<div className="cleafix">
             <div className="wallet-info">
               <div className="wallet-dis" style={{marginBottom:"43px"}}>
                 <span className="personName">我的钱包</span>
@@ -305,66 +500,22 @@ const Wallet = React.createClass({
             <div style={wallet_wddyj}>
             <Link to={{pathname:"Dyj_Detail",query:{pathType:"dyjsm"}}}>
               <div className="wddyj_title">我的抵用金</div>
-              <div className="wddyj_count">{this.state.totalMoney}</div>
+              <div className="wddyj_count">{this.state.totalCurrency}</div>
             </Link>
             </div>
             <div className="getFiveRMB">
-            <Link to={{pathname:"Wallet_Share"}} style={{color:"#ff5161"}}>
-              <div style={giftPic}></div><span style={{display:"inline-block"}}>领取5元</span>
+              <Link to={{pathname:"Dyj_Detail",query:{pathType:"dyjsm"}}} style={{color:"#ff5161"}}>
+              <div style={giftPic}></div><span style={{display:"inline-block"}}>如何使用</span>
             </Link>
             </div>
+			{this.renderCardList()}
+			{this.renderInvalidCardList()}
 
-            {/* {this.renderCardList()} */}
-            {this.state.normalCards}
-          {/* <div className="me-top-short"></div>
-          <div className="rank-exp">
-            <Link to={{pathname:"Wallet_SaveMoney"}}>
-              <span className="wallet-left">我的抵用金</span>
-              <span className="wallet-right">{this.state.totalMoney}元</span>
-            </Link>
-          </div>
-          <div className="cf"></div>
-          <div className="wallet-line"></div>
-
-          <div className="rank-exp">
-            <Link to={{pathname:"Wallet_Share"}}>
-            <span className="wallet-left">邀请好友 各得5元</span>
-            <span className="wallet-right"><Icon name="share"></Icon></span>
-            </Link>
-          </div>
-          <div className="cf"></div>
-          <div className="wallet-line"></div>
-
-          <div className="rank-exp">
-            <Link to={{pathname:"Wallet_CardList"}}>
-            <span className="wallet-left">我的会员卡</span>
-            <span className="wallet-right"><Icon name="mycard"></Icon></span>
-            </Link>
-          </div>
-          <div className="cf"></div>
-          <div className="wallet-line"></div>
-
-          <div className="rank-exp">
-            <Link to={{pathname:"Wallet_tradeList"}}>
-            <span className="wallet-left">交易记录</span>
-            <span className="wallet-right"><Icon name="changelist"></Icon></span>
-            </Link>
-          </div>
-
-          <div className="cf"></div>
-          <div className="wallet-line"></div>
-          <HelpCard
-                title="Popup Modal"
-                modalProps={{
-                  role: 'popup',
-                  title: '帮助中心',
-                }}
-              >
-              <h3>什么是低用金?</h3>
-              <Card>
-                低用金就是让你花最少的钱，享受最好的服务。
-              </Card>
-          </HelpCard> */}
+			</div>
+			<div className="totalFavorablePrice">
+			<span className="InvalidCardBtn" style={{display:InvalidCardBtn}} onClick={this.showInvalidCard}>查看已失效卡</span>
+			<div className="btmBorder"><span>累计已省 ¥{this.state.totalFavorablePrice}</span></div>	
+			</div>
 
         </Container>
       </View>

@@ -173,7 +173,7 @@
       border-radius: 0.533333rem;
   }
   #wechatUserHeadPic,#aliUserHeadPic,#aliVipCard,#wechatVipCard{
-      background-size:100% 100%;
+      background-size:cover;
   }
   </style>
 </body>
@@ -234,14 +234,13 @@ else{
       data: param,
       dataType: 'json',
       success: function(response){
-          alert(response.data.aliVipCard.photo)
-          $("#aliUserHeadPic").css("background","url("+response.data.aliUserHeadPic+") no-repeat center top");
-          $("#wechatUserHeadPic").css("background","url("+response.data.wechatUserHeadPic+") no-repeat center top");
+          $("#aliUserHeadPic").css("background-image","url("+response.data.aliUserHeadPic+")");
+          $("#wechatUserHeadPic").css("background-image","url("+response.data.wechatUserHeadPic+")");
           if(typeof(response.data.aliVipCard) !== "undefined"){
-              $("#aliVipCard").css("background","url("+response.data.aliVipCard.photo+") no-repeat center top");
+              $("#aliVipCard").css("background","url("+response.data.aliVipCard.photo+")");
           }
           if(typeof(response.data.wechatVipCard) !== "undefined"){
-              $("#wechatVipCard").css("background","url("+response.data.wechatVipCard.photo+") no-repeat center top");
+              $("#wechatVipCard").css("background","url("+response.data.wechatVipCard.photo+")");
           }
           $("#aliUserNickname").text(response.data.aliUserNickname);
           $("#wechatUserNickname").text(response.data.wechatUserNickname);

@@ -12,7 +12,8 @@ import {
 import {
   Link,
 } from 'react-router';
-import ajax from '../util/ajax';
+import Tools from '../util/tools';
+
 export default class Me extends React.Component {
 
 
@@ -36,10 +37,10 @@ export default class Me extends React.Component {
   }
 
   componentDidMount() {
+	this.loadUserInfo();
     var personInfo = localStorage.getItem("personInfo");
     personInfo = JSON.parse(personInfo);
-
-    //console.log(personInfo.realName);
+	
     this.setState({
       headPic:personInfo.headPic,
       realName:personInfo.realName,
@@ -53,10 +54,40 @@ export default class Me extends React.Component {
       favoriteCount: personInfo.favoriteCount,
       bindMobile: personInfo.bindMobile == false ? "未绑定":"已绑定",
       bindWechat: personInfo.bindWechat == false ? "未绑定":"已绑定",
+      bindAlipay: personInfo.bindAlipay == false ? "未绑定":"已绑定",
+      alipayShow: personInfo.bindAlipay == false ? "":"none",
+      alipayShowMargin: personInfo.bindAlipay == false ?"10px":"25px",
       setPassword: personInfo.setPassword == false ? "未绑定":"已绑定"
-    })
+    });
   }
+  loadUserInfo(){
+    /*获取url的uid*/
+    var _this = this;
+	const uid = localStorage.getItem("uid");
+    var url = "/user/"+uid+"/data";
 
+    var lat = localStorage.getItem("userLat") ? localStorage.getItem("userLat"):0;
+    var lng = localStorage.getItem("userLng") ? localStorage.getItem("userLng"):0;
+    Tools.ajax({
+          url: url,              //请求地址
+          type: "GET",                       //请求方式
+          data: {
+            uid:uid,
+            userLat:lat,
+            userLng:lng
+          },        //请求参数
+          dataType: "json",
+          success: function (response, xml) {
+
+              var appInfo = eval('(' + response + ')');
+              localStorage.setItem("personInfo",JSON.stringify(appInfo.data.personInfo));
+          },
+          fail: function (status) {
+
+            console.log(status);
+          }
+      });
+  }
   render() {
     const personhead = <img width="32" src={this.state.headPic} />;
     var headStyle = {
@@ -64,8 +95,12 @@ export default class Me extends React.Component {
       backgroundSize:"cover",
       backgroundColor:"#b7a17c"
     };
-    const linkLinkPay1 = "/linkPay1.html?uid=" + localStorage.getItem("uid");
-    return (
+	if(this.state.alipayShow==""){
+		var linkLinkPay1 = "/linkPay1.html?uid=" + localStorage.getItem("uid");
+	}else{
+		var linkLinkPay1 = "/wechatAccount.html?headPic=" + this.state.headPic +"&nickname="+this.state.nickname;
+    }
+	return (
       <View>
 
         <Container scrollable>
@@ -88,14 +123,7 @@ export default class Me extends React.Component {
 
 
           <div className="me-top-short"></div>
-          <div className="rank-exp">
-            <Link to={{pathname:"Me_Rank"}}>
-            <span className="wallet-left">等级经验</span>
-            <span className="wallet-right">{this.state.rank}</span>
-            </Link>
-          </div>
-          <div className="cf"></div>
-          <div className="wallet-line"></div>
+
 
           <div className="rank-exp">
             <Link to={{pathname:"Collection"}}>
@@ -134,9 +162,9 @@ export default class Me extends React.Component {
 
           <div className="rank-exp">
             <a href={linkLinkPay1} target="_blank" >
-            <span className="wallet-left" style={{marginBottom:"10px"}}>支付宝</span>
-            <span className="wallet-right" style={{marginBottom:"10px"}}>未关联</span>
-            <span className="linkInfo">关联后，微信支付宝都可以使用会员卡哦</span>
+            <span className="wallet-left" style={{marginBottom:this.state.alipayShowMargin}}>支付宝</span>
+            <span className="wallet-right" style={{marginBottom:this.state.alipayShowMargin}}>{this.state.bindAlipay}</span>
+            <span className="linkInfo" style={{display:this.state.alipayShow}}>关联后，微信支付宝都可以使用会员卡哦</span>
             </a>
           </div>
           <div className="cf"></div>

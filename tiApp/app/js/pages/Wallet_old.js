@@ -86,9 +86,9 @@ const Wallet = React.createClass({
     walletInfo = eval("(" +walletInfo+")");
     var totalMoney = walletInfo.totalMoney;
     var vipCardCount = walletInfo.vipCardCount;
-    var share = walletInfo.share;
+    var isShare = walletInfo.isShare;
     var shareInfo=""
-    if(share){
+    if(isShare){
       shareInfo = "邀请好友各得5元"
     }else{
       shareInfo = "送好友5元抵用金"
@@ -96,7 +96,7 @@ const Wallet = React.createClass({
     this.setState({
       totalMoney :totalMoney,
       vipCardCount:vipCardCount,
-      share:share,
+      isShare:isShare,
       shareInfo:shareInfo
     })
   },

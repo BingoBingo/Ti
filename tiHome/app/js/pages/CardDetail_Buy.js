@@ -64,6 +64,7 @@ const CardDetail_Buy = React.createClass({
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-cczfloading"})
     var payTrue = this.props.location.query.userPayMoney * 1;
     payTrue = payTrue.toFixed(2);
+
     var cardId = this.props.location.query.cardId;
     var ownCard = localStorage.getItem("ownCard");
     let uid = localStorage.getItem("uid");
@@ -398,7 +399,12 @@ const CardDetail_Buy = React.createClass({
             </div>
           </Link>
 
-          <Link to={{pathname: "Wallet_SupportHotel",query: {cardId: cardId,cardType:cardType}}}>
+          <Link to={{pathname: "Wallet_SupportHotel",query: {
+            cardId: cardId,
+            cardType:cardType,
+            payTrue:this.props.location.query.payTrue,
+            availablePoint: this.props.location.query.availablePoint
+          }}}>
             <div className="cardDetail-top-line"></div>
             <div className="cardDetail-list">
               <div className="pserson-wechat">
@@ -413,12 +419,6 @@ const CardDetail_Buy = React.createClass({
         <div className="payEndNew">
           <div className="btn-pay-back" style={payback} onClick={this.goback}></div>
           <div className={this.state.btnPayNewNotPut} onClick={this.chooseNext}>
-              {/* <Link to={{pathname:(cardType == "DiscountCard") ? "PayEnd_WithCard" :"PayEnd_Detail",
-                  query:(cardType == "DiscountCard") ? {cardId:cardId,availablePoint:availablePoint,cardPrice:this.state.cardPrice ,cardDiscount:this.state.cardDiscount,userPayMoney:payTrue,itemPhoto:this.state.itemPhoto}
-                  :{cardId:cardId,availablePoint:availablePoint,cardGivePoint:this.state.cardGivePoint,cardPrice:this.state.cardPrice,userPayMoney:this.props.location.query.userPayMoney,availableStoredValue: this.props.location.query.availableStoredValue,defaultDiscount:this.props.location.query.defaultDiscount}
-              }}>
-                {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : `储值并支付`}
-              </Link> */}
               {cardType == "DiscountCard" ? `￥${this.state.cardPrice} 开通` : this.state.payBtnInfo}
           </div>
         </div>

@@ -27,29 +27,45 @@ const Wallet_tradeDetail = React.createClass({
       tradePrice:0
     }
   },
+  prevPathenameSave(){
+	var _this = this;
+    window.addEventListener("popstate", function(e) {
 
+			localStorage.setItem("prevPathename",_this.props.location.pathname);
+
+    }, false); 
+  },
   componentDidMount(){
+
     var _this = this;
-    var tradeDetail = this.props.location.query.tradeDetail;
+	_this.prevPathenameSave();
+	var tradeDetail = this.props.location.query.tradeDetail;
     tradeDetail = eval("("+tradeDetail+")");
-    var payTrue = tradeDetail.tradePrice*1 -tradeDetail.favorablePrice*1 -tradeDetail.pointNumber*1;
-    payTrue = payTrue.toFixed(2);
+
     var paymentChannel = tradeDetail.paymentChannel;
     if(paymentChannel == "wechat_pay"){
       paymentChannel = "微信";
     }else {
       paymentChannel = "支付宝";
     }
+	var discountZk = tradeDetail.discount*10;
+	if(discountZk==10){
+		var discountNotice = '无';
+	}else{
+		var discountNotice = discountZk;
+	}
+
     this.setState({
+      totalPrice:tradeDetail.totalPrice,
       tradePlace:tradeDetail.tradePlace,
       tradeTime:tradeDetail.tradeTime,
       tradeCode:tradeDetail.tradeCode,
-      cardName:tradeDetail.cardName,
       paymentChannel:paymentChannel,
       favorablePrice:tradeDetail.favorablePrice,
-      pointNumber:tradeDetail.pointNumber,
-      tradePrice:tradeDetail.tradePrice,
-      payTrue:payTrue
+      currency:tradeDetail.currency,
+      storedValue:tradeDetail.storedValue,
+      discountNotice:discountNotice,
+      tradePrice:tradeDetail.tradePrice
     })
 
     //var url = "/user/"+localStorage.getItem("uid")+"/trade_records"
@@ -95,17 +111,16 @@ const Wallet_tradeDetail = React.createClass({
           <Group noPadded>
             <div className="home-tradelist">消费记录</div>
             <div className="" style={{marginLeft:"25px",marginRight:"25px"}}>
-              <span style={{marginBottom:"10px",display:"inline-block",width:"40%",fontSize:"16px"}}>消费门店</span><span style={{marginBottom:"10px",display:"inline-block",width:"60%",fontSize:"16px",textAlign:"right"}}>{this.state.tradePlace}</span>
-              <span style={{marginBottom:"10px",display:"inline-block",width:"45%",fontSize:"16px"}}>支付时间</span><span style={{marginBottom:"10px",display:"inline-block",width:"55%",fontSize:"16px",textAlign:"right"}}>{this.state.tradeTime}</span>
-              <span style={{marginBottom:"10px",display:"inline-block",width:"45%",fontSize:"16px"}}>交易单号</span><span style={{marginBottom:"10px",display:"inline-block",width:"55%",fontSize:"16px",textAlign:"right"}}>{this.state.tradeCode}</span>
-              <span style={{marginBottom:"10px",display:"inline-block",width:"45%",fontSize:"16px"}}>会员卡</span><span style={{marginBottom:"10px",display:"inline-block",width:"55%",fontSize:"16px",textAlign:"right"}}>{this.state.cardName}</span>
-              <span style={{display:"inline-block",width:"70%",fontSize:"16px"}}>支付途径</span><span style={{display:"inline-block",width:"30%",fontSize:"16px",textAlign:"right"}}>{this.state.paymentChannel}</span>
-              <div className="border-top-line" style={{display:"inline-block",marginTop:"25px",marginBottom:"25px"}}></div>
-              <span style={{marginBottom:"15px",display:"inline-block",width:"70%",fontSize:"18px"}}>原价</span><span style={{marginBottom:"15px",display:"inline-block",width:"30%",fontSize:"18px",textAlign:"right"}}>{this.state.tradePrice}</span>
-              <span style={{marginBottom:"15px",display:"inline-block",width:"70%",fontSize:"18px"}}>会员折扣</span><span style={{marginBottom:"15px",display:"inline-block",width:"30%",fontSize:"18px",textAlign:"right"}}>{this.state.favorablePrice}</span>
-              <span style={{display:"inline-block",width:"70%",fontSize:"18px"}}>使用抵用金</span><span style={{display:"inline-block",width:"30%",fontSize:"18px",textAlign:"right"}}>{this.state.pointNumber}</span>
-              <div className="border-top-line" style={{display:"inline-block",marginTop:"25px",marginBottom:"25px"}}></div>
-              <span style={{display:"inline-block",width:"70%",fontSize:"21px"}}>实付</span><span style={{display:"inline-block",width:"30%",fontSize:"21px",textAlign:"right"}}>{this.state.payTrue}</span>
+              <span style={{marginBottom:"10px",display:"inline-block",width:"40%",fontSize:"18px"}}>门店</span><span style={{marginBottom:"10px",display:"inline-block",width:"60%",fontSize:"18px",textAlign:"right"}}>{this.state.tradePlace}</span>
+              <span style={{marginBottom:"10px",display:"inline-block",width:"45%",fontSize:"18px"}}>时间</span><span style={{marginBottom:"10px",display:"inline-block",width:"55%",fontSize:"18px",textAlign:"right"}}>{this.state.tradeTime}</span>
+              <span style={{marginBottom:"10px",display:"inline-block",width:"45%",fontSize:"18px"}}>单号</span><span style={{marginBottom:"10px",display:"inline-block",width:"55%",fontSize:"18px",textAlign:"right"}}>{this.state.tradeCode}</span>
+              <span style={{marginBottom:"15px",display:"inline-block",width:"70%",fontSize:"26px",fontWeight:"700"}}>总金额</span><span style={{marginBottom:"15px",display:"inline-block",width:"30%",fontSize:"26px",fontWeight:"700",textAlign:"right"}}>{this.state.totalPrice}</span>
+              <span style={{marginBottom:"15px",display:"inline-block",width:"70%",fontSize:"18px"}}>折扣</span><span style={{marginBottom:"15px",display:"inline-block",width:"30%",fontSize:"18px",textAlign:"right"}}>{this.state.discountNotice}</span>
+              <span style={{marginBottom:"15px",display:"inline-block",width:"70%",fontSize:"18px"}}>折扣金额</span><span style={{marginBottom:"15px",display:"inline-block",width:"30%",fontSize:"18px",textAlign:"right"}}>{this.state.favorablePrice}</span>
+              <div className="border-top-lineCus" ></div>
+              <span style={{display:"inline-block",width:"100%",fontSize:"18px",textAlign:"right"}}>抵用金支付 : {this.state.currency}</span>
+              <span style={{display:"inline-block",width:"100%",fontSize:"18px",textAlign:"right"}}>储值支付 : {this.state.storedValue}</span>
+				<span style={{display:"inline-block",width:"100%",fontSize:"21px",textAlign:"right",fontWeight:"700"}}>实付 : {this.state.tradePrice}</span>
 
             </div>
           </Group>

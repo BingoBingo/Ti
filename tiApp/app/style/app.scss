@@ -90,7 +90,9 @@
   height: 1px;
   background: #dedede;
   width: 47px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; 
+  width:100%;
+
 }
 ul.list.searchInput {
     margin-top: 0px;
@@ -202,7 +204,7 @@ select#gender {
     margin: -45px -15px 0px;
 }
 .slider-slides > li > img, .slider-slides > li > a > img{
-  height: 290px !important;
+  height: 320px !important;
 }
 .hotelName {
   font-size: 24px;
@@ -383,8 +385,10 @@ li.item.item-input.nickName {
     background: #dedede;
 }
 dl.serachDt {
-  margin-left: 25px;
-  margin-top: 20px;
+	margin-top: 20px;
+	margin-left:0;
+	margin-right:0;
+	padding: 0 1.75rem;
 }
 dt.search-dt a {
     color: #525252;
@@ -453,7 +457,22 @@ span.icon.icon-like {
 .tabbar > .active.tabBarColor, .tabbar > .active.tabBarColor a {
     color: #06A79B;
 }
-
+.tabbar-item .icon {
+	font-size:28px;
+	height:1.500rem;
+}
+.tabbar-item span.icon:before{
+    font-size: 28px;
+    height: 28px;
+    overflow: hidden;
+    display: block;
+    line-height: 28px;
+}
+.tabbar-item span.icon-me:before{
+    font-size: 26px;
+    height: 28px;
+    line-height: 26px;
+}
 /*我*/
 
 li.item.item-linked.me-name {
@@ -587,7 +606,7 @@ li.item.item-input.nickName {
   width: 100px;
   height: 38px;
   background: white;
-  position: absolute;
+  position: fixed;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -729,7 +748,6 @@ li.item.item-linked.shareMoney {
   margin-top: 30px;
 }
 .card-box-wallet {
-  height: 224px;
   margin-top: 50px;
 }
 .my-cardlist {
@@ -794,13 +812,13 @@ margin-right: 25px;
     // margin: 0 auto;
     // margin-top: 10px;
     // border-radius: 13px;
-    text-align: center;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
     // margin-top: 20px;
     // margin-right: 15px;
     // margin-left: 15px;
     // margin-bottom: 30px;
+    margin:0;
 }
 .card-discount {
   font-size: 44px;
@@ -887,7 +905,6 @@ text-align: right;
   height: 42px;
 line-height: 42px;
 text-align: center;
-width: 80px;
 float: right;
 background: #06a79b;
 color: #fff;
@@ -918,9 +935,11 @@ border-radius: 30px;
 .title_0 {
     font-size: 21px;
     margin-left: 25px;
+    margin-right: 25px;
     color: #fff;
     margin-bottom: 10px;
     line-height: 21px;
+    word-wrap: break-word;
 }
 .title_0_0 {
     margin-left: 45px;
@@ -999,11 +1018,7 @@ div.border-top-line {
   text-align: center;
   border-radius: 20px;
   line-height: 40px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  position: absolute;
-  bottom: 100px;
+  margin: 50px auto;
 }
 .name-info {
     margin: 50px 25px 0px;
@@ -1069,7 +1084,7 @@ span.personEdit {
 }
 
 span.data-before {
-  width: 80%;
+  width: 75%;
 display: inline-block;
 float: left;
 font-size: 18px;
@@ -1078,8 +1093,8 @@ margin-top: 25px;
 margin-bottom: 25px;
 }
 span.wallet-right {
-  font-size: 16px;
-  color: #474747;
+  font-size: 18px;
+  color: #00a698;
   display: inline-block;
   float: right;
   margin-bottom: 25px;
@@ -1107,7 +1122,7 @@ span.wallet-right {
     text-align: center;
 }
 span.wallet-left {
-  font-size: 16px;
+  font-size: 18px;
   color: #474747;
   display: inline-block;
   float: left;
@@ -1123,7 +1138,7 @@ span.data-after {
   line-height: 18px;
   margin-top: 25px;
   margin-bottom: 25px;
-  width: 20%;
+  width: 25%;
   text-align: right;
 }
 
@@ -1136,23 +1151,36 @@ span.info-before {
   margin-left: 25px;
   margin-bottom: 25px;
 }
+.reduceOutBox{
+	padding-bottom:18px;
+}
+.reduceJSDYJ{
+  text-align: left;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-size: 14px;
+  color: #ff5161;
+line-height: 28px;
+height: 28px;
+}
 .reduceDYJ {
   text-align: left;
   margin-left: 25px;
   margin-right: 25px;
   font-size: 18px;
-  color: #a0a0a0;
-  line-height: 15px;
+  color: #474747;
+line-height: 28px;
+height: 28px;
 }
 .reduceYH {
   text-align: left;
   margin-left: 25px;
   margin-right: 25px;
   font-size: 18px;
-  color: #a0a0a0;
+  color: #474747;
   margin-top: 10px;
-  line-height: 18px;
-  margin-bottom: 15px;
+line-height: 28px;
+height: 28px;
 }
 
 .giveBack {
@@ -1160,10 +1188,11 @@ span.info-before {
   margin-left: 25px;
   margin-right: 25px;
   font-size: 18px;
-  color: #a0a0a0;
+  color: #474747;
   margin-top: 15px;
   margin-bottom: 40px;
-  line-height: 18px;
+line-height: 28px;
+height: 28px;
 }
 span.info-after {
   display: block;
@@ -1179,8 +1208,8 @@ li.item.modal-actions-header.reduce-detail {
   margin-left: 25px;
   padding: 0px;
   margin-right: 25px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 2.813rem;
+  padding-bottom: 2.813rem;
 }
 .modal-special{
   margin: 0px !important;
@@ -1287,7 +1316,7 @@ float: right;
   display: block;
   float: right;
   font-size: 18px;
-  color: #a0a0a0;
+  color: #474747;
   margin-right: 10px;
 }
 
@@ -1379,6 +1408,8 @@ span.icon.icon-transmit {
     height: 100%;
     opacity: 0.4;
     position: absolute;
+    top:0;
+    z-index:2;
 }
 
 input#nickname ,input#lastName,input#firstName,input#gender,input#identity,input#birthday,select#genderSelect{
@@ -1387,6 +1418,7 @@ input#nickname ,input#lastName,input#firstName,input#gender,input#identity,input
   padding-bottom: 25px;
   font-size: 18px;
   line-height: 18px;
+  height:70px;
 }
 // input#birthday{
 //   padding-top: 30px;
@@ -1441,9 +1473,39 @@ $ratchicons-path: "../../node_modules/amazeui-touch/fonts/";
 .tradelist .item-content {
     padding-top: 20px !important;
     padding-bottom: 20px !important;
+    border:none;
+    border-bottom: 1px solid #e6e6e6;
+}
+.saveItem .item-date{
+	border:none;
+	padding-bottom: 5px !important;
+}
+.saveItem .item-date span{
+	background:#06A79B;
+	display:inline-block;
+	color:#FFF;
+	padding: 0px 3px;
+}
+.tradelist .item-content .item-after{
+	font-size:1.5rem;
+	color:#000;
 }
 .tradelist >a .item-subtitle {
     margin-top: 10px;
+    float:left;
+}
+.tradelist >a .item-tradeType {
+    margin-top: 10px;
+    float:right;
+    color: #474747;
+}
+.border-top-lineCus{
+    display: inline-block;
+    border-top: 1px solid #c0c0c0;
+    border-bottom: 1px solid #c0c0c0;
+    background: none;
+    height: 4px;
+	width: 100%;
 }
 .hotel-card .card-header {
     padding: 0px;

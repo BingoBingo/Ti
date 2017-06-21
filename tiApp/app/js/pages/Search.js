@@ -76,8 +76,8 @@ const Me_Rank = React.createClass({
 
   getInitialState(){
     //this.callWX();
-    let userLng = localStorage.getItem("userLng") ? localStorage.getItem("userLng") : "" ;
-    let userLat = localStorage.getItem("userLat") ? localStorage.getItem("userLat") :"";
+    let userLng = localStorage.getItem("userLng") ? localStorage.getItem("userLng") : "0" ;
+    let userLat = localStorage.getItem("userLat") ? localStorage.getItem("userLat") :"0";
     return({
       shopInfo:[],
       searchCount:"0",

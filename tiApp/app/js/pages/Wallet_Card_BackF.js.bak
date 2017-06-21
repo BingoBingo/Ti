@@ -35,7 +35,7 @@ const Wallet_Card_BackF = React.createClass({
 
     var status = this.props.location.query.status;
     var backInfo = this.props.location.query.backInfo;
-    var givePoint = this.props.location.query.givePoint;
+    var givePoint = this.props.location.query.currency;
     var giveBack = this.props.location.query.giveBack;
     var backTitleInfo = "";
     var backCallBack = "";
@@ -77,7 +77,7 @@ const Wallet_Card_BackF = React.createClass({
               var appInfo = eval('(' + response + ')');
 
               _this.setState({
-                hotelInfo:appInfo.data.hotelInfo,
+                shopInfo:appInfo.data.shopInfo,
                 visible:false
               })
               localStorage.setItem("histories",JSON.stringify(appInfo.data.histories));

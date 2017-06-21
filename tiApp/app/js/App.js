@@ -50,9 +50,9 @@ class App extends React.Component {
         ...props,
       } = this.props;
     var pathname = this.props.location.pathname;
-    var tabBarVisable = ""
-    if(pathname == "/Wallet_Share" || pathname == "/Dyj_Detail" || pathname == "/Wallet_Card_BackF" || pathname == "/Wallet_C_D"){
-      tabBarVisable = "none"
+    var tabBarVisable = "";
+    if(pathname == "/Wallet_Share" || pathname == "/Dyj_Detail" || pathname == "/Wallet_Card_BackF" || pathname == "/Wallet_C_D" || pathname == "/CategoryList"  || pathname == "/CategoryList/" || pathname == "/CityList" || pathname == "/CityList/"  || pathname == "/Home_H_D"  || pathname == "/Home_H_D/" || pathname == "/Me_Detail" || pathname == "/Me_Detail/"){
+      tabBarVisable = "none";
     }
     const {
       router
@@ -89,7 +89,7 @@ class App extends React.Component {
             selected={router.isActive('/Search', true)}
             to="/Search"
             onlyActiveOnIndex
-            className="tabBarColor"
+            className="tabBarColor hidden"
           />
           <TabBar.Item
             component={Link}
@@ -103,7 +103,7 @@ class App extends React.Component {
           <TabBar.Item
             component={Link}
             icon="me"
-            title="我"
+            title="我的"
             // @see https://github.com/reactjs/react-router/blob/0616f6e14337f68d3ce9f758aa73f83a255d6db3/docs/API.md#isactivepathorloc-indexonly
             selected={router.isActive('/Me', true)}
             to="/Me"

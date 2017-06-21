@@ -1,4 +1,5 @@
 import React from 'react';
+import Rodal from 'rodal';
 import {
   View,
   Container,
@@ -23,7 +24,12 @@ import {
 } from 'react-router';
 
 const Home_H_D = React.createClass({
+   defaultProps :{
+		width           : 70,
+		height          : 20,
+		measure         : '%'
 
+	},
   getInitialState(){
 
     return{
@@ -33,10 +39,12 @@ const Home_H_D = React.createClass({
       detail: "",
       photos: [],
       rooms: [],
+      products:[],
+      cardInfo:[],
+      province: "",
       city: "",
-      district: "",
-      address: "",
-      detail:"",
+      county: "",
+      discountInfo:[],
       hotelDiscount:"",
       discountShow:"",
       hotelLat:"",
@@ -53,12 +61,34 @@ const Home_H_D = React.createClass({
       showDot:"none",
       discountInfo_mark:"",
       discountInfo_info:"",
-      color:""
+      color:"",
+	  visibleAlert:false
+
     }
     this.setState({
       tabBarVisable:"none"
     })
   },
+	showAlert(contents,url) {
+		document.getElementById('showAlertContent').innerHTML = contents;
+		this.setState({ visibleAlert: true});
+		if(url){
+			this.setState({ realoadUlr: url });
+		}
+	},
+
+	hideAlert() {
+		this.setState({ visibleAlert: false });
+		document.getElementById('showAlertContent').innerHTML = '';
+		if(this.state.realoadUlr && this.state.realoadUlr !='reload'){
+			this.context.router.push(this.state.realoadUlr);
+		}
+		if( this.state.realoadUlr =='reload'){
+				window.location.reload();
+		}
+
+
+	},
   removeColl(){
     var _this = this;
     var hid = this.props.location.query.hid;
@@ -68,7 +98,7 @@ const Home_H_D = React.createClass({
           //url: "http://123.56.20.50/hotel-union-api/user/086d1f45-19b7-43e9-84db-2f3d2915523c/favorites",
           url:url,
           type: "POST",
-          data: { hid: hid},
+          data: { sid: hid},
           dataType: "json",
           success: function (response, xml) {
               var response = eval('(' + response + ')');
@@ -78,12 +108,11 @@ const Home_H_D = React.createClass({
                   likeIcon:"none"
                 })
               }else{
-                alert("操作失败，请确保网络正常~");
+                _this.showAlert("操作失败，请确保网络正常~");
               }
           },
           fail: function (status) {
-            alert("操作失败，请确保网络正常~");
-            window.location.reload();
+            _this.showAlert("操作失败，请确保网络正常~",'reload');
             console.log(status);
           }
       });
@@ -96,7 +125,7 @@ const Home_H_D = React.createClass({
      Tools.ajax({
            url: url,
            type: "POST",
-           data: { hid: hid },
+           data: { sid: hid },
            dataType: "json",
            success: function (response, xml) {
 
@@ -109,28 +138,31 @@ const Home_H_D = React.createClass({
 
                }else{
                  var error = hotelDetail.error;
-                 alert("收藏失败:" + error);
-                //  _this.setState({
-                //    dislikeIcon:"none",
-                //    likeIcon:""
-                //  })
+                 _this.showAlert("收藏失败:" + error);
+
                }
            },
            fail: function (response) {
-             alert("收藏失败~")
+             _this.showAlert("收藏失败~")
              console.log(response);
            }
        });
   },
+  prevPathenameSave(){
+	var _this = this;
+    window.addEventListener("popstate", function(e) {
+
+			localStorage.setItem("prevPathename",_this.props.location.pathname);
+
+    }, false); 
+  },
   componentDidMount(){
+
     var _this = this;
-    //var mockUrl = "http://localhost:3005/Home_H_D";
-    //var hid = Tools.GetQueryString("hid");
+	_this.prevPathenameSave();
     var hid = this.props.location.query.hid;
     var uid = Tools.GetQueryString("uid");
-    //var url = "/hotel/"+ hid + "?uid=" + uid;
-    var url = "/hotel/"+ hid;
-    console.log(url);
+    var url = "/shop/"+ hid;
 
     Tools.ajax({
           url: url,
@@ -139,43 +171,30 @@ const Home_H_D = React.createClass({
           dataType: "json",
           success: function (data, xml) {
               var hotelDetail = eval('(' + data + ')');
-              var countInfo = (1 - hotelDetail.data.hotelDiscount)* 100;
-              countInfo = countInfo.toFixed(0) + "%";
-              var discountInfo = hotelDetail.data.discountInfo ? hotelDetail.data.discountInfo:{};
-              var discountInfo_type = discountInfo.type;
               var color = "#00a698";
-              if(discountInfo_type != "vip"){
-                color = "#ff5161"
-              }
-              var discountInfo_info = discountInfo.info;
-              var discountInfo_price = discountInfo.price;
-              var discountInfo_mark = discountInfo.mark;
+     
 
               _this.setState({
                 hotelName: hotelDetail.data.name,
-                address: hotelDetail.data.address,
                 detail: hotelDetail.data.detail,
                 like: hotelDetail.data.like,
                 photos: hotelDetail.data.photos,
                 rooms: hotelDetail.data.rooms,
+                products: hotelDetail.data.products,
+                province: hotelDetail.data.province,
                 city: hotelDetail.data.city,
-                district: hotelDetail.data.district,
+                county: hotelDetail.data.county,
                 address: hotelDetail.data.address,
-                detail: hotelDetail.data.detail,
+                discountInfo: hotelDetail.data.discountInfo,
                 hotelDiscount:hotelDetail.data.hotelDiscount*10,
                 discountShow:hotelDetail.data.shopVipDiscount == "1" ? "none" : "",
                 hotelLon:hotelDetail.data.longitude,
                 hotelLat:hotelDetail.data.latitude,
-                countInfo:countInfo,
-                discountInfo_mark:discountInfo_mark,
-                discountInfo_info:discountInfo_info,
                 color:color
               });
 
               /*是否收藏*/
               var likeOrNot = hotelDetail.data.like;
-              console.log(likeOrNot);
-              // likeOrNot = true;
               if(likeOrNot == false){
                 _this.setState({
                   dislikeIcon:"",
@@ -188,7 +207,6 @@ const Home_H_D = React.createClass({
                 })
               }
 
-              console.log(hotelDetail.data.detail.length + "+++");
               var scrollHeight = hotelDetail.data.detail.length;
               if(scrollHeight >= 50){
                 _this.setState({
@@ -201,10 +219,38 @@ const Home_H_D = React.createClass({
             console.log(status);
           }
       });
-
+	_this.getCardInfo();
 
   },
+  getCardInfo(){
+  
+    var _this = this;
+    var hid = this.props.location.query.hid;
+    var uid = Tools.GetQueryString("uid");
+    var url = "/user/"+uid+"/vip_shop/"+ hid;
 
+    Tools.ajax({
+          url: url,
+          type: "GET",
+          data: { },
+          dataType: "json",
+          success: function (data, xml) {
+              var cardInfo = eval('(' + data + ')');
+			  if(cardInfo.data){
+				  _this.setState({
+					cardInfo: cardInfo.data
+
+				  });
+			  }
+
+
+          },
+          fail: function (status) {
+            console.log(status);
+          }
+      });  
+  
+  },
   hideRemark(e){
     document.getElementById("remark").style.display = "none";
   },
@@ -277,7 +323,7 @@ const Home_H_D = React.createClass({
                 wx.onMenuShareWeibo(shareData);
                 wx.onMenuShareQZone(shareData);
                 wx.error(function(res){
-                  alert(JSON.stringify(res));
+                  _this.showAlert(JSON.stringify(res));
                 });
               });
           },
@@ -286,37 +332,119 @@ const Home_H_D = React.createClass({
           }
       });
   },
+  renderCardInfo(){
+    const cardInfo = this.state.cardInfo;
+	const discountInfo = this.state.discountInfo;
+    if(cardInfo!=''){
+
+		if(discountInfo.type=='vip'){
+	
+		  
+          var discount =  cardInfo.discount ? (cardInfo.discount*10).toFixed(1):"" ;
+
+		  return (
+                <Link to={{pathname:"/Wallet_C_D",query:{item:cardInfo.id}}}  key={cardInfo.id}>
+
+				<div className="storeCard">
+					<div className="cardType">{discount}折会员</div>
+					<div className="cardNotice">已开通</div>
+					<div className="rightIcon"></div>
+
+				</div>
+				</Link>
+	 
+		  );
+		}
+	
+	}else{
+		  if(discountInfo.type=='point'){
+			  return (
+					<Link to={{pathname:"Dyj_Detail",query:{pathType:"dyjsm"}}} key={0}>
+
+					<div className="storeCard">
+						<div className="cardType">抵用金</div>
+						<div className="cardNotice">本店支持使用抵用金</div>
+						<div className="rightIcon"></div>
+
+					</div>
+					</Link>
+		 
+			  );	
+		  }
+	
+	}
+
+  
+  },
   renderRoomList(){
     const rooms = this.state.rooms;
+    const products = this.state.products;
+    if(products!=''){
+		return(
+		  <div>
+			{products.map(function(item, i) {
+			  var photo = "";
+			  if(item.photos.length == 0){
+				  photo = nopic;
+			  }else {
+				  photo = item.photos[0].path + "/" + item.photos[0].name;
+			  }
+			  var roomImg = {
+					background:"url('"+photo+"')",
+					backgroundSize:"cover"
+				  };
 
-    return(
-      <div>
-        {rooms.map(function(item, i) {
-          console.log(item);
-          var photo = "";
-          if(item.photos.length == 0){
-              photo = nopic;
-          }else {
-              photo = item.photos[0].path + "/" + item.photos[0].name;
-          }
-          var roomImg = {
-                background:"url('"+photo+"')",
-                backgroundSize:"cover"
-              };
-          return (
-              <div  className="room-list" key={i}>
-                <div className="col-roomImg"><div className="room-img"><img src={photo} height="30px"/></div></div>
-                <div style={{marginLeft:"90px"}}>
-                  <div className="col-roomtype"><div className="room-type">{item.name}</div><div className="room-dis">{item.bed}、{item.breakfast}、{item.area}㎡</div></div>
-                  <div className="col-roomPrice"><div className="room-price">¥{item.price}</div></div>
-                </div>
+			  var hid = item.id;
+			  var discountInfo = item.discountInfo?item.discountInfo:'';
 
-                <div className="border-line"></div>
-              </div>
-          );
-        })}
-      </div>
-    )
+			  return (
+					<div className="items"  key={item.id}>
+						<div className="img" style={roomImg}></div>
+						<div className="rightBox">
+						<div className="title">{item.name}</div>
+						<div className="desc">{item.about}</div>
+						<div className="prices"><span className="coupon">{discountInfo.mark} ¥{discountInfo.price}</span><span className="price">¥{item.price}</span></div>
+						</div>
+					</div>
+		 
+			  );
+			})}
+		  </div>
+		);	
+	}	
+    if(rooms!=''){
+		return(
+		  <div>
+			{rooms.map(function(item, i) {
+			  var photo = "";
+			  if(item.photos.length == 0){
+				  photo = nopic;
+			  }else {
+				  photo = item.photos[0].path + "/" + item.photos[0].name;
+			  }
+			  var roomImg = {
+					background:"url('"+photo+"')",
+					backgroundSize:"cover"
+				  };
+
+			  var hid = item.id;
+			  var discountInfo = item.discountInfo?item.discountInfo:'';
+
+			  return (
+					<div className="items"  key={item.id}>
+						<div className="img" style={roomImg}></div>
+						<div className="rightBox">
+						<div className="title">{item.name}</div>
+						<div className="times">{item.bed}、{item.breakfast}、{item.area}㎡</div>
+						<div className="prices"><span className="coupon">{discountInfo.mark} ¥{discountInfo.price}</span><span className="price">¥{item.price}</span></div>
+						</div>
+					</div>
+		 
+			  );
+			})}
+		  </div>
+		);
+	  }
   },
   showAllDetail(){
     this.setState({
@@ -325,14 +453,35 @@ const Home_H_D = React.createClass({
       showDot:"none"
     })
   },
+goBackUp(){
+  history.go(-1);
+},
+BuyItem(){
+	const uid = localStorage.getItem("uid");
+    var hid = this.props.location.query.hid;
+	Tools.ajax
+	var Base64 = new Tools.Base64Cus();  
+	var hname = Base64.encode(this.state.hotelName);  
+ 
+	var userType = this.state.discountInfo.userType;
+	var hostUrl = window.location.host;
+	if(hostUrl == "taihuiyuan.com"){
+		var urlPre = "https://taihuiyuan.com/";
+	}else{
+		var urlPre = "https://dev.taihuiyuan.com/";
+	}
+	var url=urlPre+"pay/index.html?hid="+hid+"&hname="+hname+"&device=wechat&ut="+userType+"&uid="+uid
+	window.location.href=url;
+
+},
   render() {
 
-    const img40 = <img width="48" src="./i/hotel.jpg" />;
     const hotelLat = this.state.hotelLat;
     const hotelLng = this.state.hotelLon;
     const uid = localStorage.getItem("uid");
     const hotelLocation = "http://taihuiyuan.com/api/map.jsp?hotelLat="+hotelLat+"&hotelLng="+hotelLng+"&userLat=0&userLng=0&uid="+uid+"";
 
+    var detail = this.state.detail;
     var cardBack = {
       backgroundImage:"url("+share+")",
       backgroundSize:"cover",
@@ -361,54 +510,49 @@ const Home_H_D = React.createClass({
       backgroundSize: "100% 100%",
     }
 
-    const albums = this.state.albums;
-    // const isShow = this.state.isShow;
-    var detail_0 = this.state.detail.substring(0,50);
-    var detail_1 = this.state.detail.substring(50,this.state.detail.length);
-
-
     return (
       <View>
 
         <Container scrollable>
+			<div className="storeInfBody">
+				<div className="storeImg">
+				  <div style={{backgroundColor:"#dedede"}}>
+					{this.renderHotelPic()}
+				  </div>
+				<span className="share" onClick={this.callWX}></span><span className="collect" onClick={this.addCollection} style={{display:this.state.dislikeIcon}}></span><span className="collectOn" onClick={this.removeColl} style={{display:this.state.likeIcon}}></span>
+				</div>
+				<div className="storeListContent storeInfoInBox cleafix">
+					<div className="storeTit">
+						<span className="title">{this.state.hotelName}</span>
+						<a href={hotelLocation}><span className="location">{this.state.province}{this.state.city}{this.state.county}{this.state.address}</span></a>
+					</div>
+					<div className="cleafix">
+					{this.renderCardInfo()}
 
-          <div style={{height:"290px",backgroundColor:"#dedede"}}>
-            {this.renderHotelPic()}
-          </div>
+					</div>
+					<div className="storeRecommend">
 
-
-          <div className="hotelOP">
-              <div className="likeOrNot" onClick={this.addCollection} style={{display:this.state.dislikeIcon}}><Icon name="dislike"></Icon></div>
-              <div className="likeOrNot" onClick={this.removeColl} style={{display:this.state.likeIcon}}><Icon name="like"></Icon></div>
-              <div className="shareHotel" onClick={this.callWX}><Icon name="transmit"></Icon></div>
-          </div>
-          <Group className="h-d-dis">
-            <div>
-              <div className="hotelName">{this.state.hotelName}</div>
-              <div className="dis-info"><div className="hotel-discout-detail" style={{display:this.state.discountShow,backgroundColor:this.state.color}}><span style={{fontSize:"11px"}}>{this.state.discountInfo_mark}</span></div><div className="discount-dis">{this.state.discountInfo_info}</div></div>
-            </div>
-
-            <div className="border-line-hotelname" style={{marginTop:"40px"}}></div>
-            <Grid wrap="wrap" className="hotel-earth">
-              <Col cols={4}><div className="hotel-earth-place">{this.state.city}</div></Col>
-              <Col cols={2}><a href={hotelLocation} target="_blank"><div className="ckdt" >查看地图</div></a></Col>
-              <Col cols={6} className="district-info">{this.state.district}{this.state.address}</Col>
-            </Grid>
-            <div className="border-line-place"></div>
-            {this.renderRoomList()}
-            <div className="dis-title">酒店详情</div>
-            <div className="hotel-dis" ref="hotel_dis" id="hotel_dis">
-              <span>{detail_0}</span><span style={{display:this.state.showDot}} >...</span><span style={{display:this.state.showOther}}>{detail_1}</span>
-            </div>
-            <div className="showAll" onClick={this.showAllDetail} style={{display:this.state.showAll}}>显示全部</div>
-          </Group>
-
+						{this.renderRoomList()}
+					</div>
+					<div className="storeDesc">
+						<div className="descTit">门店详情</div>
+						<div className="storeDescBox">{detail}</div>
+					</div>
+					<div className="storeBottomTool">
+						<div className="leftIcon" onClick={this.goBackUp}></div>
+						<div className="buyBtn" onClick={this.BuyItem}>优惠买单</div>
+					</div>
+				</div>
+			</div>
+			<div className="remark" onClick={this.hideRemark} id="remark" style={{display:this.state.isShow}}>
+			  <div className="arrowPic" style={arrowPic}></div>
+			  <div className="clickPic" style={clickPic}></div>
+			</div>
+			<Rodal visible={this.state.visibleAlert} {...this.defaultProps} onClose={this.hideAlert} >
+				<div id="showAlertContent" style={{textAlign: 'center',paddingTop: '30px'}}></div>
+			</Rodal>
         </Container>
-        <div className="remark" onClick={this.hideRemark} id="remark" style={{display:this.state.isShow}}>
-          <div className="arrowPic" style={arrowPic}></div>
-          <div className="clickPic" style={clickPic}></div>
-        </div>
-        <div className="collectHotel" onClick={this.addCollection} style={{display:"none"}}>加入收藏</div>
+
       </View>
 
     );

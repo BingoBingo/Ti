@@ -22,7 +22,7 @@ const Wallet_Card_BackF = React.createClass({
       backInfo:"",
       backTitleInfo:"",
       backCallBack:"",
-      giveBack:"0",
+      refundPrice:"0",
       givePoint:"0",
       lat:"0",
       lng:"0"
@@ -35,8 +35,8 @@ const Wallet_Card_BackF = React.createClass({
 
     var status = this.props.location.query.status;
     var backInfo = this.props.location.query.backInfo;
-    var givePoint = this.props.location.query.givePoint;
-    var giveBack = this.props.location.query.giveBack;
+    var givePoint = this.props.location.query.currency;
+    var refundPrice = this.props.location.query.refundPrice;
     var backTitleInfo = "";
     var backCallBack = "";
     if(status == "success"){
@@ -52,7 +52,7 @@ const Wallet_Card_BackF = React.createClass({
       backTitleInfo:backTitleInfo,
       backCallBack:backCallBack,
       givePoint:givePoint,
-      giveBack:giveBack
+      refundPrice:refundPrice
     })
 
     /*获取url的uid*/
@@ -105,7 +105,7 @@ const Wallet_Card_BackF = React.createClass({
             <div className="backSuccess">{this.state.backCallBack}</div>
             <div className="backInfo">
               <span style={{marginBottom:"10px",display:"inline-block",width:"80%",fontSize:"16px",float:"left"}}>扣除抵用金</span><span style={{marginBottom:"10px",display:"inline-block",width:"20%",fontSize:"16px",textAlign:"right"}}><span style={{fontSize:"15px"}}>￥</span>{this.state.givePoint}</span>
-              <span style={{display:"inline-block",width:"80%",fontSize:"16px",float:"left"}}>返还金额</span><span style={{display:"inline-block",width:"20%",fontSize:"16px",textAlign:"right"}}><span style={{fontSize:"15px"}}>￥</span>{this.state.giveBack}</span>
+              <span style={{display:"inline-block",width:"80%",fontSize:"16px",float:"left"}}>返还金额</span><span style={{display:"inline-block",width:"20%",fontSize:"16px",textAlign:"right"}}><span style={{fontSize:"15px"}}>￥</span>{this.state.refundPrice}</span>
               <div className="border-top-line"></div>
               <span className="backInfoTitle">* 1~3个工作日内退回至当时购卡的账户中</span>
               <span className="backInfoDis">银行处理可能有延迟，具体以账户的到账时间为准</span>

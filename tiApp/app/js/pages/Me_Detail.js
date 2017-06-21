@@ -1,4 +1,5 @@
 import React from 'react';
+import Rodal from 'rodal';
 import {
   Container,
   List,
@@ -16,38 +17,56 @@ import Tools from '../util/tools';
 
 
 const Me_Detail = React.createClass({
+	defaultProps :{
+		width           : 70,
+		height          : 20,
+		measure         : '%'
+
+	},
   contextTypes: {
         router: React.PropTypes.object.isRequired,
   },
   getInitialState(){
+    let personInfo = localStorage.getItem("personInfo");
+    personInfo = JSON.parse(personInfo);
+
     return({
       headPic: "",
       nickname: "",
       realName: "",
-      gender: "",
+      gender: personInfo.gender,
       identity: "",
       birthday: "",
       headPic:"",
       firstName:"",
-      lastName:""
+      lastName:"",
+	  showSaveBtn:false,
+	  visibleAlert:false
     })
   },
+	showAlert(contents,url) {
+		document.getElementById('showAlertContent').innerHTML = contents;
+		this.setState({ visibleAlert: true});
+		if(url){
+			this.setState({ realoadUlr: url });
+		}
+	},
 
+	hideAlert() {
+		this.setState({ visibleAlert: false });
+		document.getElementById('showAlertContent').innerHTML = '';
+		if(this.state.realoadUlr){
+			this.context.router.push(this.state.realoadUlr);
+		}
+
+	},
   componentDidMount(){
     var personInfo = localStorage.getItem("personInfo");
     personInfo = JSON.parse(personInfo);
-    var gender = "";
-    if(personInfo.gender == "male"){
-      gender = "男";
-    }else if(personInfo.gender == "female") {
-      gender = "女";
-    }else {
-      gender = "";
-    }
     this.setState({
       realName:personInfo.lastName + personInfo.firstName,
       nickname:personInfo.nickname,
-      gender:gender,
+      gender:personInfo.gender,
       identity:personInfo.identity,
       birthday:personInfo.birthday,
       headPic:personInfo.headPic,
@@ -101,32 +120,58 @@ const Me_Detail = React.createClass({
    var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
    if(reg.test(card) === false)
    {
-       alert("身份证输入不合法");
+       this.showAlert("身份证输入不合法");
        return  false;
    }
+ },
+  changeInfoCheck(){
+		var _this = this;
+	
+      var nickname = document.getElementById("nickname").value;
+      var nickname2 = this.state.nickname;
+      var gender = document.getElementById("gender").value;
+      var gender2 = this.state.gender;
+      var identity = document.getElementById("identity").value;
+      var identity2 = this.state.identity;
+      var birthday = document.getElementById("birthday").value;
+      var birthday2 = this.state.birthday;
+      var firstName = document.getElementById("firstName").value;
+      var firstName2 = this.state.firstName;
+      var lastName = document.getElementById("lastName").value;
+      var lastName2 = this.state.lastName;
+	  if(nickname!= nickname2 || gender!= gender2 || identity!= identity2 || birthday!= birthday2 || firstName!= firstName2 || lastName!= lastName2 )
+	  _this.setState({
+		showSaveBtn:true
+	  })
+	  
  },
   savePersonInfo(){
       //const phoneCode= event.target.elements[0].value;
       var nickname = document.getElementById("nickname").value == "" ? this.state.nickname :document.getElementById("nickname").value;
       //var realName = document.getElementById("realName").value == "" ? this.state.realName :document.getElementById("realName").value;
-      var gender = document.getElementById("gender").value == "" ? this.state.gender :document.getElementById("gender").value;
-      var identity = document.getElementById("identity").value == "" ? this.state.identity :document.getElementById("identity").value;
-      var birthday = document.getElementById("birthday").value == ""? this.state.birthday :document.getElementById("birthday").value;
-      var firstName = document.getElementById("firstName").value == "" ? this.state.realName :document.getElementById("firstName").value;
-      var lastName = document.getElementById("lastName").value == "" ? this.state.realName :document.getElementById("lastName").value;
-      if(gender == "男"){
-        gender = "male"
-      }else if(gender == "女"){
-        gender = "female"
-      }else{
-        gender = ""
-      }
-      var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-      if(reg.test(identity) === false)
-      {
-          alert("身份证输入不合法");
-          return  false;
-      }
+      var gender = document.getElementById("gender").value == "" ? '' :document.getElementById("gender").value;
+      var identity = document.getElementById("identity").value == "" ? '' :document.getElementById("identity").value;
+      var birthday = document.getElementById("birthday").value != ""? document.getElementById("birthday").value :this.state.birthday;
+      var firstName = document.getElementById("firstName").value == "" ? this.state.firstName :document.getElementById("firstName").value;
+      var lastName = document.getElementById("lastName").value == "" ? this.state.lastName :document.getElementById("lastName").value;
+		if(birthday=='' || typeof(birthday)=='undefined'){
+			var birthday = '';
+		}
+	  if(identity.length>0){
+
+		  var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+		  if(reg.test(identity) === false)
+		  {
+			  this.showAlert("身份证输入不合法");
+			  return  false;
+		  }
+	  }else{
+		if(this.state.identity!='' && typeof(this.state.identity)!='undefined'){
+			var identity = this.state.identity;
+		}else{
+			var identity = '';
+		}
+	  }
       var personParam = {
         nickname :nickname,
         firstName :firstName,
@@ -146,14 +191,12 @@ const Me_Detail = React.createClass({
             success: function (response, xml) {
                 _this.loadUserInfo();
                 var path = `/Me/`
-                alert("恭喜您～修改成功");
+                _this.showAlert("恭喜您～修改成功",path);
                 var appInfo = eval('(' + response + ')');
-                _this.context.router.push(path);
             },
             fail:function(status){
               var path = `/Me/`
-              alert("很遗憾，修改失败，请联系服务商");
-              _this.context.router.push(path);
+              _this.showAlert("很遗憾，修改失败，请联系服务商",path);
             }
         });
   },
@@ -176,12 +219,18 @@ const Me_Detail = React.createClass({
         icon: 'refresh'
       }
     ];
-
     var headPic = this.state.headPic;
+    var showSaveBtn = this.state.showSaveBtn;
     const header = (
       <Card.Child cover={headPic}>
       </Card.Child>
     );
+	if(showSaveBtn){
+		var showSaveBtnSty = '';
+	}else{
+		var showSaveBtnSty = 'none';
+	}
+	
     return(
       <View>
         <Container scrollable>
@@ -192,7 +241,7 @@ const Me_Detail = React.createClass({
             <Card header={header} className="headerPic">
             </Card>
           </div>
-          <div className="savePersonInfo" onClick={this.savePersonInfo}>
+          <div className="savePersonInfo" style={{display:showSaveBtnSty}} onClick={this.savePersonInfo}>
             保存<Icon name="save" style={{fontSize:"16px",marginLeft:"6px"}}></Icon>
           </div>
           </Group>
@@ -209,6 +258,7 @@ const Me_Detail = React.createClass({
                     type='text'
                     placeholder={this.state.nickname}
                     id="nickname"
+					onChange={this.changeInfoCheck}
                   />
                 </List.Item>
                 <List.Item
@@ -218,6 +268,7 @@ const Me_Detail = React.createClass({
                     type='text'
                     id="lastName"
                     placeholder={this.state.lastName}
+					onChange={this.changeInfoCheck}
                   />
                 </List.Item>
                 <List.Item
@@ -227,6 +278,7 @@ const Me_Detail = React.createClass({
                     type='text'
                     id="firstName"
                     placeholder={this.state.firstName}
+					onChange={this.changeInfoCheck}
                   />
                 </List.Item>
                 {/* <List.Item
@@ -246,7 +298,8 @@ const Me_Detail = React.createClass({
                   label="性别"
                   id="gender"
                   ref="gender"
-                  defaultValue="male"
+                  defaultValue={this.state.gender}
+				  onChange={this.changeInfoCheck}
                 >
                   <option value="male">男</option>
                   <option value="female">女</option>
@@ -261,6 +314,7 @@ const Me_Detail = React.createClass({
                     type='text'
                     id='identity'
                     placeholder={this.state.identity}
+					onChange={this.changeInfoCheck}
                   />
                 </List.Item>
                 <List.Item
@@ -272,10 +326,14 @@ const Me_Detail = React.createClass({
                     id='birthday'
                     value={this.state.birthday}
                     placeholder={this.state.birthday}
+					onChange={this.changeInfoCheck}
                   />
                 </List.Item>
             </List>
         </Group>
+			<Rodal visible={this.state.visibleAlert} {...this.defaultProps} onClose={this.hideAlert} >
+				<div id="showAlertContent" style={{textAlign: 'center',paddingTop: '30px'}}></div>
+			</Rodal>
         </Container>
       </View>
     )

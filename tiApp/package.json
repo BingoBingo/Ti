@@ -8,7 +8,9 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "react-lazyload": "^2.2.0"
+    "react-lazyload": "^2.2.0",
+    "reactjs-iscroll": "^0.3.2",
+    "rodal": "^1.2.10"
   },
   "devDependencies": {
     "amazeui-touch": "^1.0.0-rc.2",

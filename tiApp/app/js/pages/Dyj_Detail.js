@@ -18,15 +18,19 @@ import close from '../../i/close.png';
 
 const Dyj_Detail = React.createClass({
   getInitialState(){
+
     return{
       albums:[],
       share:false,
       shareInfo:"",
       shareLink:"",
+      ykxzNotice:"",
+      bktqNotice:"",
       isShow:"none",
       sstInfo:"none",
       dyjInfo:"none",
-      hykInfo:"none"
+      hykInfo:"none",
+      ykxzInfo:"none"
     }
   },
 
@@ -47,9 +51,53 @@ const Dyj_Detail = React.createClass({
           hykInfo:""
         })
     }
+    if(pathType == "ykxz"){
+        this.setState({
+          ykxzInfo:""
+        })
+    }
   },
   goBack(){
     window.history.back();
+  },
+  bktqNotice(){
+   var pathType = this.props.location.query.pathType;
+	if(pathType=='hyksm'){
+		var bktqInfo = this.props.location.query.pathValue;
+		bktqInfo = eval("(" +bktqInfo+")");
+		bktqInfo = bktqInfo.split('@@');
+		if(bktqInfo !== "" && bktqInfo.length > 0){
+
+		return bktqInfo.map((item, index) => {
+		  return(
+			  <div className="title_0" key={index}>{item}</div>
+		  )
+
+		});
+
+		}
+	}
+  },
+  ykxzNotice(){
+    var pathType = this.props.location.query.pathType;
+	if(pathType=='ykxz'){
+
+		var ykxzInfo = this.props.location.query.pathValue;
+		ykxzInfo = eval("(" +ykxzInfo+")");
+
+		ykxzInfo = ykxzInfo.split('@@');
+		if(ykxzInfo !== "" && ykxzInfo.length > 0){
+
+			  return ykxzInfo.map((item, index) => {
+				  return(
+					  <div className="title_0" key={index}>{item}</div>
+				  )
+				
+			});
+
+		}
+	}
+
   },
   render(){
 
@@ -72,6 +120,10 @@ const Dyj_Detail = React.createClass({
     if(pathType == "hyksm"){
         backgroundImage = "url("+back+")"
     }
+    if(pathType == "ykxz"){
+        backgroundImage = "url("+back+")"
+    }
+
 
     var cardBack = {
       backgroundImage:backgroundImage,
@@ -121,10 +173,14 @@ const Dyj_Detail = React.createClass({
         <div style={{display:this.state.hykInfo}}>
           <div className="sst_head">会员卡特权</div>
           <div className="sst_shead">以下权益由商家提供</div>
-          <div className="title_0">1、会员入住免押金</div>
-          <div className="title_0">2、退房可延后到下午2点</div>
-          <div className="title_0">3、退房“0”等待</div>
-          <div className="title_0">4、可享受机场接送服务</div>
+          {this.bktqNotice()}
+        </div>
+        <div style={{display:this.state.ykxzInfo}}>
+          <div className="sst_head">会员用卡须知</div>
+          <div className="sst_shead">以下权益由商家提供</div>
+          {this.ykxzNotice()}
+
+        
         </div>
 
         <div className="closeBtn" onClick={this.goBack}>
