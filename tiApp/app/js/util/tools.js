@@ -35,8 +35,8 @@ var Tools = {
       if(hostUrl == "taihuiyuan.com"){
         options.url = "https://taihuiyuan.com/api" + options.url;
       }else{
-        options.url = "https://dev.taihuiyuan.com/api" + options.url;
-        //options.url = "http://taihuiyuan.com/api" + options.url;
+        //options.url = "https://dev.taihuiyuan.com/api" + options.url;
+        options.url = "https://taihuiyuan.com/api" + options.url;
       }
       //连接 和 发送 - 第二步
       if (options.type == "GET") {
@@ -59,10 +59,10 @@ var Tools = {
       return arr.join("&");
   },
   Base64Cus:function () {
-	 
+
 		// private property
 		var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-	 
+
 		// public method for encoding
 		this.encode = function (input) {
 			var output = "";
@@ -88,7 +88,7 @@ var Tools = {
 			}
 			return output;
 		}
-	 
+
 		// public method for decoding
 		this.decode = function (input) {
 			var output = "";
@@ -115,7 +115,7 @@ var Tools = {
 			output = _utf8_decode(output);
 			return output;
 		}
-	 
+
 		// private method for UTF-8 encoding
 		this._utf8_encode = function (string) {
 			string = string.replace(/\r\n/g,"\n");
@@ -132,11 +132,11 @@ var Tools = {
 					utftext += String.fromCharCode(((c >> 6) & 63) | 128);
 					utftext += String.fromCharCode((c & 63) | 128);
 				}
-	 
+
 			}
 			return utftext;
 		}
-	 
+
 		// private method for UTF-8 decoding
 		this._utf8_decode = function (utftext) {
 			var string = "";

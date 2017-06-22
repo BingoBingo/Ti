@@ -132,14 +132,16 @@ const Index = React.createClass({
 
           }
         } else {
-          var path = "Pay_Success_Fail";
-          _this.context.router.push({
-            pathname: path,
-            query: {
-              backInfo: payInfo.error,
-              status: "fail"
-            }
-          });
+          // var path = "Pay_Success_Fail";
+          // _this.context.router.push({
+          //   pathname: path,
+          //   query: {
+          //     backInfo: payInfo.error,
+          //     status: "fail"
+          //   }
+          // });
+          alert(payInfo.error);
+          return false;
         }
 
       },
@@ -236,14 +238,16 @@ const Index = React.createClass({
             document.forms['alipaysubmit'].submit();
           }
         } else {
-          var path = "Pay_Success_Fail";
-          _this.context.router.push({
-            pathname: path,
-            query: {
-              backInfo: payInfo.error,
-              status: "fail"
-            }
-          });
+          // var path = "Pay_Success_Fail";
+          // _this.context.router.push({
+          //   pathname: path,
+          //   query: {
+          //     backInfo: payInfo.error,
+          //     status: "fail"
+          //   }
+          // });
+          alert(payInfo.error);
+          return false;
         }
       },
       fail: function(status) {
@@ -277,8 +281,8 @@ const Index = React.createClass({
       alert("输入正确的金额");
       return false;
     }
-    if (payOldMoney > 9999.99) {
-      alert("输入金额请小于10000");
+    if (payOldMoney > 19999.99) {
+      alert("输入金额请小于20000");
       return false;
     }
     localStorage.setItem("payOldMoney", payOldMoney);
@@ -291,8 +295,11 @@ const Index = React.createClass({
     // this.context.router.push({pathname:path,query:{payOldMoney:payOldMoney,ownCard_discount:ownCard_discount}});
   },
   chooseNext(payMoney){
-    console.log("___"+payMoney.length);
-    if(payMoney.length == 0){
+    let isSaleCards = this.state.isSaleCards;
+    let storeCards = this.state.storeCards;
+    let discountCards = this.state.discountCards;
+
+    if(payMoney.length == 0 && isSaleCards && (storeCards.length !== 0 || discountCards.length !==0)){
       document.getElementById("xdd-keybord").style.display = "none";
       const path = `/New_User_Welfare/`
       this.context.router.push({
@@ -322,6 +329,9 @@ const Index = React.createClass({
           //余额 < 原价-折扣 < 储值卡金额 + 余额 + 赠送储值
           var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
           var diff1 = item.price*1 + availableStoredValue*1 + item.storedValue*1 - (userPayMoney*1 - availablePoint*1);
+          console.log(userPayMoney);
+          console.log(availablePoint);
+          console.log(availableStoredValue);
           if (diff0 > 0 && diff1 > 0) {
               canBuyCards.push(item)
           }
@@ -331,6 +341,7 @@ const Index = React.createClass({
         this.noCardPayMoney(payMoney);
         return false;
       }
+      console.log(canBuyCards);
       //storeCards ->canBuyCards
       if(discountCards.length == 0 && canBuyCards.length == 0 && availablePoint == 0 && availableStoredValue == 0){
         this.noCardPayMoney(payMoney);
@@ -338,6 +349,7 @@ const Index = React.createClass({
       }
       //storeCards ->canBuyCards
       if(discountCards.length == 0 && canBuyCards.length == 0 && (availablePoint != 0 || availableStoredValue !=0)) {
+        alert("test");
         document.getElementById("xdd-keybord").style.display = "none";
         let path = `/PayEnd_Detail/`
         this.context.router.push({
@@ -359,6 +371,7 @@ const Index = React.createClass({
         if(availablePoint == 0 && availableStoredValue ==0){
           this.noCardPayMoney(payMoney);
         }else{
+          alert("test2");
           document.getElementById("xdd-keybord").style.display = "none";
           let path = `/PayEnd_Detail/`
           this.context.router.push({
@@ -376,6 +389,7 @@ const Index = React.createClass({
           });
         }
       }
+
       if(isSaleCards && (canBuyCards.length !=0 || discountCards.length != 0)) {
         document.getElementById("xdd-keybord").style.display = "none";
         const path = `/New_User_Welfare/`
@@ -395,8 +409,8 @@ const Index = React.createClass({
     //   alert("输入正确的金额");
     //   return false;
     // }
-    if (newUserPayMoney > 9999.99) {
-      alert("输入金额请小于10000");
+    if (newUserPayMoney > 19999.99) {
+      alert("输入金额请小于20000");
       return false;
     }
     localStorage.setItem("newUserPayMoney", newUserPayMoney);
@@ -416,8 +430,8 @@ const Index = React.createClass({
     //   alert("金额不能为0");
     //   return false;
     // }
-    if (payMemberMoney > 9999.99) {
-      alert("输入金额请小于10000");
+    if (payMemberMoney > 19999.99) {
+      alert("输入金额请小于20000");
       return false;
     }
     let payBtnInfo = <div className="loader-inner ball-pulse">
@@ -436,8 +450,8 @@ const Index = React.createClass({
       <div></div>
       <div></div>
     </div>;
-    if (payMemberMoney > 9999.99) {
-      alert("输入金额请小于10000");
+    if (payMemberMoney > 19999.99) {
+      alert("输入金额请小于20000");
       return false;
     }
     this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotloading"})
@@ -509,7 +523,7 @@ const Index = React.createClass({
           availablePoint = cardInfo.data.availablePoint;
           let defaultDiscount = cardInfo.data.defaultDiscount;
           var payBtnInfo = "";
-          if (isSaleCards) {
+          if (isSaleCards && (storeCards.length !== 0 || discountCards.length !==0)) {
             payBtnInfo = "会员卡";
           } else {
             payBtnInfo = "支付";

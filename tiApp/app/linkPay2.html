@@ -162,7 +162,6 @@ function linkAliPay(){
     dataType: 'json',
     success: function(response){
         var data = response.data;
-        alert(JSON.stringfy(data));
         window.location.href("http://www.taihuiyuan.com/linkPaySuccess.html");
     },
     error: function(xhr, type){
@@ -182,7 +181,6 @@ function getUserInfo(){
     dataType: 'json',
     success: function(response){
         var data = response.data;
-        alert(JSON.stringfy(data));
     },
     error: function(xhr, type){
       alert(JSON.stringify(xhr));
