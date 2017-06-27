@@ -1,7 +1,7 @@
 import React from 'react';
-import {View} from 'amazeui-touch';
+import {View,Container} from 'amazeui-touch';
 import {
-  Link,Router,Route,Container
+  Link,Router,Route
 } from 'react-router';
 
 import Tools from '../util/tools';
@@ -34,11 +34,10 @@ const YKXZ_Detail = React.createClass({
   },
 
   render(){
-
     var pathType = this.props.location.query.pathType;
     var location = window.location.host;
     var backgroundImage = backgroundImage = "url("+back+")"
-    var closePic = "url("+close+")";
+    var closePicURL = "url("+close+")";
     var cardBack = {
       backgroundImage:backgroundImage,
       backgroundSize:"cover",
@@ -50,14 +49,17 @@ const YKXZ_Detail = React.createClass({
     };
 
     var closePic = {
-    backgroundImage:closePic,
-    backgroundSize:"cover",
-    height: "0.72rem",
-    width: "0.72rem",
-    right: "0",
-    left: "0",
-    display: "inline-block"
-  }
+      backgroundImage:closePicURL,
+      backgroundSize:"cover",
+      height: "1rem",
+      width: "1rem",
+      right: "0",
+      left: "0",
+      display: "inline-block",
+      // borderRadius: "50%",
+      // backgroundColor: "#dedede",
+      // opacity: "1"
+    }
 
     return(
       <View className="dyj-back" style={cardBack}>

@@ -28,7 +28,7 @@ a{
 }
 
 .vipBack.view {
-  background: #f8f8f8;
+  background: #fff;
 }
 
 #xdd-keybord {
@@ -186,7 +186,7 @@ input#payMoney {
 
 .closeBtn {
   position: absolute;
-  bottom: 0;
+  bottom: 1rem;
   width: 100%;
   height: 2.053333rem;
   text-align: center;
@@ -222,7 +222,7 @@ input#payMoney {
   text-align: left;
   color: #dfca47;
   padding-top: 0.88rem;
-  padding-left: 0.266667rem;
+  padding-left: 0.6rem;
   line-height: 0.64rem;
 }
 
@@ -230,7 +230,7 @@ input#payMoney {
   font-size: 0.3rem;
   color: #b39d67;
   line-height: 0.3rem;
-  padding-left: 0.266667rem;
+  padding-left: 0.6rem;
   margin-top: 0.133333rem;
 }
 

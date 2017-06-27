@@ -327,6 +327,7 @@ const Index = React.createClass({
     cardPrice = cardPrice.toFixed(2);
 
     var payBtnInfo = this.props.location.query.payBtnInfo;
+    trueUsePoint = (trueUsePoint == 0) ? 0 : ("-"+trueUsePoint);
     return (
       <View className="payEnd-background">
         <Container scrollable>
@@ -338,7 +339,7 @@ const Index = React.createClass({
             <span className="data-after">￥{payTrue}</span>
           </div>
           <div className="payDiscountMoney" >
-            <span className="data-before reduce-dyj">抵用金</span><span className="data-after reduce-dyj">￥-{trueUsePoint}</span>
+            <span className="data-before reduce-dyj">抵用金</span><span className="data-after reduce-dyj">￥{trueUsePoint}</span>
           </div>
           {/* <div className="payDiscountMoney">
             <span className="data-before reduce-dyj">抵用金</span>

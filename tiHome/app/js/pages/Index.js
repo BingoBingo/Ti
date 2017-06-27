@@ -147,7 +147,6 @@ const Index = React.createClass({
       },
       fail: function(status) {
         var payBtnInfo = "支付"
-        alert(status);
         _this.setState({payBtnInfo: payBtnInfo, btnPayNewNotPut: "btn-pay-newnotput"})
         console.log(status);
       }
@@ -329,9 +328,6 @@ const Index = React.createClass({
           //余额 < 原价-折扣 < 储值卡金额 + 余额 + 赠送储值
           var diff0 = userPayMoney*1 - availablePoint*1 -availableStoredValue*1;
           var diff1 = item.price*1 + availableStoredValue*1 + item.storedValue*1 - (userPayMoney*1 - availablePoint*1);
-          console.log(userPayMoney);
-          console.log(availablePoint);
-          console.log(availableStoredValue);
           if (diff0 > 0 && diff1 > 0) {
               canBuyCards.push(item)
           }
@@ -341,7 +337,6 @@ const Index = React.createClass({
         this.noCardPayMoney(payMoney);
         return false;
       }
-      console.log(canBuyCards);
       //storeCards ->canBuyCards
       if(discountCards.length == 0 && canBuyCards.length == 0 && availablePoint == 0 && availableStoredValue == 0){
         this.noCardPayMoney(payMoney);
@@ -349,7 +344,6 @@ const Index = React.createClass({
       }
       //storeCards ->canBuyCards
       if(discountCards.length == 0 && canBuyCards.length == 0 && (availablePoint != 0 || availableStoredValue !=0)) {
-        alert("test");
         document.getElementById("xdd-keybord").style.display = "none";
         let path = `/PayEnd_Detail/`
         this.context.router.push({
@@ -371,7 +365,6 @@ const Index = React.createClass({
         if(availablePoint == 0 && availableStoredValue ==0){
           this.noCardPayMoney(payMoney);
         }else{
-          alert("test2");
           document.getElementById("xdd-keybord").style.display = "none";
           let path = `/PayEnd_Detail/`
           this.context.router.push({
@@ -532,6 +525,7 @@ const Index = React.createClass({
           localStorage.setItem("isBuyCard", "zk");
           _this.setState({payBtnInfo: payBtnInfo, isSaleCards: isSaleCards,discountCards:discountCards,storeCards:storeCards,availableStoredValue:availableStoredValue,availablePoint:availablePoint,defaultDiscount:defaultDiscount})
           localStorage.setItem("isSaleCards", isSaleCards);
+          localStorage.setItem("payBtnInfo", payBtnInfo);
           if (isNewUser == "vip") {
             let ownCard = JSON.stringify(cardInfo.data.ownCard);
             localStorage.setItem("ownCard", ownCard);

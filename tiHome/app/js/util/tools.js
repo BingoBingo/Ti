@@ -46,8 +46,8 @@ var Tools = {
     if (hostUrl == "taihuiyuan.com") {
       options.url = "https://taihuiyuan.com/api" + options.url;
     } else {
-      //options.url = "https://dev.taihuiyuan.com/api" + options.url;
-      options.url = "http://dev.taihuiyuan.com/api" + options.url;
+      options.url = "https://dev.taihuiyuan.com/api" + options.url;
+      //options.url = "http://dev.taihuiyuan.com/api" + options.url;
     }
 
     //连接 和 发送 - 第二步
@@ -272,9 +272,6 @@ var Tools = {
         if (self.input.value.indexOf(".") > 0) {
           self.input.value = (self.input.value).substring(0, self.input.value.indexOf(".") + 3);
         }
-        // else if(clickEl.tagName.toLocaleLowerCase() === 'div' && value === "完成"){
-        // 	    body.removeChild(self.el);
-        // }
       } else if (clickEl.tagName.toLocaleLowerCase() === 'img' || clickEl.tagName.toLocaleLowerCase() === 'div') {
         var num = self.input.value;
         if (num) {
@@ -306,15 +303,13 @@ var Tools = {
           self.cursor.style.display = "";
           self[vipReduce].innerText = "￥0";
           self[vipPayBtn].innerText = "支付";
-        }else if(btnType.id !== "memberWithStore"){
-          self[btnType].innerText = "会员卡";
         }else{
+          self[btnType].innerText = localStorage.getItem("payBtnInfo");
           self[btnType].style.border = "0.05rem solid #fff;"
           self[btnType].style.background = "#6ac9bf";
           self[btnType].style.color = "#fff"
         }
       }
-
     }
 
     function removeEvent(e) {
