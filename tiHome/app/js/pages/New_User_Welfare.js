@@ -276,7 +276,7 @@ const New_User_Welfare = React.createClass({
     if (saleCards !== "" && saleCards.length > 0) {
       return saleCards.map((item, index) => {
         var cardStyle = {
-          background: "url(" + item.photo + ") 0% 0% / contain no-repeat",
+          background: "url(" + item.photo + "_m.jpg) 0% 0% / contain no-repeat",
           // backgroundSize: "cover"
         };
         var userPayMoney = this.props.location.query.userPayMoney;
@@ -333,7 +333,7 @@ const New_User_Welfare = React.createClass({
     if (saleStoredCards !== "" && saleStoredCards.length > 0) {
       return saleStoredCards.map((item, index) => {
         var cardStyle = {
-          background: "url(" + item.photo + ") 0% 0% / contain no-repeat"
+          background: "url(" + item.photo + "_m.jpg) 0% 0% / contain no-repeat"
           // backgroundSize: "cover"
         };
         //原价

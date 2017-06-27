@@ -326,7 +326,7 @@ const CardDetail_Buy = React.createClass({
       // width:"10rem",
       right: "0",
       left: "0",
-      margin: "0.666667rem",
+      margin: "0.4rem 0",
       borderRadius: "0.3rem"
     };
     var about = this.props.location.query.about;
