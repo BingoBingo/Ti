@@ -175,9 +175,9 @@ const Index = React.createClass({
                 var uid = localStorage.getItem("uid");
                 var cardPrice_buy = localStorage.getItem("cardPrice_buy");
                 if (window.location.host == "taihuiyuan.com") {
-                  window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 } else {
-                  window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 }
               }
             });

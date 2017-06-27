@@ -164,10 +164,10 @@ const Index = React.createClass({
             var isBuyCard = localStorage.getItem("isBuyCard");
             if (wechatPayParam == "") {
               if (window.location.host == "taihuiyuan.com") {
-                window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
               }
               if (window.location.host == "dev.taihuiyuan.com") {
-                window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
               }
             } else {
               wechatPayParam = eval("(" + wechatPayParam + ")");
@@ -175,9 +175,9 @@ const Index = React.createClass({
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                   //wx.closeWindow();
                   if (window.location.host == "taihuiyuan.com") {
-                    window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                    window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                   } else {
-                    window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                    window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                   }
                 }
               });
@@ -189,11 +189,11 @@ const Index = React.createClass({
             var isBuyCard = localStorage.getItem("isBuyCard");
             if (alipayForm == "") {
               if (window.location.host == "taihuiyuan.com") {
-                window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
+                window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
                 //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
               }
               if (window.location.host == "dev.taihuiyuan.com") {
-                window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
+                window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
                 //window.location.href = "http://dev.taihuiyuan.com/pay/index.html?hid=" + hid + "&hname=" + hname + "&device=" + device + "&ut=member" + "&uid=" + uid + "&cardPrice_buy=" + cardPrice_buy;
               }
             } else {
@@ -234,9 +234,9 @@ const Index = React.createClass({
           }
         } else {
           if (window.location.host == "taihuiyuan.com") {
-            window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
+            window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
           } else {
-            window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
+            window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid+ "&code=" + code;
           }
         }
       },

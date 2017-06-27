@@ -33,7 +33,7 @@ const SearchResult = React.createClass({
     //const mockUrl = "http://localhost:3005/searchResult"
     const urlJS = "/wechat/jssign";
     //const currentUrl = window.location.href;
-    const currentUrl = "http://taihuiyuan.com/index.html?uid=086d1f45-19b7-43e9-84db-2f3d2915523c";
+    const currentUrl = "https://taihuiyuan.com/index.html?uid=086d1f45-19b7-43e9-84db-2f3d2915523c";
 
     const _this = this;
     Tools.ajax({

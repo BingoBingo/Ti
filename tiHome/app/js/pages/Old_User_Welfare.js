@@ -96,9 +96,9 @@ const Old_User_Welfare = React.createClass({
                       if (res.err_msg == "get_brand_wcpay_request:ok") {
                         //wx.closeWindow();
                         if(window.location.host == "taihuiyuan.com"){
-                          window.location.href=  "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                          window.location.href=  "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                         }else{
-                          window.location.href=  "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                          window.location.href=  "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                         }
                         }
                     });

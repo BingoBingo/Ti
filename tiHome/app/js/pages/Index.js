@@ -86,9 +86,9 @@ const Index = React.createClass({
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
-                  window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 } else {
-                  window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 }
               }
             });
@@ -194,9 +194,9 @@ const Index = React.createClass({
                 /*不购卡操作*/
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
-                  window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 } else {
-                  window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 }
               }
             });
@@ -501,7 +501,8 @@ const Index = React.createClass({
       var cursorVip = document.getElementById("cursorVip");
       var vipReduce = document.getElementById("vipReduce");
       var vipPayBtn = document.getElementById("vipPayBtn");
-      payOldMoney.onclick = Tools.KeyBoard(payOldMoney, cursorVip, vipReduce, vipPayBtn);
+      //var ownCard_discount = this.state.ownCard_discount;
+      //payOldMoney.onclick = Tools.KeyBoard(payOldMoney, cursorVip, vipReduce, ownCard_discount);
     }
 
     if (cardPrice_buy === null) {
@@ -552,6 +553,7 @@ const Index = React.createClass({
               ownCard_hotelPhoto: ownCard_hotelPhoto
             })
             localStorage.setItem("ownCard_discount", ownCard_discount);
+            payOldMoney.onclick = Tools.KeyBoard(payOldMoney, cursorVip, vipReduce, ownCard_discount);
           }
           if (isNewUser == "member" && availableStoredValue != 0) {
             var payMemberMoney_CZ = document.getElementById('payMemberMoney_CZ');

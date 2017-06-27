@@ -188,8 +188,8 @@ var Tools = {
     return string;
   },
 
-  KeyBoard: function(input, cursor, btnType, newBtn, options) {
-    var ownCard_discount = localStorage.getItem("ownCard_discount");
+  KeyBoard: function(input, cursor, btnType, ownCard_discount, options) {
+    //var ownCard_discount = localStorage.getItem("ownCard_discount");
     var body = document.getElementsByTagName('body')[0];
     var DIV_ID = options && options.divId || 'xdd-keybord';
     if (document.getElementById(DIV_ID)) {
@@ -198,7 +198,7 @@ var Tools = {
     this.input = input;
     this.cursor = cursor;
     this[btnType] = btnType;
-    this.newBtn = newBtn;
+    //this.ownCard_discount = ownCard_discount;
     this.el = document.createElement('div');
 
     var self = this;
@@ -288,7 +288,7 @@ var Tools = {
         reduceMoney = reduceMoney.toFixed(1);
         payTrue = payTrue.toFixed(1);
         self.cursor.style.display = "none";
-        console.log(btnType);
+
         if(btnType.id == "vipReduce"){
           self[vipReduce].innerText = "￥" + reduceMoney;
           //self[vipReduce].innerText = "支付 ￥" + payTrue;
@@ -306,13 +306,12 @@ var Tools = {
           self.cursor.style.display = "";
           self[vipReduce].innerText = "￥0";
           self[vipPayBtn].innerText = "支付";
-        }else{
+        }else if(btnType.id !== "memberWithStore"){
           self[btnType].innerText = "会员卡";
-          if(btnType.id !== "memberWithStore"){
-            self[btnType].style.border = "0.05rem solid #fff;"
-            self[btnType].style.background = "#6ac9bf";
-            self[btnType].style.color = "#fff"
-          }
+        }else{
+          self[btnType].style.border = "0.05rem solid #fff;"
+          self[btnType].style.background = "#6ac9bf";
+          self[btnType].style.color = "#fff"
         }
       }
 

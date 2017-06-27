@@ -58,7 +58,7 @@ const New_User_Welfare = React.createClass({
       let userPayMoney = this.props.location.query.userPayMoney;
       // var payReduce = userPayMoney - userPayMoney * this.state.defaultDiscount;//本单立减
       // payReduce = payReduce.toFixed(0);
-      if (userPayMoney == "") {
+      if (userPayMoney.length == 0 || userPayMoney == 0) {
         alert("您未输入消费金额");
         return false;
       }
@@ -124,9 +124,9 @@ const New_User_Welfare = React.createClass({
                 //wx.closeWindow();
                 localStorage.setItem("card_buy", "false");
                 if (window.location.host == "taihuiyuan.com") {
-                  window.location.href = "http://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 } else {
-                  window.location.href = "http://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
+                  window.location.href = "https://dev.taihuiyuan.com/index2.html?sid=" + hotelId + "&uid=" + uid + "&code=" + code;
                 }
               }
             });
@@ -276,8 +276,8 @@ const New_User_Welfare = React.createClass({
     if (saleCards !== "" && saleCards.length > 0) {
       return saleCards.map((item, index) => {
         var cardStyle = {
-          background: "url(" + item.photo + ")",
-          backgroundSize: "cover"
+          background: "url(" + item.photo + ") 0% 0% / contain no-repeat",
+          // backgroundSize: "cover"
         };
         var userPayMoney = this.props.location.query.userPayMoney;
         var payReduce = userPayMoney - userPayMoney * item.discount;
@@ -333,8 +333,8 @@ const New_User_Welfare = React.createClass({
     if (saleStoredCards !== "" && saleStoredCards.length > 0) {
       return saleStoredCards.map((item, index) => {
         var cardStyle = {
-          background: "url(" + item.photo + ")",
-          backgroundSize: "cover"
+          background: "url(" + item.photo + ") 0% 0% / contain no-repeat"
+          // backgroundSize: "cover"
         };
         //原价
         var userPayMoney = this.props.location.query.userPayMoney;
