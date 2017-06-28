@@ -285,9 +285,9 @@ const New_User_Welfare = React.createClass({
         //payReduce = parseInt(payReduce.substring(0,payReduce.indexOf('.')));
 
         var payTrue = userPayMoney * item.discount;
-        var discount = item.discount
-          ? (item.discount * 10).toFixed(1)
-          : "";
+        var discount = (item.discount * 10)%1 === 0
+          ? (item.discount * 10)
+          : (item.discount * 10).toFixed(1);
         var givePoint = item.givePoint ? item.givePoint : 0;
         var isRefund = item.isRefund ? "可退" : "";
         givePoint = givePoint.toFixed(0);
@@ -355,7 +355,11 @@ const New_User_Welfare = React.createClass({
         var payReduce = userPayMoney - userPayMoney * this.state.defaultDiscount;
         payReduce = payReduce.toFixed(0);
         var payTrue = userPayMoney * item.discount;
-        var discount = item.discount ? (item.discount * 10).toFixed(1) : "";
+        //var discount = item.discount ? (item.discount * 10).toFixed(1) : "";
+        var discount = (item.discount * 10)%1 === 0
+          ? (item.discount * 10)
+          : (item.discount * 10).toFixed(1);
+
         var givePoint = item.givePoint ? item.givePoint : 0;
         givePoint = givePoint.toFixed(0);
         var isRefund = item.isRefund ? "可退" : "";
