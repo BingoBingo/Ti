@@ -46,8 +46,8 @@ var Tools = {
     if (hostUrl == "taihuiyuan.com") {
       options.url = "https://taihuiyuan.com/api" + options.url;
     } else {
-      //options.url = "https://dev.taihuiyuan.com/api" + options.url;
-      options.url = "https://taihuiyuan.com/api" + options.url;
+      options.url = "https://dev.taihuiyuan.com/api" + options.url;
+      //options.url = "https://taihuiyuan.com/api" + options.url;
     }
 
     //连接 和 发送 - 第二步
