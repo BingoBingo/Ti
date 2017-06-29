@@ -224,9 +224,9 @@ const CardDetail_Buy = React.createClass({
     for (let i = 0; i < cardDetail.length; i++) {
       if (cardDetail[i].cardId == cardId) {
         this.setState({
-          cardDiscount: cardDetail[i].discount
-            ? (cardDetail[i].discount * 10).toFixed(1)
-            : "",
+          cardDiscount: (cardDetail[i].discount * 10)%1 === 0
+            ? (cardDetail[i].discount * 10)
+            : (cardDetail[i].discount * 10).toFixed(1),
           cardDeadLine: cardDetail[i].expiry
             ? cardDetail[i].expiry
             : "",
@@ -275,9 +275,9 @@ const CardDetail_Buy = React.createClass({
         // let devi =  new Date(end).getTime() - start.getTime();
         // let deviDays =Math.floor(devi/(24*3600*1000)) + "天"
         this.setState({
-          cardDiscount: cardDetail[i].discount
-            ? (cardDetail[i].discount * 10).toFixed(1)
-            : "",
+          cardDiscount: (cardDetail[i].discount * 10)%1 === 0
+            ? (cardDetail[i].discount * 10)
+            : (cardDetail[i].discount * 10).toFixed(1),
           cardDeadLine: cardDetail[i].expiry
             ? cardDetail[i].expiry
             : "",
