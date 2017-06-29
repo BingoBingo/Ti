@@ -15,6 +15,7 @@ a{
 .views .view {
   background: #fff;
 }
+.clear{ clear:both}
 //当面付样式
 
 .home-title {
@@ -412,7 +413,7 @@ ul.list.money-input {
   text-align: left;
   text-indent: 0.1rem;
   height: 2.506667rem;
-  padding-top: 0.6rem;
+  padding-top: 1rem;
 }
 
 .bigTitle {
@@ -434,7 +435,7 @@ ul.list.money-input {
 }
 
 .hotelcard-list {
-  margin: 0.933333rem 0 1.333333rem 0.8rem;
+  margin: 0.8rem 0 0.8rem 0.8rem;
 }
 
 .card-discount,

@@ -320,6 +320,7 @@ const New_User_Welfare = React.createClass({
                   <div className="card-reduceMoney">本单立减￥{payReduce}</div>
                   <div className="card-giveMoney">{givePoint == 0 ? `了解详情` :`再赠抵用金${givePoint}元`}</div>
                 </div>
+                <div class="clear"></div>
               </div>
               <div className="cardlist-border"></div>
             </div>
@@ -437,6 +438,7 @@ const New_User_Welfare = React.createClass({
                     <div className="card-reduceMoney"></div>
                     <div className="card-giveCZ">{givePoint == 0 ? `了解详情` : `赠${givePoint}元抵用金`}</div>
                   </div>
+                  <div class="clear"></div> 
                 </div>
                 <div className="cardlist-border"></div>
               </div>
