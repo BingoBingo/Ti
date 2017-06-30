@@ -24,7 +24,7 @@ const basePlugins = [
     }
   }),
   new HTMLWebpackPlugin({
-    title: 'Amaze UI Touch Starter Kit',
+    title: 'Ti-Member',
     template: 'app/index.html',
     // inject: false,
     prod: isProd,
