@@ -1,0 +1,258 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Light'), url(../fonts/OpenSansL.woff) format('woff');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url(../fonts/OpenSans.woff) format('woff');
+}
+
+/* 无表头表格 */
+.table-striped.no-thead td, .table-striped.no-thead th {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+}
+
+/*
+.widget-main.no-padding .table-bordered.no-thead > tbody > tr:last-child > td {
+    border-bottom-width: 1px !important;
+}*/
+
+.table-striped.no-thead > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: inherit;
+}
+
+.table-striped.no-thead > tbody > tr:nth-child(even) > td, .table-striped > tbody > tr:nth-child(even) > th {
+    background-color: #f9f9f9;
+}
+
+.table-hover.no-thead > tbody > tr:hover > td, .table-hover.no-thead > tbody > tr:hover > th {
+    background-color: #f5f5f5;
+}
+
+/* 导航 */
+.navbar-banner-control {
+    position: relative;
+    left: 50%;
+    top: 25px;
+    width: 30%;
+    margin-left: -15%;
+}
+
+.navbar.banner-min .navbar-banner-control {
+    top: 0px;
+}
+
+.navbar-banner-control a {
+    color: white;
+}
+
+.navbar .navbar-brand {
+    background: url(../img/logo.png) no-repeat;
+    width: 175px;
+    height: 45px;
+}
+
+.navbar .navbar-brand small {
+    display: none;
+}
+
+#breadcrumbs .breadcrumb li .showText {
+    display: none;
+}
+
+/* Config */
+.ace-settings-container {
+    top: 25px;
+}
+
+/* Widget */
+/* 覆盖bootstrap样式，避免当菜单展开时，row元素排斥浮动元素，导致首行与余下行间距撑开 */
+.widgetContent > .row:after {
+    clear: none;
+}
+
+@media only screen and (max-width: 1100px) {
+    .widget-tabs-title {
+        display: none !important
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .widget-tabs-title {
+        display: inline !important
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .hidden-1024 {
+        display: none !important
+    }
+}
+
+.widget-header > .widget-caption, .widget-header > a:link {
+    color: inherit;
+}
+
+.widget-header > .widget-caption, .widget-header > a:hover {
+    text-decoration: none;
+}
+
+.widget-header > .widget-caption, .widget-header > a > :first-child {
+    display: inline;
+}
+
+/* 视图面板 */
+.checkbox INPUT[type=checkbox] {
+    margin-left: 0px \9; /* 修正IE8下的偏移问题 */
+}
+
+.sidebar-menu > div {
+    display: none;
+}
+
+.sidebar-menu > div.active {
+    display: block;
+}
+
+.sidebar-menu .nav.more a {
+    text-align: right;
+}
+
+.page-content > div {
+    display: none;
+}
+
+.page-content > div.active {
+    display: block;
+}
+
+input[type=checkbox].ace + .lbl, input[type=radio].ace + .lbl {
+    z-index: 10;
+}
+
+.view-breadcrumb {
+    display: inline-block;
+}
+
+.view-toolbar {
+    margin: 0px 5px 0 0;
+    float: right;
+}
+
+.view-toolbar .btn {
+    width: 45px;
+}
+
+.viewPanel th span {
+    font-size: 13px !important;
+    font-weight: bold !important;
+}
+
+.query-toolbar .form-inline .form-group {
+    margin-right: 30px;
+}
+
+.query-toolbar .form-inline .form-group:last-child {
+    margin-right: 0px;
+}
+
+.query-toolbar label {
+    display: table;
+}
+
+.query-toolbar label .title {
+    width: 8em;
+    overflow-x: hidden;
+    display: table-cell;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.query-toolbar label .input {
+    display: table-cell;
+    width: 12em;
+}
+
+.query-toolbar .form-control {
+    width: 100%;
+}
+
+.query-toolbar input[readonly] {
+    background-color: #FFF !important;
+}
+
+.dataTables_wrapper .dataTable {
+    table-layout: fixed;
+}
+
+.dataTables_wrapper .dataTable td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.main-container {
+    background-color: #e4e6e9 \9; /*IE6-8 Hack*/
+}
+
+.btn-scroll-up {
+    border: 0;
+    display: none;
+    position: fixed;
+    right: 12px;
+    bottom: 31px;
+    z-index: 11;
+    line-height: 20px;
+    padding-bottom: 4px
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
+    border-top: 1px solid #e5e5e5;
+    background-color: #f5f5f5;
+}
+
+.footer p {
+    margin-bottom: 2px;
+}
+
+/*CONFIG_PANEL*/
+
+.page-content .config .layout {
+    cursor: pointer;
+}
+
+.page-content .config .layout.active {
+    border: 2px solid #5293C4;
+}
+
+.layoutConfig .ui-draggable.ui-draggable-dragging {
+    cursor: move;
+}
+
+.tree .tree-folder .tree-folder-header .tree-folder-name, .tree .tree-item .tree-item-name {
+    margin-left: 5px;
+}
+
+.dd-list .dd-item .action-buttons button {
+    border: 0px;
+    background: transparent;
+}
+
+.dd-list .dd-item .action-buttons button:hover {
+    text-decoration: none;
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    opacity: 1;
+}
