@@ -48,6 +48,7 @@ const Index = React.createClass({
       return_url: "",
       sign_type: "",
       seller_id: "",
+      enable_paymethod:"",
       payBtnInfo: "去支付 ￥",
       trueCost: 0,
       discountMoney: 0,
@@ -199,6 +200,7 @@ const Index = React.createClass({
             var return_url = alipayForm.return_url;
             var sign_type = alipayForm.sign_type;
             var seller_id = alipayForm.seller_id;
+            var enable_paymethod = alipayForm.enable_paymethod;
             _this.setState({
               _input_charset: _input_charset,
               subject: subject,
@@ -213,7 +215,8 @@ const Index = React.createClass({
               total_fee: total_fee,
               return_url: return_url,
               sign_type: sign_type,
-              seller_id: seller_id
+              seller_id: seller_id,
+              enable_paymethod:enable_paymethod
             })
             document.forms['alipaysubmit'].submit();
           }
@@ -348,6 +351,7 @@ const Index = React.createClass({
           <input type="hidden" name="return_url" value={this.state.return_url}/>
           <input type="hidden" name="sign_type" value={this.state.sign_type}/>
           <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+          <input type="hidden" name="enable_paymethod" value={this.state.enable_paymethod}/>
           <input type="submit" value="Confirm" style={{
             display: "none"
           }}/>

@@ -148,7 +148,7 @@ const CardDetail_Buy = React.createClass({
               var return_url = alipayForm.return_url;
               var sign_type = alipayForm.sign_type;
               var seller_id = alipayForm.seller_id;
-
+              var enable_paymethod = alipayForm.enable_paymethod;
               _this.setState({
                 _input_charset: _input_charset,
                 subject: subject,
@@ -163,7 +163,8 @@ const CardDetail_Buy = React.createClass({
                 total_fee: total_fee,
                 return_url: return_url,
                 sign_type: sign_type,
-                seller_id: seller_id
+                seller_id: seller_id,
+                enable_paymethod:enable_paymethod
               })
               document.forms['alipaysubmit'].submit();
             }
@@ -177,7 +178,7 @@ const CardDetail_Buy = React.createClass({
         }
       },
       fail: function(status) {
-        console.log(status);
+        alert(status);
       }
     });
 
@@ -365,11 +366,11 @@ const CardDetail_Buy = React.createClass({
             {/* 售价{this.state.cardPrice}元 */}
             </div>
           </div>
-          <div className="cardDetail-top-line" style={{display: this.state.refundExpires == "不可退" ? "none" : ""}}></div>
+          {/* <div className="cardDetail-top-line" style={{display: this.state.refundExpires == "不可退" ? "none" : ""}}></div>
           <div className="cardDetail-list" style={{display: this.state.refundExpires == "不可退" ? "none" : ""}}>
             <span className="info-before">无理由退卡</span>
             <span className="info-after">{this.state.refundExpires}</span>
-          </div>
+          </div> */}
           <div className="cardDetail-top-line"></div>
           <Link to={{pathname:"Dyj_Detail",query:{pathType:"dyjsm"}}}>
             <div className="cardDetail-list">
@@ -440,6 +441,7 @@ const CardDetail_Buy = React.createClass({
           <input type="hidden" name="return_url" value={this.state.return_url}/>
           <input type="hidden" name="sign_type" value={this.state.sign_type}/>
           <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+          <input type="hidden" name="enable_paymethod" value={this.state.enable_paymethod}/>
           <input type="submit" value="Confirm" style={{
             display: "none"
           }}/>

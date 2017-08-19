@@ -44,6 +44,7 @@ const New_User_Welfare = React.createClass({
       return_url: "",
       sign_type: "",
       seller_id: "",
+      enable_paymethod:"",
       btnPayNewNotPut: "giveUp",
       payBtnInfo: "放弃优惠"
     }
@@ -150,7 +151,7 @@ const New_User_Welfare = React.createClass({
             var return_url = alipayForm.return_url;
             var sign_type = alipayForm.sign_type;
             var seller_id = alipayForm.seller_id;
-
+            var enable_paymethod = alipayForm.enable_paymethod;
             _this.setState({
               _input_charset: _input_charset,
               subject: subject,
@@ -165,7 +166,8 @@ const New_User_Welfare = React.createClass({
               total_fee: total_fee,
               return_url: return_url,
               sign_type: sign_type,
-              seller_id: seller_id
+              seller_id: seller_id,
+              enable_paymethod:enable_paymethod
             })
             document.forms['alipaysubmit'].submit();
 
@@ -313,7 +315,7 @@ const New_User_Welfare = React.createClass({
               <div className="hotelcard-list">
                 <div className="card-type" style={cardStyle}>
                   {/* <img src={item.photo}/> */}
-                  <div className="card-discount"><span>{isRefund}{discount}折卡</span></div>
+                  <div className="card-discount"><span>{discount}折卡</span></div>
                   <div className="card-money">￥{item.price}</div>
                 </div>
                 <div className="card-reduce">
@@ -391,7 +393,7 @@ const New_User_Welfare = React.createClass({
               <div className="card-list">
                 <div className="hotelcard-list">
                   <div className="card-type" style={cardStyle}>
-                    <div className="card-discount-cz"><span>{isRefund}储值卡</span></div>
+                    <div className="card-discount-cz"><span>储值卡</span></div>
                     <div className="card-money-cz">￥{item.price}{item.storedValue != 0 ? `赠${item.storedValue}元` : ""}</div>
                   </div>
                   <div className="card-reduce-czk">
@@ -532,6 +534,7 @@ const New_User_Welfare = React.createClass({
           <input type="hidden" name="return_url" value={this.state.return_url}/>
           <input type="hidden" name="sign_type" value={this.state.sign_type}/>
           <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+          <input type="hidden" name="enable_paymethod" value={this.state.enable_paymethod}/>
           <input type="submit" value="Confirm" style={{display: "none"}}/>
         </form>
       </View>

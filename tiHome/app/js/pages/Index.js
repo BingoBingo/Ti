@@ -44,6 +44,7 @@ const Index = React.createClass({
       return_url: "",
       sign_type: "",
       seller_id: "",
+      enable_paymethod:"",
       availablePoint:0,
       availableStoredValue:0
     };
@@ -111,7 +112,7 @@ const Index = React.createClass({
             var return_url = alipayForm.return_url;
             var sign_type = alipayForm.sign_type;
             var seller_id = alipayForm.seller_id;
-
+            var enable_paymethod = alipayForm.enable_paymethod;
             _this.setState({
               _input_charset: _input_charset,
               subject: subject,
@@ -126,7 +127,8 @@ const Index = React.createClass({
               total_fee: total_fee,
               return_url: return_url,
               sign_type: sign_type,
-              seller_id: seller_id
+              seller_id: seller_id,
+              enable_paymethod:enable_paymethod
             })
             document.forms['alipaysubmit'].submit();
 
@@ -218,6 +220,7 @@ const Index = React.createClass({
             var return_url = alipayForm.return_url;
             var sign_type = alipayForm.sign_type;
             var seller_id = alipayForm.seller_id;
+            var enable_paymethod = alipayForm.enable_paymethod;
             _this.setState({
               _input_charset: _input_charset,
               subject: subject,
@@ -232,7 +235,8 @@ const Index = React.createClass({
               total_fee: total_fee,
               return_url: return_url,
               sign_type: sign_type,
-              seller_id: seller_id
+              seller_id: seller_id,
+              enable_paymethod:enable_paymethod
             })
             document.forms['alipaysubmit'].submit();
           }
@@ -530,9 +534,13 @@ const Index = React.createClass({
             let ownCard = JSON.stringify(cardInfo.data.ownCard);
             localStorage.setItem("ownCard", ownCard);
             localStorage.setItem("saleCards", saleCards);
-            let ownCard_discount = cardInfo.data.ownCard.discount
-              ? (cardInfo.data.ownCard.discount * 10).toFixed(1)
-              : 10;
+            // let ownCard_discount = cardInfo.data.ownCard.discount
+            //   ? (cardInfo.data.ownCard.discount * 10).toFixed(1)
+            //   : 10;
+
+            var ownCard_discount = (cardInfo.data.ownCard.discount * 10)%1 === 0
+              ? (cardInfo.data.ownCard.discount * 10)
+              : (cardInfo.data.ownCard.discount * 10).toFixed(1);
             let ownCard_deadline = cardInfo.data.ownCard.deadline.split(" ")[0];
             let ownCard_cardName = cardInfo.data.ownCard.cardName;
             let ownCard_hotelName = cardInfo.data.ownCard.hotelName;
@@ -667,7 +675,7 @@ const Index = React.createClass({
                 <div className="discount-deadline">有效期至 {this.state.ownCard_deadline}</div>
               </div>
               <div className="moreCards">
-                <div className="vipBig">尊享优惠<span id="vipReduce">￥0</span></div>
+                <div className="vipBig">您已尊享优惠</div>
                 <div onClick={this.oldUserChousePay} className="vipMoreCards">更多会员卡</div>
               </div>
             </div>
@@ -690,6 +698,7 @@ const Index = React.createClass({
             <input type="hidden" name="return_url" value={this.state.return_url}/>
             <input type="hidden" name="sign_type" value={this.state.sign_type}/>
             <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+            <input type="hidden" name="enable_paymethod" value={this.state.enable_paymethod}/>
             <input type="submit" value="Confirm" style={{
               display: "none"
             }}/>
@@ -741,6 +750,7 @@ const Index = React.createClass({
             <input type="hidden" name="return_url" value={this.state.return_url}/>
             <input type="hidden" name="sign_type" value={this.state.sign_type}/>
             <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+            <input type="hidden" name="enable_paymethod" value={this.state.enable_paymethod}/>
             <input type="submit" value="Confirm" style={{
               display: "none"
             }}/>
@@ -802,6 +812,7 @@ const Index = React.createClass({
             <input type="hidden" name="return_url" value={this.state.return_url}/>
             <input type="hidden" name="sign_type" value={this.state.sign_type}/>
             <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+            <input type="hidden" name="enable_paymethod" value={this.state.enable_paymethod}/>
             <input type="submit" value="Confirm" style={{
               display: "none"
             }}/>
@@ -856,6 +867,7 @@ const Index = React.createClass({
             <input type="hidden" name="return_url" value={this.state.return_url}/>
             <input type="hidden" name="sign_type" value={this.state.sign_type}/>
             <input type="hidden" name="seller_id" value={this.state.seller_id}/>
+            <input type="hidden" name="enable_paymethod" value={this.state.enable_paymethod}/>
             <input type="submit" value="Confirm" style={{
               display: "none"
             }}/>

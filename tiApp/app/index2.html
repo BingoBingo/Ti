@@ -359,7 +359,11 @@
               var arrLen = items.length;
               if (arrLen > 0) {
                 for (var i = 0; i < arrLen; i++) {
-                  var disount = items[i].discountInfo.discount == 1 ? "无折扣" : (items[i].discountInfo.discount * 10 + '折')
+                  var dis = (items[i].discountInfo.discount * 10)%1 === 0
+                    ? (items[i].discountInfo.discount * 10)
+                    : (items[i].discountInfo.discount * 10).toFixed(1);
+                    
+                  var disount = items[i].discountInfo.discount == 1 ? "无折扣" : (dis + '折')
                   result += '<a class="item opacity" href="javascript:;">' +
                     '<img src="' + items[i].photo.path + '/' + items[i].photo.name + '" alt="">' +
                     '<div class="itemsDetail">' +
